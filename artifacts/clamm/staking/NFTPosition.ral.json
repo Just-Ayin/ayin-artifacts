@@ -1,0 +1,135 @@
+{
+  "version": "v3.8.5",
+  "name": "NFTPosition",
+  "bytecode": "0d0841dc41e741f4420f422c4240425442fa0100000501405e000417041703170217011700ce0214093f76657273696f6e3d440d89441409266d616e616765723d44ce00000744140726696e6465783d44ce018944140626706f6f6c3d44ce03000744141126706f6f6c4b65795b746f6b656e305d3d44ce04000744141126706f6f6c4b65795b746f6b656e315d3d44ce05000744141626706f6f6c4b65795b7469636b53706163696e675d3d44ce068944141426706f6f6c4b65795b6665655065724d696c5d3d44ce078944141426706f736974696f6e4b65795b6f776e65725d3d44ce0847000744141826706f736974696f6e4b65795b7469636b4c6f7765725d3d44ce098a44141826706f736974696f6e4b65795b7469636b55707065725d3d44ce0a8a44141326706f736974696f6e4b65795b73616c745d3d44ce0b000744141526706f736974696f6e5b6c69717569646974795d3d441600894414402426706f736974696f6e5b66656547726f777468496e73696465304c617374583132385d3d441601894414402426706f736974696f6e5b66656547726f777468496e73696465314c617374583132385d3d4416028944141426706f736974696f6e5b6665654f776564305d3d4416038944141426706f736974696f6e5b6665654f776564315d3d441604894402010000000203ce00ce0102010000000103d3da1a8f8a0d0201010202000cd3deae6261b3ce00411341937b1600b10dbd1601b001000000050ad3070a2bddce08ce09ce0ace0b1011ce03d49aba8ec002010000000406d3068ce6a1ce04ce05ce06ce0702010000000406d3f0822238ce08ce09ce0ace0b0200000116014054140017011600431702140130140131140132140133140134140135140136140137140138140139140161140162140163140164140165140166171217111710170f170e170d170c170b170a17091708170717061705170417030c171316131602314c40271600161316130d2a626c17141614103c7a1310314d0f2a781614130f387a1310314d0f2a784417151601161544170116130d2a17134a7fd5160102",
+  "codeHash": "29cdf0f1fa856ae84c1b32d1e2c406ab8c373f6740e7f3789603ca60ff0fd753",
+  "fieldsSig": {
+    "names": [
+      "manager",
+      "nftIndex",
+      "nftUriPrefix",
+      "pool",
+      "poolKey",
+      "positionKey",
+      "__stdInterfaceId"
+    ],
+    "types": [
+      "NFTPositionManager",
+      "U256",
+      "ByteVec",
+      "IPoolCL",
+      "PoolKey",
+      "PositionKey",
+      "ByteVec"
+    ],
+    "isMutable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  "eventsSig": [],
+  "functions": [
+    {
+      "name": "getTokenUri",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "ByteVec"
+      ]
+    },
+    {
+      "name": "getCollectionIndex",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "ByteVec",
+        "U256"
+      ]
+    },
+    {
+      "name": "getVersion",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "burn",
+      "paramNames": [
+        "owner",
+        "refundAddress"
+      ],
+      "paramTypes": [
+        "Address",
+        "Address"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "getPositionInfo",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "Position"
+      ]
+    },
+    {
+      "name": "getPoolKey",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "PoolKey"
+      ]
+    },
+    {
+      "name": "getPositionKey",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "PositionKey"
+      ]
+    },
+    {
+      "name": "toHex",
+      "paramNames": [
+        "bytes"
+      ],
+      "paramTypes": [
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "ByteVec"
+      ]
+    }
+  ],
+  "constants": [
+    {
+      "name": "Version",
+      "value": {
+        "type": "U256",
+        "value": "1"
+      }
+    }
+  ],
+  "enums": [],
+  "stdInterfaceId": "0003"
+}

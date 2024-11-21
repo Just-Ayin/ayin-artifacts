@@ -1,0 +1,94 @@
+struct ModifyLiquidity {
+    // the address that owns the position
+    owner: Address,
+    // the lower and upper tick of the position
+    tickLower: I256,
+    tickUpper: I256,
+    // any change in liquidity
+    liquidityDelta: I256,
+    // used to distinguish positions of the same owner, at the same tick range
+    salt: ByteVec
+}
+
+struct PositionKey {
+    owner: Address,
+    tickLower: I256,
+    tickUpper: I256,
+    salt: ByteVec
+} 
+
+struct Position {
+    mut liquidity: U256,
+    mut feeGrowthInside0LastX128: U256,
+    mut feeGrowthInside1LastX128: U256,
+    mut feeOwed0: U256, // The amount of fees in token0 owed to the LP
+    mut feeOwed1: U256  // The amount of fees in token1 owed to the LP
+}
+
+/// Public interface for interacting with the PoolCL contract
+/// Functions that modify state are excluded as they can only ever be called by the factory
+Interface IPoolCL {
+    event Swap(
+        caller: Address,    // The address which called the swap in Factory
+        token0: ByteVec,    // The lower token ID
+        token1: ByteVec,    // The higher token ID
+        delta0: I256,       // The difference in user balance from this trade in token0 (- if user sells token0, + if buys)
+        delta1: I256,       // The difference in user balance from this trade in token1 (- if user sells token1, + if buys)
+        sqrtPriceX96:U256,  // The price in the pool after the swap
+        tick: I256,         // The tick of the pool after the swap
+        lpFeePerMil: U256   // The net fee from input to the LPs in parts per million (fee = -delta * lpFeePerMil / 1_000_000)
+    )
+
+    event ModifyLiquidity(
+        owner: Address,         // The address of the owner of the position
+        token0: ByteVec,        // The lower token ID
+        token1: ByteVec,        // The higher token ID
+        tickLower: I256,        // The lower tick of the position
+        tickUpper: I256,        // The upper tick of the position
+        liquidityDelta: I256,   // The change in liquidity
+        salt: ByteVec           // An arbitrary byte string to distinguish positions of the same owner at the same tick range
+    )
+
+    /// View function to simulate the effects of a liquidity change
+    pub fn modifyLiquidityView(params: ModifyLiquidity) -> (I256, I256)
+
+    /// Get the current SQRT price of token0 in terms of token1
+    pub fn getSqrtPriceX96() -> U256
+
+    /// Get Position information with up to date fee amounts on a view-only basis
+    pub fn getUpdatedPosition(positionKey: PositionKey) -> Position
+
+    /// Get the current position information as stored in the contract
+    pub fn getPosition(positionKey: PositionKey) -> Position
+
+    /// Check if a given position exists
+    pub fn positionExists(positionKey: PositionKey) -> Bool
+
+    /// Get the amount of tokens locked as liquidity
+    pub fn getTokenBalances() -> (U256, U256)
+
+    /////////////////////////////////////////////
+    //  Permissioned endpoints (factory only)  //
+    /////////////////////////////////////////////
+
+    @using(updateFields = true, checkExternalCaller = false)
+    pub fn initialize(intialSqrtPrice: U256) -> ()
+
+    @using(updateFields = true)
+    pub fn modifyFeeProtocol(newFeeProtocol: U256) -> ()
+
+    @using(updateFields = true, preapprovedAssets = true)
+    pub fn modifyLiquidity(payer: Address, params: ModifyLiquidity) -> (I256, I256)
+
+    pub fn claimFees(refundAddress: Address, positionKey: PositionKey) -> (U256, U256)
+    
+    @using(updateFields = true)
+    pub fn swap(caller: Address, zeroForOne: Bool, amountSpecified: I256, priceLimit: U256) -> (I256, I256, U256, U256)
+
+    
+    /// Subtracts user balances from the pool balances
+    /// Protocol fees are also subtracted from the pool balances
+    /// Will revert on overflow
+    @using(updateFields = true)
+    pub fn factoryOnlySubUserDeltas(userDelta0: I256, userDelta1: I256, protocol0: U256, protocol1: U256) -> ()
+}

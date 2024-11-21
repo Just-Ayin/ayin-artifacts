@@ -1,0 +1,116 @@
+struct PoolKey {
+  token0: ByteVec,
+  token1: ByteVec,
+  tickSpacing: U256,
+  feePerMil: U256
+}
+
+struct FactoryRoles {
+  deployer: Address,
+  protocolFeeSetter: Address,
+  feeSink: Address,
+  admin: Address,
+  upgrader: Address
+}
+
+Interface IPoolFactory {
+  event PairCreated(token0: ByteVec, token1: ByteVec, pair: ByteVec, currentPairSize: U256, tickSpacing: U256, feePerMil: U256)
+
+  pub fn getRoles() -> FactoryRoles
+
+  /// Claim protocol fees for a list of tokenIds, each token is a 32-byte vector
+  /// Send fees to a dedicated address, can be called by anyone
+  @using(assetsInContract = true, checkExternalCaller = false)
+  pub fn claimProtocolFees(tokenIds: ByteVec) -> () 
+
+  /// Get the contractID of a pool with a given key
+  pub fn getPool(poolKey: PoolKey) -> IPoolCL
+
+  /// Deposit token to be used for swapping/adding liquidity
+  /// Optional step, only necessary for routing
+  @using(preapprovedAssets = true, payToContractOnly = true, checkExternalCaller = false)
+  pub fn deposit(sender: Address, tokenId: ByteVec, amount: U256) -> U256
+
+  /// Get the amount of token a user can withdraw from the contract
+  pub fn getPendingUserBalance(tokenId: ByteVec) -> U256
+
+  /// Get the current SQRT price of token0 in terms of token1
+  pub fn getSqrtPriceX96(poolKey: PoolKey) -> U256
+
+  /// Withdraw all pendingBalances with specified tokenIds from the factory
+  /// TokenIds are densely packed in a single ByteVec
+  /// Each tokenId is a 32-byte vector
+  @using(assetsInContract = true, checkExternalCaller = false)
+  pub fn withdrawAllN(beneficiary: Address, tokenIds: ByteVec) -> ()
+
+  /// Create a new pair with the given poolKey and initial price
+  /// There are certain restrictions on the tickSpacing and feePerMil that is allowed
+  ///
+  /// Returns:
+  ///   the contractID of the new pool
+  @using(preapprovedAssets = true, checkExternalCaller = false)
+  pub fn createPairPermisionless(payer: Address, poolKey: PoolKey, initialPriceX96: U256) -> ByteVec
+
+  /// Deployer Only
+  @using(preapprovedAssets = true, checkExternalCaller = false)
+  pub fn createPairWithPermissions(payer: Address, poolKey: PoolKey, initialPriceX96: U256) -> ByteVec
+
+  /// Modify the liquidity of a position.
+  /// This method will use pending balances first and if more is needed
+  /// it will try to use the allowed balance of the payer in this transaction
+  /// After removing liquidity, the user needs to call `withdrawAllN` in the same trasnaction to receive the tokens
+  /// Recommended ALPH amount: 5x minimum contract deposit as ALPH allowance
+  /// More info see: IPoolCL documentation
+  @using(checkExternalCaller = false, preapprovedAssets = true)
+  pub fn modifyLiquidity(
+    // Address to pay for minimal contract deposits on maps and subcontracts
+    payer: Address,
+    key: PoolKey,
+    tickLower: I256,
+    tickUpper: I256,
+    liquidityDelta: I256,
+    // a value to set if you want unique liquidity positions at the same range
+    salt: ByteVec
+  ) -> (I256, I256)
+
+  /// Claim fees earned from position into pending balances
+  /// To receive the tokens, user needs to call `withdrawAllN` in the same transaction
+  /// Returns: (fee0, fee1)
+  @using(checkExternalCaller = false)
+  pub fn claimFees(
+    // The address which will receive ALPH from deleted maps/subcontracts (if any)
+    refundAddress: Address,
+    poolKey: PoolKey,
+    tickLower: I256,
+    tickUpper: I256,
+    salt: ByteVec
+  ) -> (U256, U256)
+
+  /// Swap tokens in the pool using pending balances
+  /// Args:
+  ///  payer: Address responsible for covering new map entries charges
+  ///  key: Pool key to fetch from map
+  ///  zeroForOne: if true, the swap is from token0 to token1
+  ///  amountSpecified: if positive, then use exact amount of input token
+  ///                   if negative, then receive exact amount of output token
+  /// Returns: 
+  ///  (pendingBalanceDelta of token0, pendingBalanceDelta of token1)
+  @using(checkExternalCaller = false)
+  pub fn swap(
+    key: PoolKey,
+    zeroForOne: Bool,
+    amountSpecified: I256,
+    priceLimit: U256
+  ) -> (I256, I256)
+
+  /// Same args as swap, this method will use the pending balances first and 
+  /// if more is needed it will try to use the allowed balance of the payer in this transaction
+  @using(checkExternalCaller = false, preapprovedAssets = true)
+  pub fn depositAndSwap(
+    payer: Address,
+    key: PoolKey,
+    zeroForOne: Bool,
+    amountSpecified: I256,
+    priceLimit: U256
+  ) -> (I256, I256)
+}

@@ -1,0 +1,4 @@
+Interface IVersioned {
+  /// Gets the contract version
+  pub fn getVersion() -> U256
+}

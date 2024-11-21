@@ -1,0 +1,811 @@
+{
+  "version": "v3.8.5",
+  "name": "MetaRouter",
+  "bytecode": "010f405c40ce41344151416a419441db4220426f42be42e742f84361439c447c00000206044033160016010c2a16010c2a13202a6217021600160113202a160113202a13202a621703160016011340402a16011340402a13202a62711704160016011340602a16011340602a13202a627117051602160316041605020003061a03402b160016010000170917081707170616024c0213c101000276a34a0113d0fffd8963efd1fc6a506488495d951d5263988d26170a1605160316051603a5a31605160616071608160916021604160a13080ece00010c170c170b16024c02160c4a01160b170d134080160d0c020000040c034024160016010000170717061705170416024c0213c101000276a34a0113d0fffd8963efd1fc6a506488495d951d5263988d261708160416051606160716021603160813070ece00010b170a170916024c02160a4a011609170b134080160b0c0200000203010e16010d0dce0001041702160016010e0cce00010616020200000203010d160016010c2a16010c2a13202a6217021602020000020502160c0e16000108170317020c0e1600010718170416011604414c031602160302160316020200030509014024160016010005170617051343e80f2b16022c1707160716062c16071343e816052c2a2d17081603160116031601a5a316001603160416011602160800081608020003050801402416001601000517061705160516022c1343e82c160616022b1343e80f2b2c2d0d2a17071603160116031601a5a316001603160416011607160200081602020003061800402b0c0e1600010718170616031606414c111601160316011603a5a31601160216040c0c160513060c160001114a101601160316011603a5a3160116020c160416050c13060c160001110003060803402a1600160100041706160305284c0e1604160216041602a5a31606160216033d1604160500064a0f1604160216041602a5a316061602051603203d16041605000717071320051607020000020402181600160116010d2a626c1702160016010d2a16010d2a13102a62703f170316021603020000020201081600160116010d2a626c020003070b03403b16020d2f4c0e1605160316051603a5a3160016010316031604160500010216020c2f4c0e1605160316051603a5a3160016010416031604160500010216020e2f4c0e1605160316051603a5a3160016011603160416051606000902134385047c7b180000040403402216020d2f4c061600160103160300020216020c2f4c061600160104160300020216020e2f4c05134386047c7b18134385047c7b180103064042004077d31a7fd5b816054317060c17070c170804170916071606314c405c16051607000a170b170a160713112a170716051607000b170c16070d2a1707160c0d2f160c0c2f1b4c020317091603160016031600a5a316051607160c1600160b16031604000c170f170e170d1607160d2a1707160e170b1608160f2a17080d17101610160a314c1f16051607000b171116070d2a1707160516071611160b000d171417131712160716122a17071613170b160816142a170816100d2a17104a7fdd4a7fa016094c0616081604160100032a170816081602341343847b",
+  "codeHash": "cb8eaf09411c7ecf6259c1c35e32cbdb549f4fbb4bbfb5803a6c51dc535065dc",
+  "fieldsSig": {
+    "names": [
+      "factory"
+    ],
+    "types": [
+      "PoolFactory"
+    ],
+    "isMutable": [
+      false
+    ]
+  },
+  "eventsSig": [],
+  "functions": [
+    {
+      "name": "decodePoolKey",
+      "paramNames": [
+        "encoded",
+        "index"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "PoolKey"
+      ]
+    },
+    {
+      "name": "goV3",
+      "paramNames": [
+        "encoded",
+        "index",
+        "zeroForOne",
+        "tokenIn",
+        "amountIn",
+        "payer"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "U256",
+        "Bool",
+        "ByteVec",
+        "I256",
+        "Address"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256",
+        "I256",
+        "U256"
+      ]
+    },
+    {
+      "name": "goV3InChain",
+      "paramNames": [
+        "encoded",
+        "index",
+        "zeroForOne",
+        "amountIn"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "U256",
+        "Bool",
+        "I256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256",
+        "I256",
+        "U256"
+      ]
+    },
+    {
+      "name": "withdrawV3",
+      "paramNames": [
+        "beneficiary",
+        "tokenOut"
+      ],
+      "paramTypes": [
+        "Address",
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "decodeTokenPair",
+      "paramNames": [
+        "encoded",
+        "index"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "TokenPair"
+      ]
+    },
+    {
+      "name": "getReserveInAndReserveOut",
+      "paramNames": [
+        "tokenPair",
+        "tokenIn"
+      ],
+      "paramTypes": [
+        "TokenPair",
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256",
+        "U256"
+      ]
+    },
+    {
+      "name": "swapExactTokenForToken",
+      "paramNames": [
+        "tokenPair",
+        "tokenIn",
+        "amountIn",
+        "payer",
+        "to"
+      ],
+      "paramTypes": [
+        "TokenPair",
+        "ByteVec",
+        "U256",
+        "Address",
+        "Address"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "swapTokenForExactToken",
+      "paramNames": [
+        "tokenPair",
+        "tokenIn",
+        "amountOut",
+        "payer",
+        "to"
+      ],
+      "paramTypes": [
+        "TokenPair",
+        "ByteVec",
+        "U256",
+        "Address",
+        "Address"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "swap",
+      "paramNames": [
+        "tokenPair",
+        "payer",
+        "to",
+        "tokenIn",
+        "amountIn",
+        "amountOut"
+      ],
+      "paramTypes": [
+        "TokenPair",
+        "Address",
+        "Address",
+        "ByteVec",
+        "U256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "goV2",
+      "paramNames": [
+        "encoded",
+        "index",
+        "tokenIn",
+        "amountIn",
+        "payer",
+        "beneficiary"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "U256",
+        "ByteVec",
+        "I256",
+        "Address",
+        "Address"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256",
+        "I256",
+        "U256"
+      ]
+    },
+    {
+      "name": "decodeChainDesc",
+      "paramNames": [
+        "encoded",
+        "index"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256",
+        "I256"
+      ]
+    },
+    {
+      "name": "decodePoolType",
+      "paramNames": [
+        "encoded",
+        "index"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "goByPoolType",
+      "paramNames": [
+        "encoded",
+        "index",
+        "poolType",
+        "tokenIn",
+        "amountIn",
+        "payer",
+        "beneficiary"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "U256",
+        "U256",
+        "ByteVec",
+        "I256",
+        "Address",
+        "Address"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256",
+        "I256",
+        "U256"
+      ]
+    },
+    {
+      "name": "goByPoolTypeInChain",
+      "paramNames": [
+        "encoded",
+        "index",
+        "poolType",
+        "amountIn"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "U256",
+        "U256",
+        "I256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256",
+        "I256",
+        "U256"
+      ]
+    },
+    {
+      "name": "go",
+      "paramNames": [
+        "tokenIn",
+        "tokenOut",
+        "minAmountOut",
+        "payer",
+        "beneficiary",
+        "encoded"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "ByteVec",
+        "U256",
+        "Address",
+        "Address",
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
+    }
+  ],
+  "constants": [
+    {
+      "name": "V3Token0Offset",
+      "value": {
+        "type": "U256",
+        "value": "0"
+      }
+    },
+    {
+      "name": "V3Token0Size",
+      "value": {
+        "type": "U256",
+        "value": "32"
+      }
+    },
+    {
+      "name": "V3Token1Offset",
+      "value": {
+        "type": "U256",
+        "value": "32"
+      }
+    },
+    {
+      "name": "V3Token1Size",
+      "value": {
+        "type": "U256",
+        "value": "32"
+      }
+    },
+    {
+      "name": "V3TickSpacingOffset",
+      "value": {
+        "type": "U256",
+        "value": "64"
+      }
+    },
+    {
+      "name": "V3TickSpacingSize",
+      "value": {
+        "type": "U256",
+        "value": "32"
+      }
+    },
+    {
+      "name": "V3FeePerMilOffset",
+      "value": {
+        "type": "U256",
+        "value": "96"
+      }
+    },
+    {
+      "name": "V3FeePerMilSize",
+      "value": {
+        "type": "U256",
+        "value": "32"
+      }
+    },
+    {
+      "name": "V3PoolDescSize",
+      "value": {
+        "type": "U256",
+        "value": "128"
+      }
+    },
+    {
+      "name": "MinSqrtPrice",
+      "value": {
+        "type": "U256",
+        "value": "4295128739"
+      }
+    },
+    {
+      "name": "MaxSqrtPrice",
+      "value": {
+        "type": "U256",
+        "value": "1461446703485210103287273052203988822378723970342"
+      }
+    },
+    {
+      "name": "V2TokenPairOffset",
+      "value": {
+        "type": "U256",
+        "value": "0"
+      }
+    },
+    {
+      "name": "V2TokenPairSize",
+      "value": {
+        "type": "U256",
+        "value": "32"
+      }
+    },
+    {
+      "name": "V2PoolDescSize",
+      "value": {
+        "type": "U256",
+        "value": "32"
+      }
+    },
+    {
+      "name": "V2FeePermille",
+      "value": {
+        "type": "U256",
+        "value": "3"
+      }
+    },
+    {
+      "name": "ChainLengthSize",
+      "value": {
+        "type": "U256",
+        "value": "1"
+      }
+    },
+    {
+      "name": "AmountThroughOffset",
+      "value": {
+        "type": "U256",
+        "value": "1"
+      }
+    },
+    {
+      "name": "AmountThroughSize",
+      "value": {
+        "type": "U256",
+        "value": "16"
+      }
+    },
+    {
+      "name": "SwapChainDescSize",
+      "value": {
+        "type": "U256",
+        "value": "17"
+      }
+    },
+    {
+      "name": "PoolTypeSize",
+      "value": {
+        "type": "U256",
+        "value": "1"
+      }
+    }
+  ],
+  "enums": [
+    {
+      "name": "ErrorCodes",
+      "fields": [
+        {
+          "name": "NotAdmin",
+          "value": {
+            "type": "U256",
+            "value": "100"
+          }
+        },
+        {
+          "name": "NotNewAdmin",
+          "value": {
+            "type": "U256",
+            "value": "101"
+          }
+        },
+        {
+          "name": "NotDeployer",
+          "value": {
+            "type": "U256",
+            "value": "102"
+          }
+        },
+        {
+          "name": "NotInitialized",
+          "value": {
+            "type": "U256",
+            "value": "103"
+          }
+        },
+        {
+          "name": "NotFactory",
+          "value": {
+            "type": "U256",
+            "value": "104"
+          }
+        },
+        {
+          "name": "TokensNotSorted",
+          "value": {
+            "type": "U256",
+            "value": "105"
+          }
+        },
+        {
+          "name": "FeeTooHigh",
+          "value": {
+            "type": "U256",
+            "value": "106"
+          }
+        },
+        {
+          "name": "TickSpacingZero",
+          "value": {
+            "type": "U256",
+            "value": "107"
+          }
+        },
+        {
+          "name": "NotFeeSetter",
+          "value": {
+            "type": "U256",
+            "value": "108"
+          }
+        },
+        {
+          "name": "InvalidFeeAndSpacing",
+          "value": {
+            "type": "U256",
+            "value": "109"
+          }
+        },
+        {
+          "name": "NotUpgrader",
+          "value": {
+            "type": "U256",
+            "value": "110"
+          }
+        },
+        {
+          "name": "IdenticalTokenIds",
+          "value": {
+            "type": "U256",
+            "value": "200"
+          }
+        },
+        {
+          "name": "TickOOB",
+          "value": {
+            "type": "U256",
+            "value": "201"
+          }
+        },
+        {
+          "name": "SqrtRatioOOB",
+          "value": {
+            "type": "U256",
+            "value": "202"
+          }
+        },
+        {
+          "name": "ProductOverflow",
+          "value": {
+            "type": "U256",
+            "value": "203"
+          }
+        },
+        {
+          "name": "SqrtPriceTooLow",
+          "value": {
+            "type": "U256",
+            "value": "204"
+          }
+        },
+        {
+          "name": "SqrtPriceZero",
+          "value": {
+            "type": "U256",
+            "value": "205"
+          }
+        },
+        {
+          "name": "LiquidityZero",
+          "value": {
+            "type": "U256",
+            "value": "206"
+          }
+        },
+        {
+          "name": "ResultExceeds160Bits",
+          "value": {
+            "type": "U256",
+            "value": "207"
+          }
+        },
+        {
+          "name": "TickTooLow",
+          "value": {
+            "type": "U256",
+            "value": "208"
+          }
+        },
+        {
+          "name": "TickTooHigh",
+          "value": {
+            "type": "U256",
+            "value": "209"
+          }
+        },
+        {
+          "name": "TicksUnordered",
+          "value": {
+            "type": "U256",
+            "value": "210"
+          }
+        },
+        {
+          "name": "TokenIdsSizeInvalid",
+          "value": {
+            "type": "U256",
+            "value": "211"
+          }
+        },
+        {
+          "name": "TickNotMultipleOfSpacing",
+          "value": {
+            "type": "U256",
+            "value": "212"
+          }
+        },
+        {
+          "name": "TickSpacingNonPositive",
+          "value": {
+            "type": "U256",
+            "value": "213"
+          }
+        },
+        {
+          "name": "LowerTickNotMultiple",
+          "value": {
+            "type": "U256",
+            "value": "214"
+          }
+        },
+        {
+          "name": "UpperTickNotMultiple",
+          "value": {
+            "type": "U256",
+            "value": "215"
+          }
+        },
+        {
+          "name": "PriceLimitOOB",
+          "value": {
+            "type": "U256",
+            "value": "216"
+          }
+        },
+        {
+          "name": "IncorrectTokenIndex",
+          "value": {
+            "type": "U256",
+            "value": "800"
+          }
+        },
+        {
+          "name": "NFTNotFound",
+          "value": {
+            "type": "U256",
+            "value": "801"
+          }
+        },
+        {
+          "name": "NFTNotPartOfCollection",
+          "value": {
+            "type": "U256",
+            "value": "802"
+          }
+        },
+        {
+          "name": "MissingNFTInput",
+          "value": {
+            "type": "U256",
+            "value": "803"
+          }
+        },
+        {
+          "name": "MinimumAmountOutNotReached",
+          "value": {
+            "type": "U256",
+            "value": "900"
+          }
+        },
+        {
+          "name": "UnknownPoolType",
+          "value": {
+            "type": "U256",
+            "value": "901"
+          }
+        },
+        {
+          "name": "UnsupportedPoolType",
+          "value": {
+            "type": "U256",
+            "value": "902"
+          }
+        }
+      ]
+    },
+    {
+      "name": "PoolType",
+      "fields": [
+        {
+          "name": "V3OneForZero",
+          "value": {
+            "type": "U256",
+            "value": "0"
+          }
+        },
+        {
+          "name": "V3ZeroForOne",
+          "value": {
+            "type": "U256",
+            "value": "1"
+          }
+        },
+        {
+          "name": "V2",
+          "value": {
+            "type": "U256",
+            "value": "2"
+          }
+        }
+      ]
+    }
+  ]
+}

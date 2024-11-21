@@ -1,0 +1,103 @@
+{
+  "version": "v3.8.5",
+  "name": "UpdatedPoolFactory",
+  "bytecode": "0b0340544068407f01000101004024d3839fc5fb1600a1001600a1011600a1021600a1031600a1041600a1051400a106130aa1070ca108ce010c2f1348597b140a5f5f6d61705f5f305f5f140044cbc51348597bce000c2f1348597b00000404010a1600160144160240441603404402010004040108d3a7b9974a16001601160216030001cb02",
+  "codeHash": "8fa590ef0025dfd7c98236684ecff16f90e98708e5ceb84a91badac9cac7aa7e",
+  "fieldsSig": {
+    "names": [
+      "deployer",
+      "protocolFeeSetter",
+      "feeSink",
+      "admin",
+      "newAdmin",
+      "upgrader",
+      "poolTemplateId",
+      "pairSize",
+      "newMutablePrimitive",
+      "newImmutablePrimitive",
+      "newStruct"
+    ],
+    "types": [
+      "Address",
+      "Address",
+      "Address",
+      "Address",
+      "Address",
+      "Address",
+      "ByteVec",
+      "U256",
+      "U256",
+      "U256",
+      "NewStruct"
+    ],
+    "isMutable": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      false,
+      false
+    ]
+  },
+  "eventsSig": [],
+  "functions": [
+    {
+      "name": "placeholder",
+      "paramNames": [
+        "newDeployer"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "serializePoolKey",
+      "paramNames": [
+        "poolKey"
+      ],
+      "paramTypes": [
+        "PoolKey"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "ByteVec"
+      ]
+    },
+    {
+      "name": "getPool",
+      "paramNames": [
+        "poolKey"
+      ],
+      "paramTypes": [
+        "PoolKey"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "PoolCL"
+      ]
+    }
+  ],
+  "constants": [],
+  "enums": [],
+  "mapsSig": {
+    "names": [
+      "pendingBalances"
+    ],
+    "types": [
+      "Map[ByteVec,PendingBalance]"
+    ]
+  }
+}

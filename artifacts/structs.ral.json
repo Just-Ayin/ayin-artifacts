@@ -1,0 +1,302 @@
+[
+  {
+    "name": "PoolData",
+    "fieldNames": [
+      "liquidity",
+      "feeGrowthGlobal0X128",
+      "feeGrowthGlobal1X128",
+      "protocolFees0",
+      "protocolFees1",
+      "sqrtPriceX96",
+      "tick",
+      "observationIndex",
+      "observationCardinality",
+      "observationCardinalityNext",
+      "feeProtocol",
+      "unlocked"
+    ],
+    "fieldTypes": [
+      "U256",
+      "U256",
+      "U256",
+      "U256",
+      "U256",
+      "U256",
+      "I256",
+      "U256",
+      "U256",
+      "U256",
+      "U256",
+      "Bool"
+    ],
+    "isMutable": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "name": "NewStruct",
+    "fieldNames": [
+      "newField"
+    ],
+    "fieldTypes": [
+      "U256"
+    ],
+    "isMutable": [
+      false
+    ]
+  },
+  {
+    "name": "PendingBalance",
+    "fieldNames": [
+      "user",
+      "protocol"
+    ],
+    "fieldTypes": [
+      "U256",
+      "U256"
+    ],
+    "isMutable": [
+      true,
+      true
+    ]
+  },
+  {
+    "name": "ModifyLiquidityScriptParams",
+    "fieldNames": [
+      "tickLower",
+      "tickUpper",
+      "liquidityDelta",
+      "amount0Min",
+      "amount1Min",
+      "salt"
+    ],
+    "fieldTypes": [
+      "I256",
+      "I256",
+      "I256",
+      "U256",
+      "U256",
+      "ByteVec"
+    ],
+    "isMutable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  {
+    "name": "TickInfo",
+    "fieldNames": [
+      "liquidityNet",
+      "liquidityGross",
+      "feeGrowthOutside0X128",
+      "feeGrowthOutside1X128"
+    ],
+    "fieldTypes": [
+      "I256",
+      "U256",
+      "U256",
+      "U256"
+    ],
+    "isMutable": [
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "name": "TickUpdateInfo",
+    "fieldNames": [
+      "tick",
+      "liquidityGross",
+      "hasFlipped"
+    ],
+    "fieldTypes": [
+      "I256",
+      "U256",
+      "Bool"
+    ],
+    "isMutable": [
+      false,
+      false,
+      false
+    ]
+  },
+  {
+    "name": "CurrentPoolInfo",
+    "fieldNames": [
+      "tick",
+      "feeGrowthGlobal0X128",
+      "feeGrowthGlobal1X128"
+    ],
+    "fieldTypes": [
+      "I256",
+      "U256",
+      "U256"
+    ],
+    "isMutable": [
+      false,
+      false,
+      false
+    ]
+  },
+  {
+    "name": "NextTick",
+    "fieldNames": [
+      "value",
+      "initialized"
+    ],
+    "fieldTypes": [
+      "I256",
+      "Bool"
+    ],
+    "isMutable": [
+      true,
+      false
+    ]
+  },
+  {
+    "name": "FactoryProtectedData",
+    "fieldNames": [
+      "balance0",
+      "balance1"
+    ],
+    "fieldTypes": [
+      "U256",
+      "U256"
+    ],
+    "isMutable": [
+      true,
+      true
+    ]
+  },
+  {
+    "name": "ModifyLiquidity",
+    "fieldNames": [
+      "owner",
+      "tickLower",
+      "tickUpper",
+      "liquidityDelta",
+      "salt"
+    ],
+    "fieldTypes": [
+      "Address",
+      "I256",
+      "I256",
+      "I256",
+      "ByteVec"
+    ],
+    "isMutable": [
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  {
+    "name": "PositionKey",
+    "fieldNames": [
+      "owner",
+      "tickLower",
+      "tickUpper",
+      "salt"
+    ],
+    "fieldTypes": [
+      "Address",
+      "I256",
+      "I256",
+      "ByteVec"
+    ],
+    "isMutable": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  {
+    "name": "Position",
+    "fieldNames": [
+      "liquidity",
+      "feeGrowthInside0LastX128",
+      "feeGrowthInside1LastX128",
+      "feeOwed0",
+      "feeOwed1"
+    ],
+    "fieldTypes": [
+      "U256",
+      "U256",
+      "U256",
+      "U256",
+      "U256"
+    ],
+    "isMutable": [
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "name": "PoolKey",
+    "fieldNames": [
+      "token0",
+      "token1",
+      "tickSpacing",
+      "feePerMil"
+    ],
+    "fieldTypes": [
+      "ByteVec",
+      "ByteVec",
+      "U256",
+      "U256"
+    ],
+    "isMutable": [
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  {
+    "name": "FactoryRoles",
+    "fieldNames": [
+      "deployer",
+      "protocolFeeSetter",
+      "feeSink",
+      "admin",
+      "upgrader"
+    ],
+    "fieldTypes": [
+      "Address",
+      "Address",
+      "Address",
+      "Address",
+      "Address"
+    ],
+    "isMutable": [
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  }
+]

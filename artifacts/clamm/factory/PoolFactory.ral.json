@@ -1,0 +1,942 @@
+{
+  "version": "v3.8.5",
+  "name": "PoolFactory",
+  "bytecode": "081f16408d40a440ea410b4128419f41db420542b9430c435043ec43f9440b441a44314443445544674479448b44b144c744db450d452a457346594743475d010000000507d35bca0e05a000a001a002a003a0050201020105004037d3d3dd6b1f1600431701160113202e0c2f1340d37b0c170216021601314c402616001602160213202a6217030d0d0d140a5f5f6d61705f5f305f5f160344cb0101170416040c334c0da00216031604ab0c0d0e0c140a5f5f6d61705f5f305f5f160344cb0102160213202a17024a7fd6010004040108d3a7b9974a16001601160216030018cb0201070317011bd31c2f1a9e160016011602ac0c0d0d140a5f5f6d61705f5f305f5f160144cb010116022a170316030c0e0c140a5f5f6d61705f5f305f5f160144cb010216030201000101010ad30a9df1200c0d0d140a5f5f6d61705f5f305f5f160044cb01010201000404010ad322eb8cf40c0d16001601160216030002d4d9dc3b080201020206004037d3cc66c4c71601431702160213202e0c2f1340d37b0c170316031602314c402616011603160313202a6217040c0d0d140a5f5f6d61705f5f305f5f160444cb0101170516050c334c0d160016041605ab0c0c0e0c140a5f5f6d61705f5f305f5f160444cb0102160313202a17034a7fd60103060a011dd392f1a08d1601170616021707160317081604170916091608001b13406d7b1600d10ed12c2aa2160016061607160816091605001c02010306060115d30417efb8b4a000451340667b1600d10ed12c2aa2160016011602160316041605001c0201030917024060d305d9c5a2160116021603160400021709b41605160616071608170e170d170c170b170a16001600a4a21600160a160b160c160d160e13060e1609d4193badbc1710170f16010004171116020004171216113f160f1f171316123f16101f1714161305264c0e051613203d1715160016011615a3160016011615000318161405264c0e051614203d1716160016021616a3160016021616000318160916011602160f16100c0c001d160f1610020100080f024027d3897a5c2b160116021603160400021708b4160516061607170c170b170a170916001609160a160b160c110e1608d4f8d9c145170e170d160816011602160d3f160e3f0c0c001d160d160e020100070c021ed343351e39160016011602160300021707b416041605160610101607d43799748f170b170a1709170816071600160116081609160a160b001d160816090201030813024052d3bbccd5f6160116021603160400021708160016051606160710101608d43799748f170c170b170a170916010004170d16020004170e160d3f16091f170f160e3f160a1f1710160f05264c0e05160f203d1711160016011611a3160016011611000318161005264c0e051610203d1712160016021612a31600160216120003181608160116021609160a160b160c001d1609160a02010000000103d3da1a8f8a0d02010001010005d3916e2287b4000f1600a1040000010100051600a003451340647b010000000008d3a5a38d8bb4a004451340657ba004a103010001010005d365e0c929b4000f1600a102010001010005d39e9694c8b4000f1600a100010001010005d31ab2f27eb4000f1600a105010001010005d3cb2f06ddb4000f1600a101010001010005d36062e633b4000f1600a10601000505000fd336394400b4a0014513406c7b16040d0c16001601160216030002d4760304ce00000204010a1600711702160171170316021603310200000404010a1600160144160240441603404402000302020010140a5f5f6d61705f5f305f5f160144cbc54b0a1600d1a2140a5f5f6d61705f5f305f5f160144b10c0cd2010201000404020ad3722e74e80c0e16001601160216030002d4faecbebc020000020201402a16001340642f16010d2f1a4c02030216001341f42f1601130a2f1a4c0203021600134bb82f1601133c2f1a4c02030216001367102f16011340c82f1a4c0203020402000306402b01407d1601170616021707160317081604170916061607421340c87b1606160700171340697b16080c3313406b7b160913800f42403113406a7b0c0c0c0c0c0c050c0c0c1380030d4003171817171716171517141713171217111710170f170e170d0c0c171a1719b11608160916061607130564160d160e160f1610161116121613161416151616161716181619161a130e64170b170a1600d1a216011602160316040018a006160a160bc1170c16050d0c160c01061600d1a21600160600191600d1a21600160700190516061607160ca0071608160974a0070d2aa107160c020000070c0040760c0d0d140a5f5f6d61705f5f305f5f160144cb170b160b01010d0d0d160b0101170817070c0d0d140a5f5f6d61705f5f305f5f160244cb170b160b01010d0d0d160b0101170a1709160305264c081607051603203d2b17074a05160716033d2a1707160405264c081609051604203d2b17094a05160916043d2a1709160816052a1708160a16062a170a160716080d0e0c140a5f5f6d61705f5f305f5f160144cb170b160b01020c0e0c160b01021609160a0d0e0c140a5f5f6d61705f5f305f5f160244cb170b160b01020c0e0c160b01021603160416051606100c1600d40a6ab28601000303000ad366ed4ca8b4a0054513406e7b160016011602bb",
+  "codeHash": "8a5694b48737b0369faa53d7acb7eb5645e26cbc08471982f43e36e66150c1f5",
+  "fieldsSig": {
+    "names": [
+      "deployer",
+      "protocolFeeSetter",
+      "feeSink",
+      "admin",
+      "newAdmin",
+      "upgrader",
+      "poolTemplateId",
+      "pairSize"
+    ],
+    "types": [
+      "Address",
+      "Address",
+      "Address",
+      "Address",
+      "Address",
+      "Address",
+      "ByteVec",
+      "U256"
+    ],
+    "isMutable": [
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  "eventsSig": [
+    {
+      "name": "PairCreated",
+      "fieldNames": [
+        "token0",
+        "token1",
+        "pair",
+        "currentPairSize",
+        "tickSpacing",
+        "feePerMil"
+      ],
+      "fieldTypes": [
+        "ByteVec",
+        "ByteVec",
+        "ByteVec",
+        "U256",
+        "U256",
+        "U256"
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "name": "getRoles",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "FactoryRoles"
+      ]
+    },
+    {
+      "name": "claimProtocolFees",
+      "paramNames": [
+        "tokenIds"
+      ],
+      "paramTypes": [
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "getPool",
+      "paramNames": [
+        "poolKey"
+      ],
+      "paramTypes": [
+        "PoolKey"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "IPoolCL"
+      ]
+    },
+    {
+      "name": "deposit",
+      "paramNames": [
+        "sender",
+        "tokenId",
+        "amount"
+      ],
+      "paramTypes": [
+        "Address",
+        "ByteVec",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "getPendingUserBalance",
+      "paramNames": [
+        "tokenId"
+      ],
+      "paramTypes": [
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "getSqrtPriceX96",
+      "paramNames": [
+        "poolKey"
+      ],
+      "paramTypes": [
+        "PoolKey"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "withdrawAllN",
+      "paramNames": [
+        "beneficiary",
+        "tokenIds"
+      ],
+      "paramTypes": [
+        "Address",
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "createPairPermisionless",
+      "paramNames": [
+        "payer",
+        "poolKey",
+        "initialPriceX96"
+      ],
+      "paramTypes": [
+        "Address",
+        "PoolKey",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "ByteVec"
+      ]
+    },
+    {
+      "name": "createPairWithPermissions",
+      "paramNames": [
+        "payer",
+        "poolKey",
+        "initialPriceX96"
+      ],
+      "paramTypes": [
+        "Address",
+        "PoolKey",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "ByteVec"
+      ]
+    },
+    {
+      "name": "modifyLiquidity",
+      "paramNames": [
+        "payer",
+        "key",
+        "tickLower",
+        "tickUpper",
+        "liquidityDelta",
+        "salt"
+      ],
+      "paramTypes": [
+        "Address",
+        "PoolKey",
+        "I256",
+        "I256",
+        "I256",
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "I256",
+        "I256"
+      ]
+    },
+    {
+      "name": "claimFees",
+      "paramNames": [
+        "refundAddress",
+        "poolKey",
+        "tickLower",
+        "tickUpper",
+        "salt"
+      ],
+      "paramTypes": [
+        "Address",
+        "PoolKey",
+        "I256",
+        "I256",
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256",
+        "U256"
+      ]
+    },
+    {
+      "name": "swap",
+      "paramNames": [
+        "key",
+        "zeroForOne",
+        "amountSpecified",
+        "priceLimit"
+      ],
+      "paramTypes": [
+        "PoolKey",
+        "Bool",
+        "I256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "I256",
+        "I256"
+      ]
+    },
+    {
+      "name": "depositAndSwap",
+      "paramNames": [
+        "payer",
+        "key",
+        "zeroForOne",
+        "amountSpecified",
+        "priceLimit"
+      ],
+      "paramTypes": [
+        "Address",
+        "PoolKey",
+        "Bool",
+        "I256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "I256",
+        "I256"
+      ]
+    },
+    {
+      "name": "getVersion",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "changeAdmin",
+      "paramNames": [
+        "newAdminArg"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "assertAdmin",
+      "paramNames": [
+        "caller"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "acceptAdmin",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": []
+    },
+    {
+      "name": "setFeeSink",
+      "paramNames": [
+        "feeSinkArg"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "setDeployer",
+      "paramNames": [
+        "deployerArg"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "setUpgrader",
+      "paramNames": [
+        "upgraderArg"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "setProtocolFeeSetter",
+      "paramNames": [
+        "protocolFeeSetterArg"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "setPoolTemplateId",
+      "paramNames": [
+        "poolTemplateIdArg"
+      ],
+      "paramTypes": [
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "modifyPoolFeeProtocol",
+      "paramNames": [
+        "poolKey",
+        "newFeeProtocol"
+      ],
+      "paramTypes": [
+        "PoolKey",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "areTokensSorted",
+      "paramNames": [
+        "tokenA",
+        "tokenB"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "Bool"
+      ]
+    },
+    {
+      "name": "serializePoolKey",
+      "paramNames": [
+        "poolKey"
+      ],
+      "paramTypes": [
+        "PoolKey"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "ByteVec"
+      ]
+    },
+    {
+      "name": "initializeTokenBalance",
+      "paramNames": [
+        "payer",
+        "tokenId"
+      ],
+      "paramTypes": [
+        "Address",
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "getTokenBalances",
+      "paramNames": [
+        "poolKey"
+      ],
+      "paramTypes": [
+        "PoolKey"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "U256",
+        "U256"
+      ]
+    },
+    {
+      "name": "isValidSpacingFeePair",
+      "paramNames": [
+        "feePerMil",
+        "tickSpacing"
+      ],
+      "paramTypes": [
+        "U256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "Bool"
+      ]
+    },
+    {
+      "name": "createPair",
+      "paramNames": [
+        "payer",
+        "poolKey",
+        "initialPriceX96"
+      ],
+      "paramTypes": [
+        "Address",
+        "PoolKey",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "ByteVec"
+      ]
+    },
+    {
+      "name": "addBalanceDeltas",
+      "paramNames": [
+        "pool",
+        "token0",
+        "token1",
+        "userDelta0",
+        "userDelta1",
+        "protocol0",
+        "protocol1"
+      ],
+      "paramTypes": [
+        "IPoolCL",
+        "ByteVec",
+        "ByteVec",
+        "I256",
+        "I256",
+        "U256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "upgrade",
+      "paramNames": [
+        "newCode",
+        "newImmFieldsEncoded",
+        "newMutFieldsEncoded"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "ByteVec",
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
+    }
+  ],
+  "constants": [
+    {
+      "name": "MinTick",
+      "value": {
+        "type": "I256",
+        "value": "-887272"
+      }
+    },
+    {
+      "name": "MaxTick",
+      "value": {
+        "type": "I256",
+        "value": "887272"
+      }
+    },
+    {
+      "name": "HalfUnitX96",
+      "value": {
+        "type": "U256",
+        "value": "39614081257132168796771975168"
+      }
+    },
+    {
+      "name": "UnitX96",
+      "value": {
+        "type": "U256",
+        "value": "79228162514264337593543950336"
+      }
+    },
+    {
+      "name": "UnitX128",
+      "value": {
+        "type": "U256",
+        "value": "340282366920938463463374607431768211456"
+      }
+    },
+    {
+      "name": "DoubleUnitX96",
+      "value": {
+        "type": "U256",
+        "value": "158456325028528675187087900672"
+      }
+    },
+    {
+      "name": "U160Limit",
+      "value": {
+        "type": "U256",
+        "value": "1461501637330902918203684832716283019655932542976"
+      }
+    },
+    {
+      "name": "MaxFee",
+      "value": {
+        "type": "U256",
+        "value": "1000000"
+      }
+    },
+    {
+      "name": "MinSqrtPrice",
+      "value": {
+        "type": "U256",
+        "value": "4295128739"
+      }
+    },
+    {
+      "name": "MaxSqrtPrice",
+      "value": {
+        "type": "U256",
+        "value": "1461446703485210103287273052203988822378723970342"
+      }
+    },
+    {
+      "name": "Version",
+      "value": {
+        "type": "U256",
+        "value": "1"
+      }
+    },
+    {
+      "name": "DefaultProtocolFee",
+      "value": {
+        "type": "U256",
+        "value": "200000"
+      }
+    }
+  ],
+  "enums": [
+    {
+      "name": "ErrorCodes",
+      "fields": [
+        {
+          "name": "NotAdmin",
+          "value": {
+            "type": "U256",
+            "value": "100"
+          }
+        },
+        {
+          "name": "NotNewAdmin",
+          "value": {
+            "type": "U256",
+            "value": "101"
+          }
+        },
+        {
+          "name": "NotDeployer",
+          "value": {
+            "type": "U256",
+            "value": "102"
+          }
+        },
+        {
+          "name": "NotInitialized",
+          "value": {
+            "type": "U256",
+            "value": "103"
+          }
+        },
+        {
+          "name": "NotFactory",
+          "value": {
+            "type": "U256",
+            "value": "104"
+          }
+        },
+        {
+          "name": "TokensNotSorted",
+          "value": {
+            "type": "U256",
+            "value": "105"
+          }
+        },
+        {
+          "name": "FeeTooHigh",
+          "value": {
+            "type": "U256",
+            "value": "106"
+          }
+        },
+        {
+          "name": "TickSpacingZero",
+          "value": {
+            "type": "U256",
+            "value": "107"
+          }
+        },
+        {
+          "name": "NotFeeSetter",
+          "value": {
+            "type": "U256",
+            "value": "108"
+          }
+        },
+        {
+          "name": "InvalidFeeAndSpacing",
+          "value": {
+            "type": "U256",
+            "value": "109"
+          }
+        },
+        {
+          "name": "NotUpgrader",
+          "value": {
+            "type": "U256",
+            "value": "110"
+          }
+        },
+        {
+          "name": "IdenticalTokenIds",
+          "value": {
+            "type": "U256",
+            "value": "200"
+          }
+        },
+        {
+          "name": "TickOOB",
+          "value": {
+            "type": "U256",
+            "value": "201"
+          }
+        },
+        {
+          "name": "SqrtRatioOOB",
+          "value": {
+            "type": "U256",
+            "value": "202"
+          }
+        },
+        {
+          "name": "ProductOverflow",
+          "value": {
+            "type": "U256",
+            "value": "203"
+          }
+        },
+        {
+          "name": "SqrtPriceTooLow",
+          "value": {
+            "type": "U256",
+            "value": "204"
+          }
+        },
+        {
+          "name": "SqrtPriceZero",
+          "value": {
+            "type": "U256",
+            "value": "205"
+          }
+        },
+        {
+          "name": "LiquidityZero",
+          "value": {
+            "type": "U256",
+            "value": "206"
+          }
+        },
+        {
+          "name": "ResultExceeds160Bits",
+          "value": {
+            "type": "U256",
+            "value": "207"
+          }
+        },
+        {
+          "name": "TickTooLow",
+          "value": {
+            "type": "U256",
+            "value": "208"
+          }
+        },
+        {
+          "name": "TickTooHigh",
+          "value": {
+            "type": "U256",
+            "value": "209"
+          }
+        },
+        {
+          "name": "TicksUnordered",
+          "value": {
+            "type": "U256",
+            "value": "210"
+          }
+        },
+        {
+          "name": "TokenIdsSizeInvalid",
+          "value": {
+            "type": "U256",
+            "value": "211"
+          }
+        },
+        {
+          "name": "TickNotMultipleOfSpacing",
+          "value": {
+            "type": "U256",
+            "value": "212"
+          }
+        },
+        {
+          "name": "TickSpacingNonPositive",
+          "value": {
+            "type": "U256",
+            "value": "213"
+          }
+        },
+        {
+          "name": "LowerTickNotMultiple",
+          "value": {
+            "type": "U256",
+            "value": "214"
+          }
+        },
+        {
+          "name": "UpperTickNotMultiple",
+          "value": {
+            "type": "U256",
+            "value": "215"
+          }
+        },
+        {
+          "name": "PriceLimitOOB",
+          "value": {
+            "type": "U256",
+            "value": "216"
+          }
+        },
+        {
+          "name": "IncorrectTokenIndex",
+          "value": {
+            "type": "U256",
+            "value": "800"
+          }
+        },
+        {
+          "name": "NFTNotFound",
+          "value": {
+            "type": "U256",
+            "value": "801"
+          }
+        },
+        {
+          "name": "NFTNotPartOfCollection",
+          "value": {
+            "type": "U256",
+            "value": "802"
+          }
+        },
+        {
+          "name": "MissingNFTInput",
+          "value": {
+            "type": "U256",
+            "value": "803"
+          }
+        },
+        {
+          "name": "MinimumAmountOutNotReached",
+          "value": {
+            "type": "U256",
+            "value": "900"
+          }
+        },
+        {
+          "name": "UnknownPoolType",
+          "value": {
+            "type": "U256",
+            "value": "901"
+          }
+        },
+        {
+          "name": "UnsupportedPoolType",
+          "value": {
+            "type": "U256",
+            "value": "902"
+          }
+        }
+      ]
+    }
+  ],
+  "mapsSig": {
+    "names": [
+      "pendingBalances"
+    ],
+    "types": [
+      "Map[ByteVec,PendingBalance]"
+    ]
+  }
+}

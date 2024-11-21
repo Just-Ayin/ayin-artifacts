@@ -1,0 +1,34 @@
+Interface INFTPositionManager {
+  event NFTMinted(owner: Address, nftId: ByteVec, nftIndex: U256)
+  event NFTBurned(owner: Address, nftId: ByteVec, nftIndex: U256)
+
+  /// Modify liquidity and create an NFT for the position if not exists
+  /// Args:
+  ///   payer: the address that will pay for the transaction, nft minting and liquidity deposit
+  ///         is also the payer of minimal contract deposits and the recipient of refunds and
+  ///         tokens from removed liquidity
+  ///   nftOwner: the address that will own the NFT or the one that owns the existing nft
+  ///   key: the pool key
+  ///   tickLower: the lower tick of the position
+  ///   tickUpper: the upper tick of the position
+  ///   liquidityDelta: the change in liquidity
+  ///   nftIndex: the index of the NFT associated with the position, U256Max if no NFT yet
+  @using(preapprovedAssets = true)
+  pub fn modifyLiquidity(
+    payer: Address,
+    nftOwner: Address,
+    key: PoolKey,
+    tickLower: I256,
+    tickUpper: I256,
+    liquidityDelta: I256,
+    nftIndex: U256
+  ) -> (I256, I256, NFTPosition)
+
+  /// Claim fees earned from liquidity position and send them to refundAddress
+  @using(preapprovedAssets = true)
+  pub fn claimFees(
+    refundAddress: Address,
+    nftOwner: Address,
+    nftIndex: U256
+  ) -> (U256, U256)
+}

@@ -1,0 +1,561 @@
+{
+  "version": "v3.8.5",
+  "name": "NFTPositionManager",
+  "bytecode": "0709091240314046413d41d641e342414265010000000102ce0202010000000102a0000201000102010f1600a001311343207b160040cb17011601c51343217b16010201000203000816010002170216001602411343227b01030a1403408ad3966334f216090c0d362f4c02a0014a011609170a160a40170bb216061607160b170f170e170d170c1602160316041605100dce000102171016090c0d362f4c101600d1a2160016101602160316041605160c160d160e160f160100074a0216090002171116090c0d362f16011611a50d2f1b1343237b16001600a4a21600160216001602a5a31600160316001603a5a316001602160316041605160616071608160b13090ece0001091713171216120528161305281b4c08160016021603440e0cce000106160c160d160e160f100d1610d452eca85b4b09160116110da316001611160916010008161216131611020103030f02404fd358eba2c116020002170316011603a50d2f1343237b0c101603010517071706170517040c1016030106170b170a17091708160016041605160616071609160a160b13080ece00010a170d170c160016041605440e0cce0001061604160516061607100dce000102170e16081609160a160b100d160ed452eca85b4b09160116030da316001603160216010008160c160d02010000000103d3da1a8f8a0d0200030b0f014030a001170ba0010d2aa101a0000d2aa100b1160bce031601160216031604160516061607160816091406414c50480003130d64130064170d170c1600d1a2160b40ce01160c160d0d160ac9170e05160a160e160b60160e02000304040013a0000d2ba100160316010da3160316000e0c160101030616031601160260",
+  "codeHash": "070b86af9a3074a2ede0827d5c17f3525c1ef74e635e42817b1556e8ab82f8da",
+  "fieldsSig": {
+    "names": [
+      "factory",
+      "nftTemplateId",
+      "collectionUri",
+      "nftUriPrefix",
+      "totalSupply",
+      "nextIndex",
+      "__stdInterfaceId"
+    ],
+    "types": [
+      "PoolFactory",
+      "ByteVec",
+      "ByteVec",
+      "ByteVec",
+      "U256",
+      "U256",
+      "ByteVec"
+    ],
+    "isMutable": [
+      false,
+      false,
+      false,
+      false,
+      true,
+      true,
+      false
+    ]
+  },
+  "eventsSig": [
+    {
+      "name": "NFTMinted",
+      "fieldNames": [
+        "owner",
+        "nftId",
+        "nftIndex"
+      ],
+      "fieldTypes": [
+        "Address",
+        "ByteVec",
+        "U256"
+      ]
+    },
+    {
+      "name": "NFTBurned",
+      "fieldNames": [
+        "owner",
+        "nftId",
+        "nftIndex"
+      ],
+      "fieldTypes": [
+        "Address",
+        "ByteVec",
+        "U256"
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "name": "getCollectionUri",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "ByteVec"
+      ]
+    },
+    {
+      "name": "totalSupply",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "nftByIndex",
+      "paramNames": [
+        "index"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "INFT"
+      ]
+    },
+    {
+      "name": "validateNFT",
+      "paramNames": [
+        "nftId",
+        "nftIndex"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "modifyLiquidity",
+      "paramNames": [
+        "payer",
+        "nftOwner",
+        "key",
+        "tickLower",
+        "tickUpper",
+        "liquidityDelta",
+        "nftIndex"
+      ],
+      "paramTypes": [
+        "Address",
+        "Address",
+        "PoolKey",
+        "I256",
+        "I256",
+        "I256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "I256",
+        "I256",
+        "NFTPosition"
+      ]
+    },
+    {
+      "name": "claimFees",
+      "paramNames": [
+        "refundAddress",
+        "nftOwner",
+        "nftIndex"
+      ],
+      "paramTypes": [
+        "Address",
+        "Address",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256",
+        "U256"
+      ]
+    },
+    {
+      "name": "getVersion",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "mintNft",
+      "paramNames": [
+        "payer",
+        "pool",
+        "poolKey",
+        "positionKey",
+        "to"
+      ],
+      "paramTypes": [
+        "Address",
+        "IPoolCL",
+        "PoolKey",
+        "PositionKey",
+        "Address"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "NFTPosition"
+      ]
+    },
+    {
+      "name": "burnNft",
+      "paramNames": [
+        "refundAddress",
+        "nft",
+        "nftIndex",
+        "nftOwner"
+      ],
+      "paramTypes": [
+        "Address",
+        "NFTPosition",
+        "U256",
+        "Address"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
+    }
+  ],
+  "constants": [
+    {
+      "name": "MinTick",
+      "value": {
+        "type": "I256",
+        "value": "-887272"
+      }
+    },
+    {
+      "name": "MaxTick",
+      "value": {
+        "type": "I256",
+        "value": "887272"
+      }
+    },
+    {
+      "name": "HalfUnitX96",
+      "value": {
+        "type": "U256",
+        "value": "39614081257132168796771975168"
+      }
+    },
+    {
+      "name": "UnitX96",
+      "value": {
+        "type": "U256",
+        "value": "79228162514264337593543950336"
+      }
+    },
+    {
+      "name": "UnitX128",
+      "value": {
+        "type": "U256",
+        "value": "340282366920938463463374607431768211456"
+      }
+    },
+    {
+      "name": "DoubleUnitX96",
+      "value": {
+        "type": "U256",
+        "value": "158456325028528675187087900672"
+      }
+    },
+    {
+      "name": "U160Limit",
+      "value": {
+        "type": "U256",
+        "value": "1461501637330902918203684832716283019655932542976"
+      }
+    },
+    {
+      "name": "MaxFee",
+      "value": {
+        "type": "U256",
+        "value": "1000000"
+      }
+    },
+    {
+      "name": "MinSqrtPrice",
+      "value": {
+        "type": "U256",
+        "value": "4295128739"
+      }
+    },
+    {
+      "name": "MaxSqrtPrice",
+      "value": {
+        "type": "U256",
+        "value": "1461446703485210103287273052203988822378723970342"
+      }
+    },
+    {
+      "name": "Version",
+      "value": {
+        "type": "U256",
+        "value": "1"
+      }
+    }
+  ],
+  "enums": [
+    {
+      "name": "ErrorCodes",
+      "fields": [
+        {
+          "name": "NotAdmin",
+          "value": {
+            "type": "U256",
+            "value": "100"
+          }
+        },
+        {
+          "name": "NotNewAdmin",
+          "value": {
+            "type": "U256",
+            "value": "101"
+          }
+        },
+        {
+          "name": "NotDeployer",
+          "value": {
+            "type": "U256",
+            "value": "102"
+          }
+        },
+        {
+          "name": "NotInitialized",
+          "value": {
+            "type": "U256",
+            "value": "103"
+          }
+        },
+        {
+          "name": "NotFactory",
+          "value": {
+            "type": "U256",
+            "value": "104"
+          }
+        },
+        {
+          "name": "TokensNotSorted",
+          "value": {
+            "type": "U256",
+            "value": "105"
+          }
+        },
+        {
+          "name": "FeeTooHigh",
+          "value": {
+            "type": "U256",
+            "value": "106"
+          }
+        },
+        {
+          "name": "TickSpacingZero",
+          "value": {
+            "type": "U256",
+            "value": "107"
+          }
+        },
+        {
+          "name": "NotFeeSetter",
+          "value": {
+            "type": "U256",
+            "value": "108"
+          }
+        },
+        {
+          "name": "InvalidFeeAndSpacing",
+          "value": {
+            "type": "U256",
+            "value": "109"
+          }
+        },
+        {
+          "name": "NotUpgrader",
+          "value": {
+            "type": "U256",
+            "value": "110"
+          }
+        },
+        {
+          "name": "IdenticalTokenIds",
+          "value": {
+            "type": "U256",
+            "value": "200"
+          }
+        },
+        {
+          "name": "TickOOB",
+          "value": {
+            "type": "U256",
+            "value": "201"
+          }
+        },
+        {
+          "name": "SqrtRatioOOB",
+          "value": {
+            "type": "U256",
+            "value": "202"
+          }
+        },
+        {
+          "name": "ProductOverflow",
+          "value": {
+            "type": "U256",
+            "value": "203"
+          }
+        },
+        {
+          "name": "SqrtPriceTooLow",
+          "value": {
+            "type": "U256",
+            "value": "204"
+          }
+        },
+        {
+          "name": "SqrtPriceZero",
+          "value": {
+            "type": "U256",
+            "value": "205"
+          }
+        },
+        {
+          "name": "LiquidityZero",
+          "value": {
+            "type": "U256",
+            "value": "206"
+          }
+        },
+        {
+          "name": "ResultExceeds160Bits",
+          "value": {
+            "type": "U256",
+            "value": "207"
+          }
+        },
+        {
+          "name": "TickTooLow",
+          "value": {
+            "type": "U256",
+            "value": "208"
+          }
+        },
+        {
+          "name": "TickTooHigh",
+          "value": {
+            "type": "U256",
+            "value": "209"
+          }
+        },
+        {
+          "name": "TicksUnordered",
+          "value": {
+            "type": "U256",
+            "value": "210"
+          }
+        },
+        {
+          "name": "TokenIdsSizeInvalid",
+          "value": {
+            "type": "U256",
+            "value": "211"
+          }
+        },
+        {
+          "name": "TickNotMultipleOfSpacing",
+          "value": {
+            "type": "U256",
+            "value": "212"
+          }
+        },
+        {
+          "name": "TickSpacingNonPositive",
+          "value": {
+            "type": "U256",
+            "value": "213"
+          }
+        },
+        {
+          "name": "LowerTickNotMultiple",
+          "value": {
+            "type": "U256",
+            "value": "214"
+          }
+        },
+        {
+          "name": "UpperTickNotMultiple",
+          "value": {
+            "type": "U256",
+            "value": "215"
+          }
+        },
+        {
+          "name": "PriceLimitOOB",
+          "value": {
+            "type": "U256",
+            "value": "216"
+          }
+        },
+        {
+          "name": "IncorrectTokenIndex",
+          "value": {
+            "type": "U256",
+            "value": "800"
+          }
+        },
+        {
+          "name": "NFTNotFound",
+          "value": {
+            "type": "U256",
+            "value": "801"
+          }
+        },
+        {
+          "name": "NFTNotPartOfCollection",
+          "value": {
+            "type": "U256",
+            "value": "802"
+          }
+        },
+        {
+          "name": "MissingNFTInput",
+          "value": {
+            "type": "U256",
+            "value": "803"
+          }
+        },
+        {
+          "name": "MinimumAmountOutNotReached",
+          "value": {
+            "type": "U256",
+            "value": "900"
+          }
+        },
+        {
+          "name": "UnknownPoolType",
+          "value": {
+            "type": "U256",
+            "value": "901"
+          }
+        },
+        {
+          "name": "UnsupportedPoolType",
+          "value": {
+            "type": "U256",
+            "value": "902"
+          }
+        }
+      ]
+    }
+  ],
+  "stdInterfaceId": "0002"
+}

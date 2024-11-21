@@ -1,0 +1,31 @@
+{
+  "version": "v3.8.5",
+  "name": "ModifyLiquidityScript",
+  "bytecodeTemplate": "0101030010004070{1}{2}{3}{4}1703170217011700{5}{6}{7}{8}{9}{10}170917081707170617051704{0}170ab411d12ca2b41600b41600a5a3b41601b41601a5a3b41600160116021603160416051606160913090e160a0109170c170b160b170d160c170e160b05264c0405160b20170d160c05264c0405160c20170e160d16073f290c7b160e16083f290d7b1400170f160b05284c021600170f160c05284c04160f160144170f160f1400424c06b4160f0e0c160a0106",
+  "fieldsSig": {
+    "names": [
+      "factoryId",
+      "key",
+      "params"
+    ],
+    "types": [
+      "ByteVec",
+      "PoolKey",
+      "ModifyLiquidityScriptParams"
+    ],
+    "isMutable": [
+      false,
+      false,
+      false
+    ]
+  },
+  "functions": [
+    {
+      "name": "main",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": []
+    }
+  ]
+}
