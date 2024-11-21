@@ -15,3 +15,4 @@ The interfaces and related Ralph data structures are located in `contracts/clamm
 ## Usage
 Recommended way to use this repository: git submodule (for TS contract SDK).
 Ralph interfaces can be copied and pasted into your project. These interfaces are located in `contracts/clamm/library`.
+Make use of values provided in .env.mainnet to interact with deployed contracts
