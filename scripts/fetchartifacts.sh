@@ -8,7 +8,7 @@ ssh-agent sh -c "ssh-add $IDENTITY_FILE; git clone $REPO_URL temp"
 rm -r artifacts
 cp -r temp/artifacts artifacts
 mkdir -p contracts/clamm
-cp -r temp/contracts/clamm/library contracts/clamm/library
+cp -r temp/contracts/clamm/library contracts/clamm
 rm -rf temp
 
 # remove Test contract references

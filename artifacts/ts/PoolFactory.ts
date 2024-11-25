@@ -534,6 +534,8 @@ class Factory extends ContractFactory<
       NFTNotFound: BigInt("801"),
       NFTNotPartOfCollection: BigInt("802"),
       MissingNFTInput: BigInt("803"),
+      NFTUpgradeSameVersion: BigInt("804"),
+      NFTUpgradeBadCodeHash: BigInt("805"),
       MinimumAmountOutNotReached: BigInt("900"),
       UnknownPoolType: BigInt("901"),
       UnsupportedPoolType: BigInt("902"),

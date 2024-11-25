@@ -104,15 +104,27 @@
       "liquidityNet",
       "liquidityGross",
       "feeGrowthOutside0X128",
-      "feeGrowthOutside1X128"
+      "feeGrowthOutside1X128",
+      "tickCumulativeOutside",
+      "secondsPerLiquidityOutsideX128",
+      "secondsOutside",
+      "initialized"
     ],
     "fieldTypes": [
       "I256",
       "U256",
       "U256",
-      "U256"
+      "U256",
+      "I256",
+      "U256",
+      "U256",
+      "Bool"
     ],
     "isMutable": [
+      true,
+      true,
+      true,
+      true,
       true,
       true,
       true,

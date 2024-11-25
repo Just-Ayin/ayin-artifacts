@@ -1,8 +1,8 @@
 {
   "version": "v3.8.5",
   "name": "NFTPosition",
-  "bytecode": "0d0841dc41e741f4420f422c4240425442fa0100000501405e000417041703170217011700ce0214093f76657273696f6e3d440d89441409266d616e616765723d44ce00000744140726696e6465783d44ce018944140626706f6f6c3d44ce03000744141126706f6f6c4b65795b746f6b656e305d3d44ce04000744141126706f6f6c4b65795b746f6b656e315d3d44ce05000744141626706f6f6c4b65795b7469636b53706163696e675d3d44ce068944141426706f6f6c4b65795b6665655065724d696c5d3d44ce078944141426706f736974696f6e4b65795b6f776e65725d3d44ce0847000744141826706f736974696f6e4b65795b7469636b4c6f7765725d3d44ce098a44141826706f736974696f6e4b65795b7469636b55707065725d3d44ce0a8a44141326706f736974696f6e4b65795b73616c745d3d44ce0b000744141526706f736974696f6e5b6c69717569646974795d3d441600894414402426706f736974696f6e5b66656547726f777468496e73696465304c617374583132385d3d441601894414402426706f736974696f6e5b66656547726f777468496e73696465314c617374583132385d3d4416028944141426706f736974696f6e5b6665654f776564305d3d4416038944141426706f736974696f6e5b6665654f776564315d3d441604894402010000000203ce00ce0102010000000103d3da1a8f8a0d0201010202000cd3deae6261b3ce00411341937b1600b10dbd1601b001000000050ad3070a2bddce08ce09ce0ace0b1011ce03d49aba8ec002010000000406d3068ce6a1ce04ce05ce06ce0702010000000406d3f0822238ce08ce09ce0ace0b0200000116014054140017011600431702140130140131140132140133140134140135140136140137140138140139140161140162140163140164140165140166171217111710170f170e170d170c170b170a17091708170717061705170417030c171316131602314c40271600161316130d2a626c17141614103c7a1310314d0f2a781614130f387a1310314d0f2a784417151601161544170116130d2a17134a7fd5160102",
-  "codeHash": "29cdf0f1fa856ae84c1b32d1e2c406ab8c373f6740e7f3789603ca60ff0fd753",
+  "bytecode": "0e0941dc41e741f4420f422c4240425442fa43390100000501405e000417041703170217011700ce0214093f76657273696f6e3d440d89441409266d616e616765723d44ce00000744140726696e6465783d44ce018944140626706f6f6c3d44ce03000744141126706f6f6c4b65795b746f6b656e305d3d44ce04000744141126706f6f6c4b65795b746f6b656e315d3d44ce05000744141626706f6f6c4b65795b7469636b53706163696e675d3d44ce068944141426706f6f6c4b65795b6665655065724d696c5d3d44ce078944141426706f736974696f6e4b65795b6f776e65725d3d44ce0847000744141826706f736974696f6e4b65795b7469636b4c6f7765725d3d44ce098a44141826706f736974696f6e4b65795b7469636b55707065725d3d44ce0a8a44141326706f736974696f6e4b65795b73616c745d3d44ce0b000744141526706f736974696f6e5b6c69717569646974795d3d441600894414402426706f736974696f6e5b66656547726f777468496e73696465304c617374583132385d3d441601894414402426706f736974696f6e5b66656547726f777468496e73696465314c617374583132385d3d4416028944141426706f736974696f6e5b6665654f776564305d3d4416038944141426706f736974696f6e5b6665654f776564315d3d441604894402010000000203ce00ce0102010000000103d3da1a8f8a0d0201010202000cd3deae6261b3ce00411341937b1600b10dbd1601b001000000050ad3070a2bddce08ce09ce0ace0b1011ce03d49aba8ec002010000000406d3068ce6a1ce04ce05ce06ce0702010000000406d3f0822238ce08ce09ce0ace0b0200000116014054140017011600431702140130140131140132140133140134140135140136140137140138140139140161140162140163140164140165140166171217111710170f170e170d170c170b170a17091708170717061705170417030c171316131602314c40271600161316130d2a626c17141614103c7a1310314d0f2a781614130f387a1310314d0f2a784417151601161544170116130d2a17134a7fd516010201000105004020d3caa32a2c16004e1701b1b917020c0dce00010d17030c0dce00010cb9170416011602421343247b16011604411343257b1603a1001600ba",
+  "codeHash": "bb2c92c52674f6984684fa9901cd1bb26393a007ffe0699b79ed2291a120cb61",
   "fieldsSig": {
     "names": [
       "manager",
@@ -11,6 +11,7 @@
       "pool",
       "poolKey",
       "positionKey",
+      "data",
       "__stdInterfaceId"
     ],
     "types": [
@@ -20,6 +21,7 @@
       "IPoolCL",
       "PoolKey",
       "PositionKey",
+      "ByteVec",
       "ByteVec"
     ],
     "isMutable": [
@@ -29,6 +31,7 @@
       false,
       false,
       false,
+      true,
       false
     ]
   },
@@ -119,9 +122,36 @@
       "returnTypes": [
         "ByteVec"
       ]
+    },
+    {
+      "name": "upgrade",
+      "paramNames": [
+        "newCode"
+      ],
+      "paramTypes": [
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
     }
   ],
   "constants": [
+    {
+      "name": "MinSqrtPrice",
+      "value": {
+        "type": "U256",
+        "value": "4295128739"
+      }
+    },
+    {
+      "name": "MaxSqrtPrice",
+      "value": {
+        "type": "U256",
+        "value": "1461446703485210103287273052203988822378723970342"
+      }
+    },
     {
       "name": "Version",
       "value": {
@@ -130,6 +160,271 @@
       }
     }
   ],
-  "enums": [],
+  "enums": [
+    {
+      "name": "ErrorCodes",
+      "fields": [
+        {
+          "name": "NotAdmin",
+          "value": {
+            "type": "U256",
+            "value": "100"
+          }
+        },
+        {
+          "name": "NotNewAdmin",
+          "value": {
+            "type": "U256",
+            "value": "101"
+          }
+        },
+        {
+          "name": "NotDeployer",
+          "value": {
+            "type": "U256",
+            "value": "102"
+          }
+        },
+        {
+          "name": "NotInitialized",
+          "value": {
+            "type": "U256",
+            "value": "103"
+          }
+        },
+        {
+          "name": "NotFactory",
+          "value": {
+            "type": "U256",
+            "value": "104"
+          }
+        },
+        {
+          "name": "TokensNotSorted",
+          "value": {
+            "type": "U256",
+            "value": "105"
+          }
+        },
+        {
+          "name": "FeeTooHigh",
+          "value": {
+            "type": "U256",
+            "value": "106"
+          }
+        },
+        {
+          "name": "TickSpacingZero",
+          "value": {
+            "type": "U256",
+            "value": "107"
+          }
+        },
+        {
+          "name": "NotFeeSetter",
+          "value": {
+            "type": "U256",
+            "value": "108"
+          }
+        },
+        {
+          "name": "InvalidFeeAndSpacing",
+          "value": {
+            "type": "U256",
+            "value": "109"
+          }
+        },
+        {
+          "name": "NotUpgrader",
+          "value": {
+            "type": "U256",
+            "value": "110"
+          }
+        },
+        {
+          "name": "IdenticalTokenIds",
+          "value": {
+            "type": "U256",
+            "value": "200"
+          }
+        },
+        {
+          "name": "TickOOB",
+          "value": {
+            "type": "U256",
+            "value": "201"
+          }
+        },
+        {
+          "name": "SqrtRatioOOB",
+          "value": {
+            "type": "U256",
+            "value": "202"
+          }
+        },
+        {
+          "name": "ProductOverflow",
+          "value": {
+            "type": "U256",
+            "value": "203"
+          }
+        },
+        {
+          "name": "SqrtPriceTooLow",
+          "value": {
+            "type": "U256",
+            "value": "204"
+          }
+        },
+        {
+          "name": "SqrtPriceZero",
+          "value": {
+            "type": "U256",
+            "value": "205"
+          }
+        },
+        {
+          "name": "LiquidityZero",
+          "value": {
+            "type": "U256",
+            "value": "206"
+          }
+        },
+        {
+          "name": "ResultExceeds160Bits",
+          "value": {
+            "type": "U256",
+            "value": "207"
+          }
+        },
+        {
+          "name": "TickTooLow",
+          "value": {
+            "type": "U256",
+            "value": "208"
+          }
+        },
+        {
+          "name": "TickTooHigh",
+          "value": {
+            "type": "U256",
+            "value": "209"
+          }
+        },
+        {
+          "name": "TicksUnordered",
+          "value": {
+            "type": "U256",
+            "value": "210"
+          }
+        },
+        {
+          "name": "TokenIdsSizeInvalid",
+          "value": {
+            "type": "U256",
+            "value": "211"
+          }
+        },
+        {
+          "name": "TickNotMultipleOfSpacing",
+          "value": {
+            "type": "U256",
+            "value": "212"
+          }
+        },
+        {
+          "name": "TickSpacingNonPositive",
+          "value": {
+            "type": "U256",
+            "value": "213"
+          }
+        },
+        {
+          "name": "LowerTickNotMultiple",
+          "value": {
+            "type": "U256",
+            "value": "214"
+          }
+        },
+        {
+          "name": "UpperTickNotMultiple",
+          "value": {
+            "type": "U256",
+            "value": "215"
+          }
+        },
+        {
+          "name": "PriceLimitOOB",
+          "value": {
+            "type": "U256",
+            "value": "216"
+          }
+        },
+        {
+          "name": "IncorrectTokenIndex",
+          "value": {
+            "type": "U256",
+            "value": "800"
+          }
+        },
+        {
+          "name": "NFTNotFound",
+          "value": {
+            "type": "U256",
+            "value": "801"
+          }
+        },
+        {
+          "name": "NFTNotPartOfCollection",
+          "value": {
+            "type": "U256",
+            "value": "802"
+          }
+        },
+        {
+          "name": "MissingNFTInput",
+          "value": {
+            "type": "U256",
+            "value": "803"
+          }
+        },
+        {
+          "name": "NFTUpgradeSameVersion",
+          "value": {
+            "type": "U256",
+            "value": "804"
+          }
+        },
+        {
+          "name": "NFTUpgradeBadCodeHash",
+          "value": {
+            "type": "U256",
+            "value": "805"
+          }
+        },
+        {
+          "name": "MinimumAmountOutNotReached",
+          "value": {
+            "type": "U256",
+            "value": "900"
+          }
+        },
+        {
+          "name": "UnknownPoolType",
+          "value": {
+            "type": "U256",
+            "value": "901"
+          }
+        },
+        {
+          "name": "UnsupportedPoolType",
+          "value": {
+            "type": "U256",
+            "value": "902"
+          }
+        }
+      ]
+    }
+  ],
   "stdInterfaceId": "0003"
 }

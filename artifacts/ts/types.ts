@@ -85,6 +85,10 @@ export interface TickInfo extends Record<string, Val> {
   liquidityGross: bigint;
   feeGrowthOutside0X128: bigint;
   feeGrowthOutside1X128: bigint;
+  tickCumulativeOutside: bigint;
+  secondsPerLiquidityOutsideX128: bigint;
+  secondsOutside: bigint;
+  initialized: boolean;
 }
 export interface TickUpdateInfo extends Record<string, Val> {
   tick: bigint;

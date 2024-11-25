@@ -908,6 +908,20 @@
           }
         },
         {
+          "name": "NFTUpgradeSameVersion",
+          "value": {
+            "type": "U256",
+            "value": "804"
+          }
+        },
+        {
+          "name": "NFTUpgradeBadCodeHash",
+          "value": {
+            "type": "U256",
+            "value": "805"
+          }
+        },
+        {
           "name": "MinimumAmountOutNotReached",
           "value": {
             "type": "U256",

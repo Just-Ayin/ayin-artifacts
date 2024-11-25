@@ -62,6 +62,8 @@ export namespace NFTPositionManagerTypes {
     nftUriPrefix: HexString;
     totalSupply: bigint;
     nextIndex: bigint;
+    admin: Address;
+    newAdmin: Address;
   };
 
   export type State = ContractState<Fields>;
@@ -134,6 +136,34 @@ export namespace NFTPositionManagerTypes {
         nft: HexString;
         nftIndex: bigint;
         nftOwner: Address;
+      }>;
+      result: CallContractResult<null>;
+    };
+    changeAdmin: {
+      params: CallContractParams<{ newAdminArg: Address }>;
+      result: CallContractResult<null>;
+    };
+    assertAdmin: {
+      params: CallContractParams<{ caller: Address }>;
+      result: CallContractResult<null>;
+    };
+    acceptAdmin: {
+      params: Omit<CallContractParams<{}>, "args">;
+      result: CallContractResult<null>;
+    };
+    getNftTemplateId: {
+      params: Omit<CallContractParams<{}>, "args">;
+      result: CallContractResult<HexString>;
+    };
+    getInitialDataForPosition: {
+      params: Omit<CallContractParams<{}>, "args">;
+      result: CallContractResult<HexString>;
+    };
+    upgrade: {
+      params: CallContractParams<{
+        newCode: HexString;
+        newImmFieldsEncoded: HexString;
+        newMutFieldsEncoded: HexString;
       }>;
       result: CallContractResult<null>;
     };
@@ -217,6 +247,34 @@ export namespace NFTPositionManagerTypes {
       }>;
       result: SignExecuteScriptTxResult;
     };
+    changeAdmin: {
+      params: SignExecuteContractMethodParams<{ newAdminArg: Address }>;
+      result: SignExecuteScriptTxResult;
+    };
+    assertAdmin: {
+      params: SignExecuteContractMethodParams<{ caller: Address }>;
+      result: SignExecuteScriptTxResult;
+    };
+    acceptAdmin: {
+      params: Omit<SignExecuteContractMethodParams<{}>, "args">;
+      result: SignExecuteScriptTxResult;
+    };
+    getNftTemplateId: {
+      params: Omit<SignExecuteContractMethodParams<{}>, "args">;
+      result: SignExecuteScriptTxResult;
+    };
+    getInitialDataForPosition: {
+      params: Omit<SignExecuteContractMethodParams<{}>, "args">;
+      result: SignExecuteScriptTxResult;
+    };
+    upgrade: {
+      params: SignExecuteContractMethodParams<{
+        newCode: HexString;
+        newImmFieldsEncoded: HexString;
+        newMutFieldsEncoded: HexString;
+      }>;
+      result: SignExecuteScriptTxResult;
+    };
   }
   export type SignExecuteMethodParams<T extends keyof SignExecuteMethodTable> =
     SignExecuteMethodTable[T]["params"];
@@ -282,6 +340,8 @@ class Factory extends ContractFactory<
       NFTNotFound: BigInt("801"),
       NFTNotPartOfCollection: BigInt("802"),
       MissingNFTInput: BigInt("803"),
+      NFTUpgradeSameVersion: BigInt("804"),
+      NFTUpgradeBadCodeHash: BigInt("805"),
       MinimumAmountOutNotReached: BigInt("900"),
       UnknownPoolType: BigInt("901"),
       UnsupportedPoolType: BigInt("902"),
@@ -389,6 +449,68 @@ class Factory extends ContractFactory<
     ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "burnNft", params, getContractByCodeHash);
     },
+    changeAdmin: async (
+      params: TestContractParamsWithoutMaps<
+        NFTPositionManagerTypes.Fields,
+        { newAdminArg: Address }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
+      return testMethod(this, "changeAdmin", params, getContractByCodeHash);
+    },
+    assertAdmin: async (
+      params: TestContractParamsWithoutMaps<
+        NFTPositionManagerTypes.Fields,
+        { caller: Address }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
+      return testMethod(this, "assertAdmin", params, getContractByCodeHash);
+    },
+    acceptAdmin: async (
+      params: Omit<
+        TestContractParamsWithoutMaps<NFTPositionManagerTypes.Fields, never>,
+        "testArgs"
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
+      return testMethod(this, "acceptAdmin", params, getContractByCodeHash);
+    },
+    getNftTemplateId: async (
+      params: Omit<
+        TestContractParamsWithoutMaps<NFTPositionManagerTypes.Fields, never>,
+        "testArgs"
+      >
+    ): Promise<TestContractResultWithoutMaps<HexString>> => {
+      return testMethod(
+        this,
+        "getNftTemplateId",
+        params,
+        getContractByCodeHash
+      );
+    },
+    getInitialDataForPosition: async (
+      params: Omit<
+        TestContractParamsWithoutMaps<NFTPositionManagerTypes.Fields, never>,
+        "testArgs"
+      >
+    ): Promise<TestContractResultWithoutMaps<HexString>> => {
+      return testMethod(
+        this,
+        "getInitialDataForPosition",
+        params,
+        getContractByCodeHash
+      );
+    },
+    upgrade: async (
+      params: TestContractParamsWithoutMaps<
+        NFTPositionManagerTypes.Fields,
+        {
+          newCode: HexString;
+          newImmFieldsEncoded: HexString;
+          newMutFieldsEncoded: HexString;
+        }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
+      return testMethod(this, "upgrade", params, getContractByCodeHash);
+    },
   };
 
   stateForTest(
@@ -405,7 +527,7 @@ export const NFTPositionManager = new Factory(
   Contract.fromJson(
     NFTPositionManagerContractJson,
     "",
-    "070b86af9a3074a2ede0827d5c17f3525c1ef74e635e42817b1556e8ab82f8da",
+    "a14ecea38cb1afab0471b63ed457f59e2d941d41ae14b77d63e4ed7867010adb",
     AllStructs
   )
 );
@@ -568,6 +690,76 @@ export class NFTPositionManagerInstance extends ContractInstance {
         getContractByCodeHash
       );
     },
+    changeAdmin: async (
+      params: NFTPositionManagerTypes.CallMethodParams<"changeAdmin">
+    ): Promise<NFTPositionManagerTypes.CallMethodResult<"changeAdmin">> => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "changeAdmin",
+        params,
+        getContractByCodeHash
+      );
+    },
+    assertAdmin: async (
+      params: NFTPositionManagerTypes.CallMethodParams<"assertAdmin">
+    ): Promise<NFTPositionManagerTypes.CallMethodResult<"assertAdmin">> => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "assertAdmin",
+        params,
+        getContractByCodeHash
+      );
+    },
+    acceptAdmin: async (
+      params?: NFTPositionManagerTypes.CallMethodParams<"acceptAdmin">
+    ): Promise<NFTPositionManagerTypes.CallMethodResult<"acceptAdmin">> => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "acceptAdmin",
+        params === undefined ? {} : params,
+        getContractByCodeHash
+      );
+    },
+    getNftTemplateId: async (
+      params?: NFTPositionManagerTypes.CallMethodParams<"getNftTemplateId">
+    ): Promise<
+      NFTPositionManagerTypes.CallMethodResult<"getNftTemplateId">
+    > => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "getNftTemplateId",
+        params === undefined ? {} : params,
+        getContractByCodeHash
+      );
+    },
+    getInitialDataForPosition: async (
+      params?: NFTPositionManagerTypes.CallMethodParams<"getInitialDataForPosition">
+    ): Promise<
+      NFTPositionManagerTypes.CallMethodResult<"getInitialDataForPosition">
+    > => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "getInitialDataForPosition",
+        params === undefined ? {} : params,
+        getContractByCodeHash
+      );
+    },
+    upgrade: async (
+      params: NFTPositionManagerTypes.CallMethodParams<"upgrade">
+    ): Promise<NFTPositionManagerTypes.CallMethodResult<"upgrade">> => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "upgrade",
+        params,
+        getContractByCodeHash
+      );
+    },
   };
 
   transact = {
@@ -639,6 +831,56 @@ export class NFTPositionManagerInstance extends ContractInstance {
       params: NFTPositionManagerTypes.SignExecuteMethodParams<"burnNft">
     ): Promise<NFTPositionManagerTypes.SignExecuteMethodResult<"burnNft">> => {
       return signExecuteMethod(NFTPositionManager, this, "burnNft", params);
+    },
+    changeAdmin: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"changeAdmin">
+    ): Promise<
+      NFTPositionManagerTypes.SignExecuteMethodResult<"changeAdmin">
+    > => {
+      return signExecuteMethod(NFTPositionManager, this, "changeAdmin", params);
+    },
+    assertAdmin: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"assertAdmin">
+    ): Promise<
+      NFTPositionManagerTypes.SignExecuteMethodResult<"assertAdmin">
+    > => {
+      return signExecuteMethod(NFTPositionManager, this, "assertAdmin", params);
+    },
+    acceptAdmin: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"acceptAdmin">
+    ): Promise<
+      NFTPositionManagerTypes.SignExecuteMethodResult<"acceptAdmin">
+    > => {
+      return signExecuteMethod(NFTPositionManager, this, "acceptAdmin", params);
+    },
+    getNftTemplateId: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"getNftTemplateId">
+    ): Promise<
+      NFTPositionManagerTypes.SignExecuteMethodResult<"getNftTemplateId">
+    > => {
+      return signExecuteMethod(
+        NFTPositionManager,
+        this,
+        "getNftTemplateId",
+        params
+      );
+    },
+    getInitialDataForPosition: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"getInitialDataForPosition">
+    ): Promise<
+      NFTPositionManagerTypes.SignExecuteMethodResult<"getInitialDataForPosition">
+    > => {
+      return signExecuteMethod(
+        NFTPositionManager,
+        this,
+        "getInitialDataForPosition",
+        params
+      );
+    },
+    upgrade: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"upgrade">
+    ): Promise<NFTPositionManagerTypes.SignExecuteMethodResult<"upgrade">> => {
+      return signExecuteMethod(NFTPositionManager, this, "upgrade", params);
     },
   };
 

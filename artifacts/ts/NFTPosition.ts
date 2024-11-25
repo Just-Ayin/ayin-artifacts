@@ -62,6 +62,7 @@ export namespace NFTPositionTypes {
     pool: HexString;
     poolKey: PoolKey;
     positionKey: PositionKey;
+    data: HexString;
   };
 
   export type State = ContractState<Fields>;
@@ -98,6 +99,10 @@ export namespace NFTPositionTypes {
     toHex: {
       params: CallContractParams<{ bytes: HexString }>;
       result: CallContractResult<HexString>;
+    };
+    upgrade: {
+      params: CallContractParams<{ newCode: HexString }>;
+      result: CallContractResult<null>;
     };
   }
   export type CallMethodParams<T extends keyof CallMethodTable> =
@@ -152,6 +157,10 @@ export namespace NFTPositionTypes {
       params: SignExecuteContractMethodParams<{ bytes: HexString }>;
       result: SignExecuteScriptTxResult;
     };
+    upgrade: {
+      params: SignExecuteContractMethodParams<{ newCode: HexString }>;
+      result: SignExecuteScriptTxResult;
+    };
   }
   export type SignExecuteMethodParams<T extends keyof SignExecuteMethodTable> =
     SignExecuteMethodTable[T]["params"];
@@ -171,7 +180,50 @@ class Factory extends ContractFactory<
     );
   }
 
-  consts = { Version: BigInt("1") };
+  consts = {
+    MinSqrtPrice: BigInt("4295128739"),
+    MaxSqrtPrice: BigInt("1461446703485210103287273052203988822378723970342"),
+    Version: BigInt("1"),
+    ErrorCodes: {
+      NotAdmin: BigInt("100"),
+      NotNewAdmin: BigInt("101"),
+      NotDeployer: BigInt("102"),
+      NotInitialized: BigInt("103"),
+      NotFactory: BigInt("104"),
+      TokensNotSorted: BigInt("105"),
+      FeeTooHigh: BigInt("106"),
+      TickSpacingZero: BigInt("107"),
+      NotFeeSetter: BigInt("108"),
+      InvalidFeeAndSpacing: BigInt("109"),
+      NotUpgrader: BigInt("110"),
+      IdenticalTokenIds: BigInt("200"),
+      TickOOB: BigInt("201"),
+      SqrtRatioOOB: BigInt("202"),
+      ProductOverflow: BigInt("203"),
+      SqrtPriceTooLow: BigInt("204"),
+      SqrtPriceZero: BigInt("205"),
+      LiquidityZero: BigInt("206"),
+      ResultExceeds160Bits: BigInt("207"),
+      TickTooLow: BigInt("208"),
+      TickTooHigh: BigInt("209"),
+      TicksUnordered: BigInt("210"),
+      TokenIdsSizeInvalid: BigInt("211"),
+      TickNotMultipleOfSpacing: BigInt("212"),
+      TickSpacingNonPositive: BigInt("213"),
+      LowerTickNotMultiple: BigInt("214"),
+      UpperTickNotMultiple: BigInt("215"),
+      PriceLimitOOB: BigInt("216"),
+      IncorrectTokenIndex: BigInt("800"),
+      NFTNotFound: BigInt("801"),
+      NFTNotPartOfCollection: BigInt("802"),
+      MissingNFTInput: BigInt("803"),
+      NFTUpgradeSameVersion: BigInt("804"),
+      NFTUpgradeBadCodeHash: BigInt("805"),
+      MinimumAmountOutNotReached: BigInt("900"),
+      UnknownPoolType: BigInt("901"),
+      UnsupportedPoolType: BigInt("902"),
+    },
+  };
 
   at(address: string): NFTPositionInstance {
     return new NFTPositionInstance(address);
@@ -247,6 +299,14 @@ class Factory extends ContractFactory<
     ): Promise<TestContractResultWithoutMaps<HexString>> => {
       return testMethod(this, "toHex", params, getContractByCodeHash);
     },
+    upgrade: async (
+      params: TestContractParamsWithoutMaps<
+        NFTPositionTypes.Fields,
+        { newCode: HexString }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
+      return testMethod(this, "upgrade", params, getContractByCodeHash);
+    },
   };
 
   stateForTest(
@@ -263,7 +323,7 @@ export const NFTPosition = new Factory(
   Contract.fromJson(
     NFTPositionContractJson,
     "",
-    "29cdf0f1fa856ae84c1b32d1e2c406ab8c373f6740e7f3789603ca60ff0fd753",
+    "bb2c92c52674f6984684fa9901cd1bb26393a007ffe0699b79ed2291a120cb61",
     AllStructs
   )
 );
@@ -368,6 +428,17 @@ export class NFTPositionInstance extends ContractInstance {
         getContractByCodeHash
       );
     },
+    upgrade: async (
+      params: NFTPositionTypes.CallMethodParams<"upgrade">
+    ): Promise<NFTPositionTypes.CallMethodResult<"upgrade">> => {
+      return callMethod(
+        NFTPosition,
+        this,
+        "upgrade",
+        params,
+        getContractByCodeHash
+      );
+    },
   };
 
   transact = {
@@ -412,6 +483,11 @@ export class NFTPositionInstance extends ContractInstance {
       params: NFTPositionTypes.SignExecuteMethodParams<"toHex">
     ): Promise<NFTPositionTypes.SignExecuteMethodResult<"toHex">> => {
       return signExecuteMethod(NFTPosition, this, "toHex", params);
+    },
+    upgrade: async (
+      params: NFTPositionTypes.SignExecuteMethodParams<"upgrade">
+    ): Promise<NFTPositionTypes.SignExecuteMethodResult<"upgrade">> => {
+      return signExecuteMethod(NFTPosition, this, "upgrade", params);
     },
   };
 
