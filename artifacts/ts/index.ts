@@ -9,7 +9,6 @@ export * from "./PoolCL";
 export * from "./PoolFactory";
 export * from "./Router";
 export * from "./TokenFaucet";
-export * from "./TokenPair";
 export * from "./TokenPairFactory";
 export * from "./UpdatedPoolFactory";
 export * from "./scripts";
