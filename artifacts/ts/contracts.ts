@@ -4,7 +4,7 @@
 
 import { Contract, ContractFactory } from "@alephium/web3";
 
-let contracts: ContractFactory<any>[] | undefined = undefined;
+let contracts: ContractFactory<any>[] | undefined;
 
 export function registerContract(factory: ContractFactory<any>) {
   if (contracts === undefined) {

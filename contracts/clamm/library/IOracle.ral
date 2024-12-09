@@ -1,0 +1,9 @@
+Interface IOracle {
+    // token: token id to price aginst the other token in the pool
+    // @returnst TWAP as (numerator, denominator)
+    pub fn getTWAP(token: ByteVec, startTimestamp: U256, endTimestamp: U256) -> (U256, U256)
+
+    // Grow the available observation history to hold at least `growTo` observations
+    @using(preapprovedAssets = true, updateFields = true, checkExternalCaller = false)
+    pub fn growObservations(growTo: U256) -> ()
+}

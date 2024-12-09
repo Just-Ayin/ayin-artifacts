@@ -1,0 +1,29 @@
+Interface INFTPosition extends INFT, IVersioned {
+  /// Burn the NFT once all the liquidity has been withdrawn
+  /// Only called by manager
+  @using(assetsInContract = true, preapprovedAssets = true)
+  pub fn burn(owner: Address, refundAddress: Address) -> ()
+
+  /// Get up to date information about the current liquidity position.
+  @using(checkExternalCaller = false)
+  pub fn getPositionInfo() -> Position
+
+  pub fn getPoolKey() -> PoolKey
+
+  pub fn getPositionKey() -> PositionKey
+
+  /// Upgrade to the version deployed in the manager contract
+  @using(updateFields = true, checkExternalCaller = false)
+  pub fn upgrade(newCode: ByteVec) -> ()
+
+  pub fn getStakingInfos() -> [StakeCLInfo; 8]
+
+  /// Manager only
+  pub fn stake(programId: ByteVec) -> (U256)
+
+  /// Manager only
+  pub fn unstake(programId: ByteVec) -> (U256)
+
+  /// Check if the NFT is staked in any incentive
+  pub fn notStaked() -> (Bool)
+}

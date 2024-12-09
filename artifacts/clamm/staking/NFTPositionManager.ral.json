@@ -1,22 +1,27 @@
 {
   "version": "v3.8.5",
   "name": "NFTPositionManager",
-  "bytecode": "090f091240314046413d41d641e34243426742794288429f42ad42bb42d0010000000102ce0202010000000102a0000201000102010f1600a001311343207b160040cb17011601c51343217b16010201000203000816010002170216001602411343227b01030a1403408ad3966334f216090c0d362f4c02a0014a011609170a160a40170bb216061607160b170f170e170d170c1602160316041605100dce000102171016090c0d362f4c101600d1a2160016101602160316041605160c160d160e160f160100074a0216090002171116090c0d362f16011611a50d2f1b1343237b16001600a4a21600160216001602a5a31600160316001603a5a316001602160316041605160616071608160b13090ece0001091713171216120528161305281b4c08160016021603440e0cce000106160c160d160e160f100d1610d452eca85b4b09160116110da316001611160916010008161216131611020103030f02404fd358eba2c116020002170316011603a50d2f1343237b0c101603010517071706170517040c1016030106170b170a17091708160016041605160616071609160a160b13080ece00010a170d170c160016041605440e0cce0001061604160516061607100dce000102170e16081609160a160b100d160ed452eca85b4b09160116030da316001603160216010008160c160d02010000000103d3da1a8f8a0d0200030b0f014031a001170ba0010d2aa101a0000d2aa100b1160bce031601160216031604160516061607160816091406414c50480003130d641400130164170d170c1600d1a2160b40ce01160c160d0d160ac9170e05160a160e160b60160e02000304040013a0000d2ba100160316010da3160316000e0c160101030616031601160260010001010005d3916e2287b4000a1600a1030000010100051600a002451340647b010000000008d3a5a38d8bb4a003451340657ba003a102010000000103d3a86af1f5ce0102010000000103d3d322b8e4140002010003030007d366ed4ca8b4000a160016011602bb",
-  "codeHash": "a14ecea38cb1afab0471b63ed457f59e2d941d41ae14b77d63e4ed7867010adb",
+  "bytecode": "111909124031404641604208423c42c34325439d43aa440a4431447d450b4520453245414558456a457c458a45a445b445c9010000000102ce0102010000000102a0000201000102010f1600a001311343207b160040cb17011601c51343217b16010201000203000816010002170216001602411343227b01030a14034097d3966334f216090c0d362f4c02a0014a011609170a160a40170bb216061607160b170f170e170d170c1602160316041605100dce00d4a7b9974a171016090c0d362f4c101600d1a2160016101602160316041605160c160d160e160f1601000b4a0216090002171116090c0d362f16011611a50d2f1b1343237b0c0d1611d4da1a8f8a0e344c060c0d1611d4c998cfeb1340db7b16001600a4a21600160216001602a5a31600160316001603a5a316001602160316041605160616071608160b13090ece00d405d9c5a21713171216120528161305281b4c08160016021603440e0cce00d4cc66c4c7160c160d160e160f100d1610d452eca85b4b09160116110da31600161116091601000c161216131611020103030f02404fd358eba2c116020002170316011603a50d2f1343237b0c101603d4068ce6a117071706170517040c101603d4f0822238170b170a17091708160016041605160616071609160a160b13080ece00d4897a5c2b170d170c160016041605440e0cce00d4cc66c4c71604160516061607100dce00d4a7b9974a170e16081609160a160b100d160ed452eca85b4b09160116030da31600160316021601000c160c160d02010000010106d3bdf97c61144020ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff17001600cb0201070709004047d3e496485916060c3313432a7b561343e82d1707160716033213432b7b160316072ba0083213432d7b160316043113432c7b160416032ba0093213432e7b0006170816007ad1a216011606a31600160116021603160416051606ce0413080c1608d4b121c0321600a00546a0060c331a4c081600ce05a006aca007a0062aa1070103070b01402fd30d13550a16010002170716001607a50d2f1343237b561343e82d17080006170916021603160416051606110d1609d48c737192170a16041608321343347b16081605311343357b160ac51343367b160a0d0d1607d406439bae020103081100403ad3f55b07cd16010002170816001608a50d2f1343237b0006170916021603160416051606110d1609d48c737192170a160a0d0d1608d4aa37ecb1170b561343e82d170c160c1605334c02160c4a011605170d160d16042b170e160e1340803b170f160a17101607160f160b0f0c16100109010000000103d3da1a8f8a0e0200030b0f014031a001170ba0010d2aa101a0000d2aa100b1160bce021601160216031604160516061607160816091406414c50480003130d640017130164170d170c1600d1a2160b40ce03160c160d0d160ac9170e05160a160e160b60160e02000304040013a0000d2ba100160316010da3160316000e0c1601d4deae62610616031601160260010302050015d3c5f0f6a4b40011144020ffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff1702b1130164130064170417031600d1a21602160116031604c11801030811014046d38cb4800216010002170816001608a50d2f1343237b0006170916021603160416051606110d1609d48c737192170a160a0d0d1608d4aa37ecb1170b561343e82d170c160c1605334c02160c4a011605170d160d16042b170e160e1340803b170f160a17101607160f160b0f0c16100109160c1605314c06160a0d0d1608d406439bae02130802010200000007d3494eb063a004ce05a007ab0ca107010001010005d3916e2287b400111600a1030000010100051600a002451340647b010000000008d3a5a38d8bb4a003451340657ba003a102010001010005d365e0c929b400111600a104010001010005d387060f9eb400111600a105010000000103d3a86af1f5ce0302010003030009d34d3bfe30b400111600a1061601a1081602a109010000000104d3d322b8e41342006502010003030007d366ed4ca8b40011160016011602bb",
+  "codeHash": "0ea695d310dc57958709ee2fe6a72ffbfffa93e2be6fd2335ffd62259bc2a45e",
   "fieldsSig": {
     "names": [
       "factory",
-      "nftTemplateId",
       "collectionUri",
       "nftUriPrefix",
+      "nftTemplateId",
+      "incentiveTemplateId",
       "totalSupply",
       "nextIndex",
       "admin",
       "newAdmin",
+      "feeSink",
+      "incentivizer",
+      "stakerData",
       "__stdInterfaceId"
     ],
     "types": [
-      "PoolFactory",
+      "IPoolFactory",
+      "ByteVec",
       "ByteVec",
       "ByteVec",
       "ByteVec",
@@ -24,6 +29,9 @@
       "U256",
       "Address",
       "Address",
+      "Address",
+      "Address",
+      "StakerCLData",
       "ByteVec"
     ],
     "isMutable": [
@@ -31,6 +39,10 @@
       false,
       false,
       false,
+      false,
+      true,
+      true,
+      true,
       true,
       true,
       true,
@@ -148,7 +160,7 @@
       "returnTypes": [
         "I256",
         "I256",
-        "NFTPosition"
+        "INFTPosition"
       ]
     },
     {
@@ -172,6 +184,77 @@
         "U256",
         "U256"
       ]
+    },
+    {
+      "name": "getIncentiveFactory",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "IIncentiveCLFactory"
+      ]
+    },
+    {
+      "name": "createIncentive",
+      "paramNames": [
+        "payer",
+        "key",
+        "reward"
+      ],
+      "paramTypes": [
+        "Address",
+        "IncentiveKey",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "stake",
+      "paramNames": [
+        "nftOwner",
+        "nftIndex",
+        "incentiveKey"
+      ],
+      "paramTypes": [
+        "Address",
+        "U256",
+        "IncentiveKey"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "unstake",
+      "paramNames": [
+        "nftOwner",
+        "nftIndex",
+        "incentiveKey",
+        "refundAddress"
+      ],
+      "paramTypes": [
+        "Address",
+        "U256",
+        "IncentiveKey",
+        "Address"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
     },
     {
       "name": "getVersion",
@@ -206,7 +289,7 @@
         false
       ],
       "returnTypes": [
-        "NFTPosition"
+        "INFTPosition"
       ]
     },
     {
@@ -219,7 +302,7 @@
       ],
       "paramTypes": [
         "Address",
-        "NFTPosition",
+        "INFTPosition",
         "U256",
         "Address"
       ],
@@ -229,6 +312,53 @@
         false,
         false
       ],
+      "returnTypes": []
+    },
+    {
+      "name": "setupIncentiveFactory",
+      "paramNames": [
+        "payer",
+        "templateId"
+      ],
+      "paramTypes": [
+        "Address",
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "claimRewards",
+      "paramNames": [
+        "nftOwner",
+        "nftIndex",
+        "incentiveKey",
+        "refundAddress"
+      ],
+      "paramTypes": [
+        "Address",
+        "U256",
+        "IncentiveKey",
+        "Address"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "claimIncentivizeFees",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
       "returnTypes": []
     },
     {
@@ -265,6 +395,32 @@
       "returnTypes": []
     },
     {
+      "name": "setFeeSink",
+      "paramNames": [
+        "newFeeSink"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "setIncentivizer",
+      "paramNames": [
+        "newIncentivizer"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
       "name": "getNftTemplateId",
       "paramNames": [],
       "paramTypes": [],
@@ -272,6 +428,25 @@
       "returnTypes": [
         "ByteVec"
       ]
+    },
+    {
+      "name": "setStakerData",
+      "paramNames": [
+        "incentivizeFee",
+        "maxIncentiveStartLeadTime",
+        "maxIncentiveDuration"
+      ],
+      "paramTypes": [
+        "U256",
+        "U256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
     },
     {
       "name": "getInitialDataForPosition",
@@ -304,59 +479,24 @@
   ],
   "constants": [
     {
-      "name": "MinTick",
-      "value": {
-        "type": "I256",
-        "value": "-887272"
-      }
-    },
-    {
-      "name": "MaxTick",
-      "value": {
-        "type": "I256",
-        "value": "887272"
-      }
-    },
-    {
-      "name": "HalfUnitX96",
+      "name": "MaxStakes",
       "value": {
         "type": "U256",
-        "value": "39614081257132168796771975168"
+        "value": "8"
       }
     },
     {
-      "name": "UnitX96",
+      "name": "StakeCLInfoLen",
       "value": {
         "type": "U256",
-        "value": "79228162514264337593543950336"
+        "value": "64"
       }
     },
     {
-      "name": "UnitX128",
+      "name": "StakeCLInfosLen",
       "value": {
         "type": "U256",
-        "value": "340282366920938463463374607431768211456"
-      }
-    },
-    {
-      "name": "DoubleUnitX96",
-      "value": {
-        "type": "U256",
-        "value": "158456325028528675187087900672"
-      }
-    },
-    {
-      "name": "U160Limit",
-      "value": {
-        "type": "U256",
-        "value": "1461501637330902918203684832716283019655932542976"
-      }
-    },
-    {
-      "name": "MaxFee",
-      "value": {
-        "type": "U256",
-        "value": "1000000"
+        "value": "512"
       }
     },
     {
@@ -377,7 +517,7 @@
       "name": "Version",
       "value": {
         "type": "U256",
-        "value": "1"
+        "value": "2"
       }
     }
   ],
@@ -460,6 +600,20 @@
           "value": {
             "type": "U256",
             "value": "110"
+          }
+        },
+        {
+          "name": "UpgradeInProgress",
+          "value": {
+            "type": "U256",
+            "value": "111"
+          }
+        },
+        {
+          "name": "MigrateTokenIdsSizeInvalid",
+          "value": {
+            "type": "U256",
+            "value": "112"
           }
         },
         {
@@ -582,6 +736,55 @@
           }
         },
         {
+          "name": "TickUninitialized",
+          "value": {
+            "type": "U256",
+            "value": "217"
+          }
+        },
+        {
+          "name": "TokenNotInPool",
+          "value": {
+            "type": "U256",
+            "value": "218"
+          }
+        },
+        {
+          "name": "PositionIsStaked",
+          "value": {
+            "type": "U256",
+            "value": "219"
+          }
+        },
+        {
+          "name": "InvariantNotConverged",
+          "value": {
+            "type": "U256",
+            "value": "300"
+          }
+        },
+        {
+          "name": "BalanceUpdateNotConverged",
+          "value": {
+            "type": "U256",
+            "value": "301"
+          }
+        },
+        {
+          "name": "CoinIndexOutOfBounds",
+          "value": {
+            "type": "U256",
+            "value": "302"
+          }
+        },
+        {
+          "name": "SameCoinIndices",
+          "value": {
+            "type": "U256",
+            "value": "303"
+          }
+        },
+        {
           "name": "IncorrectTokenIndex",
           "value": {
             "type": "U256",
@@ -621,6 +824,97 @@
           "value": {
             "type": "U256",
             "value": "805"
+          }
+        },
+        {
+          "name": "IncentiveRewardZero",
+          "value": {
+            "type": "U256",
+            "value": "810"
+          }
+        },
+        {
+          "name": "IncentiveStartTimeTooEarly",
+          "value": {
+            "type": "U256",
+            "value": "811"
+          }
+        },
+        {
+          "name": "StartTimeAfterEndTime",
+          "value": {
+            "type": "U256",
+            "value": "812"
+          }
+        },
+        {
+          "name": "StartTimeTooFarInTheFuture",
+          "value": {
+            "type": "U256",
+            "value": "813"
+          }
+        },
+        {
+          "name": "IncentiveDurationTooLong",
+          "value": {
+            "type": "U256",
+            "value": "814"
+          }
+        },
+        {
+          "name": "NotNFTPositionManager",
+          "value": {
+            "type": "U256",
+            "value": "815"
+          }
+        },
+        {
+          "name": "StakeNotFound",
+          "value": {
+            "type": "U256",
+            "value": "816"
+          }
+        },
+        {
+          "name": "TooManyStakes",
+          "value": {
+            "type": "U256",
+            "value": "817"
+          }
+        },
+        {
+          "name": "StakeAlreadyExists",
+          "value": {
+            "type": "U256",
+            "value": "818"
+          }
+        },
+        {
+          "name": "EmptyStakeNotAllowed",
+          "value": {
+            "type": "U256",
+            "value": "819"
+          }
+        },
+        {
+          "name": "TooEarlyToStake",
+          "value": {
+            "type": "U256",
+            "value": "820"
+          }
+        },
+        {
+          "name": "TooLateToStake",
+          "value": {
+            "type": "U256",
+            "value": "821"
+          }
+        },
+        {
+          "name": "IncentiveNotFound",
+          "value": {
+            "type": "U256",
+            "value": "822"
           }
         },
         {

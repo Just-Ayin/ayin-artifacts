@@ -39,15 +39,21 @@ import {
   CurrentPoolInfo,
   FactoryProtectedData,
   FactoryRoles,
+  IncentiveKey,
   ModifyLiquidity,
   ModifyLiquidityScriptParams,
   NewStruct,
   NextTick,
+  ObservationCL,
+  ObservationTP,
   PendingBalance,
   PoolData,
   PoolKey,
   Position,
   PositionKey,
+  StakeCLInfo,
+  StakerCLData,
+  StakerCLIncentive,
   TickInfo,
   TickUpdateInfo,
   AllStructs,
@@ -89,6 +95,22 @@ export namespace PoolCLTypes {
   }>;
 
   export interface CallMethodTable {
+    getTWAP: {
+      params: CallContractParams<{
+        token: HexString;
+        startTimestamp: bigint;
+        endTimestamp: bigint;
+      }>;
+      result: CallContractResult<[bigint, bigint]>;
+    };
+    growObservations: {
+      params: CallContractParams<{ growTo: bigint }>;
+      result: CallContractResult<null>;
+    };
+    getVersion: {
+      params: Omit<CallContractParams<{}>, "args">;
+      result: CallContractResult<bigint>;
+    };
     modifyLiquidityView: {
       params: CallContractParams<{ params: ModifyLiquidity }>;
       result: CallContractResult<[bigint, bigint]>;
@@ -114,7 +136,7 @@ export namespace PoolCLTypes {
       result: CallContractResult<[bigint, bigint]>;
     };
     initialize: {
-      params: CallContractParams<{ intialSqrtPrice: bigint }>;
+      params: CallContractParams<{ payer: Address; intialSqrtPrice: bigint }>;
       result: CallContractResult<null>;
     };
     modifyFeeProtocol: {
@@ -150,9 +172,20 @@ export namespace PoolCLTypes {
       }>;
       result: CallContractResult<null>;
     };
-    getVersion: {
-      params: Omit<CallContractParams<{}>, "args">;
+    getMeanTick: {
+      params: CallContractParams<{
+        startTimestamp: bigint;
+        endTimestamp: bigint;
+      }>;
       result: CallContractResult<bigint>;
+    };
+    getObservation: {
+      params: CallContractParams<{ timestamp: bigint }>;
+      result: CallContractResult<ObservationCL>;
+    };
+    snapshotCumulativesInside: {
+      params: CallContractParams<{ tickLower: bigint; tickUpper: bigint }>;
+      result: CallContractResult<[bigint, bigint, bigint]>;
     };
     log2: {
       params: CallContractParams<{ x96: bigint }>;
@@ -283,6 +316,7 @@ export namespace PoolCLTypes {
         liquidityDelta: bigint;
         upper: boolean;
         currentPoolInfo: CurrentPoolInfo;
+        observation: ObservationCL;
       }>;
       result: CallContractResult<TickUpdateInfo>;
     };
@@ -317,8 +351,13 @@ export namespace PoolCLTypes {
         destinationTick: bigint;
         feeGrowthGlobal0X128: bigint;
         feeGrowthGlobal1X128: bigint;
+        observation: ObservationCL;
       }>;
       result: CallContractResult<bigint>;
+    };
+    checkTicks: {
+      params: CallContractParams<{ low: bigint; high: bigint }>;
+      result: CallContractResult<null>;
     };
     flipTick: {
       params: CallContractParams<{
@@ -413,9 +452,52 @@ export namespace PoolCLTypes {
       }>;
       result: CallContractResult<bigint>;
     };
-    checkTicks: {
-      params: CallContractParams<{ low: bigint; high: bigint }>;
+    encodeObservation: {
+      params: CallContractParams<{ observation: ObservationCL }>;
+      result: CallContractResult<HexString>;
+    };
+    decodeObservation: {
+      params: CallContractParams<{
+        encodedObservations: HexString;
+        index: bigint;
+      }>;
+      result: CallContractResult<ObservationCL>;
+    };
+    initializeObservations: {
+      params: CallContractParams<{ payer: Address }>;
       result: CallContractResult<null>;
+    };
+    transformObservation: {
+      params: CallContractParams<{
+        observation: ObservationCL;
+        timestamp: bigint;
+      }>;
+      result: CallContractResult<ObservationCL>;
+    };
+    writeObservation: {
+      params: Omit<CallContractParams<{}>, "args">;
+      result: CallContractResult<null>;
+    };
+    innerSearchObservations: {
+      params: CallContractParams<{
+        timestamp: bigint;
+        encodedObservations: HexString;
+        beforeOrAt: ObservationCL;
+        atOrAfter: ObservationCL;
+      }>;
+      result: CallContractResult<[ObservationCL, ObservationCL]>;
+    };
+    binarySearchObservations: {
+      params: CallContractParams<{ timestamp: bigint }>;
+      result: CallContractResult<[ObservationCL, ObservationCL]>;
+    };
+    interpolateObservations: {
+      params: CallContractParams<{
+        timestamp: bigint;
+        a: ObservationCL;
+        b: ObservationCL;
+      }>;
+      result: CallContractResult<ObservationCL>;
     };
     runSwapSteps: {
       params: CallContractParams<{
@@ -475,6 +557,22 @@ export namespace PoolCLTypes {
   };
 
   export interface SignExecuteMethodTable {
+    getTWAP: {
+      params: SignExecuteContractMethodParams<{
+        token: HexString;
+        startTimestamp: bigint;
+        endTimestamp: bigint;
+      }>;
+      result: SignExecuteScriptTxResult;
+    };
+    growObservations: {
+      params: SignExecuteContractMethodParams<{ growTo: bigint }>;
+      result: SignExecuteScriptTxResult;
+    };
+    getVersion: {
+      params: Omit<SignExecuteContractMethodParams<{}>, "args">;
+      result: SignExecuteScriptTxResult;
+    };
     modifyLiquidityView: {
       params: SignExecuteContractMethodParams<{ params: ModifyLiquidity }>;
       result: SignExecuteScriptTxResult;
@@ -500,7 +598,10 @@ export namespace PoolCLTypes {
       result: SignExecuteScriptTxResult;
     };
     initialize: {
-      params: SignExecuteContractMethodParams<{ intialSqrtPrice: bigint }>;
+      params: SignExecuteContractMethodParams<{
+        payer: Address;
+        intialSqrtPrice: bigint;
+      }>;
       result: SignExecuteScriptTxResult;
     };
     modifyFeeProtocol: {
@@ -539,8 +640,22 @@ export namespace PoolCLTypes {
       }>;
       result: SignExecuteScriptTxResult;
     };
-    getVersion: {
-      params: Omit<SignExecuteContractMethodParams<{}>, "args">;
+    getMeanTick: {
+      params: SignExecuteContractMethodParams<{
+        startTimestamp: bigint;
+        endTimestamp: bigint;
+      }>;
+      result: SignExecuteScriptTxResult;
+    };
+    getObservation: {
+      params: SignExecuteContractMethodParams<{ timestamp: bigint }>;
+      result: SignExecuteScriptTxResult;
+    };
+    snapshotCumulativesInside: {
+      params: SignExecuteContractMethodParams<{
+        tickLower: bigint;
+        tickUpper: bigint;
+      }>;
       result: SignExecuteScriptTxResult;
     };
     log2: {
@@ -680,6 +795,7 @@ export namespace PoolCLTypes {
         liquidityDelta: bigint;
         upper: boolean;
         currentPoolInfo: CurrentPoolInfo;
+        observation: ObservationCL;
       }>;
       result: SignExecuteScriptTxResult;
     };
@@ -717,7 +833,12 @@ export namespace PoolCLTypes {
         destinationTick: bigint;
         feeGrowthGlobal0X128: bigint;
         feeGrowthGlobal1X128: bigint;
+        observation: ObservationCL;
       }>;
+      result: SignExecuteScriptTxResult;
+    };
+    checkTicks: {
+      params: SignExecuteContractMethodParams<{ low: bigint; high: bigint }>;
       result: SignExecuteScriptTxResult;
     };
     flipTick: {
@@ -816,8 +937,51 @@ export namespace PoolCLTypes {
       }>;
       result: SignExecuteScriptTxResult;
     };
-    checkTicks: {
-      params: SignExecuteContractMethodParams<{ low: bigint; high: bigint }>;
+    encodeObservation: {
+      params: SignExecuteContractMethodParams<{ observation: ObservationCL }>;
+      result: SignExecuteScriptTxResult;
+    };
+    decodeObservation: {
+      params: SignExecuteContractMethodParams<{
+        encodedObservations: HexString;
+        index: bigint;
+      }>;
+      result: SignExecuteScriptTxResult;
+    };
+    initializeObservations: {
+      params: SignExecuteContractMethodParams<{ payer: Address }>;
+      result: SignExecuteScriptTxResult;
+    };
+    transformObservation: {
+      params: SignExecuteContractMethodParams<{
+        observation: ObservationCL;
+        timestamp: bigint;
+      }>;
+      result: SignExecuteScriptTxResult;
+    };
+    writeObservation: {
+      params: Omit<SignExecuteContractMethodParams<{}>, "args">;
+      result: SignExecuteScriptTxResult;
+    };
+    innerSearchObservations: {
+      params: SignExecuteContractMethodParams<{
+        timestamp: bigint;
+        encodedObservations: HexString;
+        beforeOrAt: ObservationCL;
+        atOrAfter: ObservationCL;
+      }>;
+      result: SignExecuteScriptTxResult;
+    };
+    binarySearchObservations: {
+      params: SignExecuteContractMethodParams<{ timestamp: bigint }>;
+      result: SignExecuteScriptTxResult;
+    };
+    interpolateObservations: {
+      params: SignExecuteContractMethodParams<{
+        timestamp: bigint;
+        a: ObservationCL;
+        b: ObservationCL;
+      }>;
       result: SignExecuteScriptTxResult;
     };
     runSwapSteps: {
@@ -868,6 +1032,7 @@ export namespace PoolCLTypes {
     ticks?: Map<bigint, TickInfo>;
     tickBitmap?: Map<bigint, bigint>;
     providersPositions?: Map<HexString, Position>;
+    observations?: Map<bigint, HexString>;
   };
 }
 
@@ -895,7 +1060,9 @@ class Factory extends ContractFactory<PoolCLInstance, PoolCLTypes.Fields> {
     LogPrecision: BigInt("15"),
     MinSqrtRatio: BigInt("4295128739"),
     MaxSqrtRatio: BigInt("1461446703485210103287273052203988822378723970342"),
-    Version: BigInt("1"),
+    ObservationSize: BigInt("32"),
+    ObservationsCapacity: BigInt("2048"),
+    Version: BigInt("2"),
     ErrorCodes: {
       NotAdmin: BigInt("100"),
       NotNewAdmin: BigInt("101"),
@@ -908,6 +1075,8 @@ class Factory extends ContractFactory<PoolCLInstance, PoolCLTypes.Fields> {
       NotFeeSetter: BigInt("108"),
       InvalidFeeAndSpacing: BigInt("109"),
       NotUpgrader: BigInt("110"),
+      UpgradeInProgress: BigInt("111"),
+      MigrateTokenIdsSizeInvalid: BigInt("112"),
       IdenticalTokenIds: BigInt("200"),
       TickOOB: BigInt("201"),
       SqrtRatioOOB: BigInt("202"),
@@ -925,12 +1094,32 @@ class Factory extends ContractFactory<PoolCLInstance, PoolCLTypes.Fields> {
       LowerTickNotMultiple: BigInt("214"),
       UpperTickNotMultiple: BigInt("215"),
       PriceLimitOOB: BigInt("216"),
+      TickUninitialized: BigInt("217"),
+      TokenNotInPool: BigInt("218"),
+      PositionIsStaked: BigInt("219"),
+      InvariantNotConverged: BigInt("300"),
+      BalanceUpdateNotConverged: BigInt("301"),
+      CoinIndexOutOfBounds: BigInt("302"),
+      SameCoinIndices: BigInt("303"),
       IncorrectTokenIndex: BigInt("800"),
       NFTNotFound: BigInt("801"),
       NFTNotPartOfCollection: BigInt("802"),
       MissingNFTInput: BigInt("803"),
       NFTUpgradeSameVersion: BigInt("804"),
       NFTUpgradeBadCodeHash: BigInt("805"),
+      IncentiveRewardZero: BigInt("810"),
+      IncentiveStartTimeTooEarly: BigInt("811"),
+      StartTimeAfterEndTime: BigInt("812"),
+      StartTimeTooFarInTheFuture: BigInt("813"),
+      IncentiveDurationTooLong: BigInt("814"),
+      NotNFTPositionManager: BigInt("815"),
+      StakeNotFound: BigInt("816"),
+      TooManyStakes: BigInt("817"),
+      StakeAlreadyExists: BigInt("818"),
+      EmptyStakeNotAllowed: BigInt("819"),
+      TooEarlyToStake: BigInt("820"),
+      TooLateToStake: BigInt("821"),
+      IncentiveNotFound: BigInt("822"),
       MinimumAmountOutNotReached: BigInt("900"),
       UnknownPoolType: BigInt("901"),
       UnsupportedPoolType: BigInt("902"),
@@ -942,6 +1131,37 @@ class Factory extends ContractFactory<PoolCLInstance, PoolCLTypes.Fields> {
   }
 
   tests = {
+    getTWAP: async (
+      params: TestContractParams<
+        PoolCLTypes.Fields,
+        { token: HexString; startTimestamp: bigint; endTimestamp: bigint },
+        PoolCLTypes.Maps
+      >
+    ): Promise<TestContractResult<[bigint, bigint], PoolCLTypes.Maps>> => {
+      return testMethod(this, "getTWAP", params, getContractByCodeHash);
+    },
+    growObservations: async (
+      params: TestContractParams<
+        PoolCLTypes.Fields,
+        { growTo: bigint },
+        PoolCLTypes.Maps
+      >
+    ): Promise<TestContractResult<null, PoolCLTypes.Maps>> => {
+      return testMethod(
+        this,
+        "growObservations",
+        params,
+        getContractByCodeHash
+      );
+    },
+    getVersion: async (
+      params: Omit<
+        TestContractParams<PoolCLTypes.Fields, never, PoolCLTypes.Maps>,
+        "testArgs"
+      >
+    ): Promise<TestContractResult<bigint, PoolCLTypes.Maps>> => {
+      return testMethod(this, "getVersion", params, getContractByCodeHash);
+    },
     modifyLiquidityView: async (
       params: TestContractParams<
         PoolCLTypes.Fields,
@@ -1012,7 +1232,7 @@ class Factory extends ContractFactory<PoolCLInstance, PoolCLTypes.Fields> {
     initialize: async (
       params: TestContractParams<
         PoolCLTypes.Fields,
-        { intialSqrtPrice: bigint },
+        { payer: Address; intialSqrtPrice: bigint },
         PoolCLTypes.Maps
       >
     ): Promise<TestContractResult<null, PoolCLTypes.Maps>> => {
@@ -1085,13 +1305,39 @@ class Factory extends ContractFactory<PoolCLInstance, PoolCLTypes.Fields> {
         getContractByCodeHash
       );
     },
-    getVersion: async (
-      params: Omit<
-        TestContractParams<PoolCLTypes.Fields, never, PoolCLTypes.Maps>,
-        "testArgs"
+    getMeanTick: async (
+      params: TestContractParams<
+        PoolCLTypes.Fields,
+        { startTimestamp: bigint; endTimestamp: bigint },
+        PoolCLTypes.Maps
       >
     ): Promise<TestContractResult<bigint, PoolCLTypes.Maps>> => {
-      return testMethod(this, "getVersion", params, getContractByCodeHash);
+      return testMethod(this, "getMeanTick", params, getContractByCodeHash);
+    },
+    getObservation: async (
+      params: TestContractParams<
+        PoolCLTypes.Fields,
+        { timestamp: bigint },
+        PoolCLTypes.Maps
+      >
+    ): Promise<TestContractResult<ObservationCL, PoolCLTypes.Maps>> => {
+      return testMethod(this, "getObservation", params, getContractByCodeHash);
+    },
+    snapshotCumulativesInside: async (
+      params: TestContractParams<
+        PoolCLTypes.Fields,
+        { tickLower: bigint; tickUpper: bigint },
+        PoolCLTypes.Maps
+      >
+    ): Promise<
+      TestContractResult<[bigint, bigint, bigint], PoolCLTypes.Maps>
+    > => {
+      return testMethod(
+        this,
+        "snapshotCumulativesInside",
+        params,
+        getContractByCodeHash
+      );
     },
     log2: async (
       params: TestContractParams<
@@ -1361,6 +1607,7 @@ class Factory extends ContractFactory<PoolCLInstance, PoolCLTypes.Fields> {
           liquidityDelta: bigint;
           upper: boolean;
           currentPoolInfo: CurrentPoolInfo;
+          observation: ObservationCL;
         },
         PoolCLTypes.Maps
       >
@@ -1415,11 +1662,21 @@ class Factory extends ContractFactory<PoolCLInstance, PoolCLTypes.Fields> {
           destinationTick: bigint;
           feeGrowthGlobal0X128: bigint;
           feeGrowthGlobal1X128: bigint;
+          observation: ObservationCL;
         },
         PoolCLTypes.Maps
       >
     ): Promise<TestContractResult<bigint, PoolCLTypes.Maps>> => {
       return testMethod(this, "crossTick", params, getContractByCodeHash);
+    },
+    checkTicks: async (
+      params: TestContractParams<
+        PoolCLTypes.Fields,
+        { low: bigint; high: bigint },
+        PoolCLTypes.Maps
+      >
+    ): Promise<TestContractResult<null, PoolCLTypes.Maps>> => {
+      return testMethod(this, "checkTicks", params, getContractByCodeHash);
     },
     flipTick: async (
       params: TestContractParams<
@@ -1601,14 +1858,125 @@ class Factory extends ContractFactory<PoolCLInstance, PoolCLTypes.Fields> {
         getContractByCodeHash
       );
     },
-    checkTicks: async (
+    encodeObservation: async (
       params: TestContractParams<
         PoolCLTypes.Fields,
-        { low: bigint; high: bigint },
+        { observation: ObservationCL },
+        PoolCLTypes.Maps
+      >
+    ): Promise<TestContractResult<HexString, PoolCLTypes.Maps>> => {
+      return testMethod(
+        this,
+        "encodeObservation",
+        params,
+        getContractByCodeHash
+      );
+    },
+    decodeObservation: async (
+      params: TestContractParams<
+        PoolCLTypes.Fields,
+        { encodedObservations: HexString; index: bigint },
+        PoolCLTypes.Maps
+      >
+    ): Promise<TestContractResult<ObservationCL, PoolCLTypes.Maps>> => {
+      return testMethod(
+        this,
+        "decodeObservation",
+        params,
+        getContractByCodeHash
+      );
+    },
+    initializeObservations: async (
+      params: TestContractParams<
+        PoolCLTypes.Fields,
+        { payer: Address },
         PoolCLTypes.Maps
       >
     ): Promise<TestContractResult<null, PoolCLTypes.Maps>> => {
-      return testMethod(this, "checkTicks", params, getContractByCodeHash);
+      return testMethod(
+        this,
+        "initializeObservations",
+        params,
+        getContractByCodeHash
+      );
+    },
+    transformObservation: async (
+      params: TestContractParams<
+        PoolCLTypes.Fields,
+        { observation: ObservationCL; timestamp: bigint },
+        PoolCLTypes.Maps
+      >
+    ): Promise<TestContractResult<ObservationCL, PoolCLTypes.Maps>> => {
+      return testMethod(
+        this,
+        "transformObservation",
+        params,
+        getContractByCodeHash
+      );
+    },
+    writeObservation: async (
+      params: Omit<
+        TestContractParams<PoolCLTypes.Fields, never, PoolCLTypes.Maps>,
+        "testArgs"
+      >
+    ): Promise<TestContractResult<null, PoolCLTypes.Maps>> => {
+      return testMethod(
+        this,
+        "writeObservation",
+        params,
+        getContractByCodeHash
+      );
+    },
+    innerSearchObservations: async (
+      params: TestContractParams<
+        PoolCLTypes.Fields,
+        {
+          timestamp: bigint;
+          encodedObservations: HexString;
+          beforeOrAt: ObservationCL;
+          atOrAfter: ObservationCL;
+        },
+        PoolCLTypes.Maps
+      >
+    ): Promise<
+      TestContractResult<[ObservationCL, ObservationCL], PoolCLTypes.Maps>
+    > => {
+      return testMethod(
+        this,
+        "innerSearchObservations",
+        params,
+        getContractByCodeHash
+      );
+    },
+    binarySearchObservations: async (
+      params: TestContractParams<
+        PoolCLTypes.Fields,
+        { timestamp: bigint },
+        PoolCLTypes.Maps
+      >
+    ): Promise<
+      TestContractResult<[ObservationCL, ObservationCL], PoolCLTypes.Maps>
+    > => {
+      return testMethod(
+        this,
+        "binarySearchObservations",
+        params,
+        getContractByCodeHash
+      );
+    },
+    interpolateObservations: async (
+      params: TestContractParams<
+        PoolCLTypes.Fields,
+        { timestamp: bigint; a: ObservationCL; b: ObservationCL },
+        PoolCLTypes.Maps
+      >
+    ): Promise<TestContractResult<ObservationCL, PoolCLTypes.Maps>> => {
+      return testMethod(
+        this,
+        "interpolateObservations",
+        params,
+        getContractByCodeHash
+      );
     },
     runSwapSteps: async (
       params: TestContractParams<
@@ -1698,8 +2066,8 @@ class Factory extends ContractFactory<PoolCLInstance, PoolCLTypes.Fields> {
 export const PoolCL = new Factory(
   Contract.fromJson(
     PoolCLContractJson,
-    "=132-2+cf=2-1+cd4f8=3-1=1+a=2-2+ca=2-2+e6=2-3=1-2+e=2-2+d0=2-2+7e=1-2=1+3d=2-2+70=2-1=1-8+4=6-2+c6=3+b52=1+9=2-2+53=2-2+39=2-2+8d=2-2+9f=2-2+bb=2-2+de=1-3=1-3+1d=2-2+13=2-2+3b5849586b=2+9=1-1=6659-1+2=41-1+c=88+7a7e0214696e73657274206174206d617020706174683a2000=1115-1+b=40+7a7e021472656d6f7665206174206d617020706174683a2000=575-1+2=117-1+f=40+7a7e0214696e73657274206174206d617020706174683a2000=895-1+b=61-1+f=38+7a7e0214696e73657274206174206d617020706174683a2000=31-1+d=209-1+b=38+7a7e021472656d6f7665206174206d617020706174683a2000=2372",
-    "06570b847950c86f8c270b2bec8aab227cedb4f9183f877181b968378a7a659a",
+    "=12-2+b2=2-2+bf=2-2+23=2+3=1-1=2-2+82=2-5+d=4-5+9=2-1+0=2-2+22e=1+252=2+a=1-1=1-2+3f=3-2+7a=2-2+cf=2-2+0745df=2-2+34=2-1=1+6=2-5=1+3=3+7=1+aed=2-1=2-3=2-2+9f=2+bf4=1+e64=1+61=2+e5=1-1+e15=1-3+e=1-3+5=2-2+9=1-3=2-3=1-2=1-3=2+0e4=1-1+38=3-1+3=2-2+37=2-2+0b=2+0=1-1=2-4+c=1-1=1-2=1-1+0=1-2=2-1+1=2-1+3=1-1+e=1+3=1-1=2-2+42d=1+46c=2+1=1-5=3-1+9=1-3+60c=2-1=1+0=3-1+c=2-1+6=2+68=1-2=1-1+6=1-1=1-2=1+6ef=2-2+d=1-3=3-1+9=2-2+3b=2-2=1-3+7=1+87=1-2=1-2=1+c5=1-3+92c=1-3+999=1-1=1-1+e1=1-1+a=1-1+e=1+b175bf=1+5=1+3=3+435=1-1+6b5f79=2+9b5fc=1-1=161-1+5=68-2+11=38+7a7e0214696e73657274206174206d617020706174683a2000=27-1+b=7967-1+2=41-1+c=88+7a7e0214696e73657274206174206d617020706174683a2000=1139-1+b=40+7a7e021472656d6f7665206174206d617020706174683a2000=743-1+2=117-1+f=40+7a7e0214696e73657274206174206d617020706174683a2000=895-1+b=61-1+f=38+7a7e0214696e73657274206174206d617020706174683a2000=31-1+d=209-1+b=38+7a7e021472656d6f7665206174206d617020706174683a2000=847-1+9=130+7a7e0214696e73657274206174206d617020706174683a2000=3176",
+    "ba25deba5ec933877faebc0738339baa0ce8f0445a535bd161be482d2c0fc096",
     AllStructs
   )
 );
@@ -1726,6 +2094,11 @@ export class PoolCLInstance extends ContractInstance {
       PoolCL.contract,
       this.contractId,
       "providersPositions"
+    ),
+    observations: new RalphMap<bigint, HexString>(
+      PoolCL.contract,
+      this.contractId,
+      "observations"
     ),
   };
 
@@ -1773,6 +2146,33 @@ export class PoolCLInstance extends ContractInstance {
   }
 
   view = {
+    getTWAP: async (
+      params: PoolCLTypes.CallMethodParams<"getTWAP">
+    ): Promise<PoolCLTypes.CallMethodResult<"getTWAP">> => {
+      return callMethod(PoolCL, this, "getTWAP", params, getContractByCodeHash);
+    },
+    growObservations: async (
+      params: PoolCLTypes.CallMethodParams<"growObservations">
+    ): Promise<PoolCLTypes.CallMethodResult<"growObservations">> => {
+      return callMethod(
+        PoolCL,
+        this,
+        "growObservations",
+        params,
+        getContractByCodeHash
+      );
+    },
+    getVersion: async (
+      params?: PoolCLTypes.CallMethodParams<"getVersion">
+    ): Promise<PoolCLTypes.CallMethodResult<"getVersion">> => {
+      return callMethod(
+        PoolCL,
+        this,
+        "getVersion",
+        params === undefined ? {} : params,
+        getContractByCodeHash
+      );
+    },
     modifyLiquidityView: async (
       params: PoolCLTypes.CallMethodParams<"modifyLiquidityView">
     ): Promise<PoolCLTypes.CallMethodResult<"modifyLiquidityView">> => {
@@ -1899,14 +2299,36 @@ export class PoolCLInstance extends ContractInstance {
         getContractByCodeHash
       );
     },
-    getVersion: async (
-      params?: PoolCLTypes.CallMethodParams<"getVersion">
-    ): Promise<PoolCLTypes.CallMethodResult<"getVersion">> => {
+    getMeanTick: async (
+      params: PoolCLTypes.CallMethodParams<"getMeanTick">
+    ): Promise<PoolCLTypes.CallMethodResult<"getMeanTick">> => {
       return callMethod(
         PoolCL,
         this,
-        "getVersion",
-        params === undefined ? {} : params,
+        "getMeanTick",
+        params,
+        getContractByCodeHash
+      );
+    },
+    getObservation: async (
+      params: PoolCLTypes.CallMethodParams<"getObservation">
+    ): Promise<PoolCLTypes.CallMethodResult<"getObservation">> => {
+      return callMethod(
+        PoolCL,
+        this,
+        "getObservation",
+        params,
+        getContractByCodeHash
+      );
+    },
+    snapshotCumulativesInside: async (
+      params: PoolCLTypes.CallMethodParams<"snapshotCumulativesInside">
+    ): Promise<PoolCLTypes.CallMethodResult<"snapshotCumulativesInside">> => {
+      return callMethod(
+        PoolCL,
+        this,
+        "snapshotCumulativesInside",
+        params,
         getContractByCodeHash
       );
     },
@@ -2182,6 +2604,17 @@ export class PoolCLInstance extends ContractInstance {
         getContractByCodeHash
       );
     },
+    checkTicks: async (
+      params: PoolCLTypes.CallMethodParams<"checkTicks">
+    ): Promise<PoolCLTypes.CallMethodResult<"checkTicks">> => {
+      return callMethod(
+        PoolCL,
+        this,
+        "checkTicks",
+        params,
+        getContractByCodeHash
+      );
+    },
     flipTick: async (
       params: PoolCLTypes.CallMethodParams<"flipTick">
     ): Promise<PoolCLTypes.CallMethodResult<"flipTick">> => {
@@ -2332,13 +2765,90 @@ export class PoolCLInstance extends ContractInstance {
         getContractByCodeHash
       );
     },
-    checkTicks: async (
-      params: PoolCLTypes.CallMethodParams<"checkTicks">
-    ): Promise<PoolCLTypes.CallMethodResult<"checkTicks">> => {
+    encodeObservation: async (
+      params: PoolCLTypes.CallMethodParams<"encodeObservation">
+    ): Promise<PoolCLTypes.CallMethodResult<"encodeObservation">> => {
       return callMethod(
         PoolCL,
         this,
-        "checkTicks",
+        "encodeObservation",
+        params,
+        getContractByCodeHash
+      );
+    },
+    decodeObservation: async (
+      params: PoolCLTypes.CallMethodParams<"decodeObservation">
+    ): Promise<PoolCLTypes.CallMethodResult<"decodeObservation">> => {
+      return callMethod(
+        PoolCL,
+        this,
+        "decodeObservation",
+        params,
+        getContractByCodeHash
+      );
+    },
+    initializeObservations: async (
+      params: PoolCLTypes.CallMethodParams<"initializeObservations">
+    ): Promise<PoolCLTypes.CallMethodResult<"initializeObservations">> => {
+      return callMethod(
+        PoolCL,
+        this,
+        "initializeObservations",
+        params,
+        getContractByCodeHash
+      );
+    },
+    transformObservation: async (
+      params: PoolCLTypes.CallMethodParams<"transformObservation">
+    ): Promise<PoolCLTypes.CallMethodResult<"transformObservation">> => {
+      return callMethod(
+        PoolCL,
+        this,
+        "transformObservation",
+        params,
+        getContractByCodeHash
+      );
+    },
+    writeObservation: async (
+      params?: PoolCLTypes.CallMethodParams<"writeObservation">
+    ): Promise<PoolCLTypes.CallMethodResult<"writeObservation">> => {
+      return callMethod(
+        PoolCL,
+        this,
+        "writeObservation",
+        params === undefined ? {} : params,
+        getContractByCodeHash
+      );
+    },
+    innerSearchObservations: async (
+      params: PoolCLTypes.CallMethodParams<"innerSearchObservations">
+    ): Promise<PoolCLTypes.CallMethodResult<"innerSearchObservations">> => {
+      return callMethod(
+        PoolCL,
+        this,
+        "innerSearchObservations",
+        params,
+        getContractByCodeHash
+      );
+    },
+    binarySearchObservations: async (
+      params: PoolCLTypes.CallMethodParams<"binarySearchObservations">
+    ): Promise<PoolCLTypes.CallMethodResult<"binarySearchObservations">> => {
+      return callMethod(
+        PoolCL,
+        this,
+        "binarySearchObservations",
+        params,
+        getContractByCodeHash
+      );
+    },
+    interpolateObservations: async (
+      params: PoolCLTypes.CallMethodParams<"interpolateObservations">
+    ): Promise<PoolCLTypes.CallMethodResult<"interpolateObservations">> => {
+      return callMethod(
+        PoolCL,
+        this,
+        "interpolateObservations",
         params,
         getContractByCodeHash
       );
@@ -2395,6 +2905,21 @@ export class PoolCLInstance extends ContractInstance {
   };
 
   transact = {
+    getTWAP: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"getTWAP">
+    ): Promise<PoolCLTypes.SignExecuteMethodResult<"getTWAP">> => {
+      return signExecuteMethod(PoolCL, this, "getTWAP", params);
+    },
+    growObservations: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"growObservations">
+    ): Promise<PoolCLTypes.SignExecuteMethodResult<"growObservations">> => {
+      return signExecuteMethod(PoolCL, this, "growObservations", params);
+    },
+    getVersion: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"getVersion">
+    ): Promise<PoolCLTypes.SignExecuteMethodResult<"getVersion">> => {
+      return signExecuteMethod(PoolCL, this, "getVersion", params);
+    },
     modifyLiquidityView: async (
       params: PoolCLTypes.SignExecuteMethodParams<"modifyLiquidityView">
     ): Promise<PoolCLTypes.SignExecuteMethodResult<"modifyLiquidityView">> => {
@@ -2462,10 +2987,27 @@ export class PoolCLInstance extends ContractInstance {
         params
       );
     },
-    getVersion: async (
-      params: PoolCLTypes.SignExecuteMethodParams<"getVersion">
-    ): Promise<PoolCLTypes.SignExecuteMethodResult<"getVersion">> => {
-      return signExecuteMethod(PoolCL, this, "getVersion", params);
+    getMeanTick: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"getMeanTick">
+    ): Promise<PoolCLTypes.SignExecuteMethodResult<"getMeanTick">> => {
+      return signExecuteMethod(PoolCL, this, "getMeanTick", params);
+    },
+    getObservation: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"getObservation">
+    ): Promise<PoolCLTypes.SignExecuteMethodResult<"getObservation">> => {
+      return signExecuteMethod(PoolCL, this, "getObservation", params);
+    },
+    snapshotCumulativesInside: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"snapshotCumulativesInside">
+    ): Promise<
+      PoolCLTypes.SignExecuteMethodResult<"snapshotCumulativesInside">
+    > => {
+      return signExecuteMethod(
+        PoolCL,
+        this,
+        "snapshotCumulativesInside",
+        params
+      );
     },
     log2: async (
       params: PoolCLTypes.SignExecuteMethodParams<"log2">
@@ -2625,6 +3167,11 @@ export class PoolCLInstance extends ContractInstance {
     ): Promise<PoolCLTypes.SignExecuteMethodResult<"crossTick">> => {
       return signExecuteMethod(PoolCL, this, "crossTick", params);
     },
+    checkTicks: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"checkTicks">
+    ): Promise<PoolCLTypes.SignExecuteMethodResult<"checkTicks">> => {
+      return signExecuteMethod(PoolCL, this, "checkTicks", params);
+    },
     flipTick: async (
       params: PoolCLTypes.SignExecuteMethodParams<"flipTick">
     ): Promise<PoolCLTypes.SignExecuteMethodResult<"flipTick">> => {
@@ -2713,10 +3260,58 @@ export class PoolCLInstance extends ContractInstance {
     > => {
       return signExecuteMethod(PoolCL, this, "calculateAccumulatedFee", params);
     },
-    checkTicks: async (
-      params: PoolCLTypes.SignExecuteMethodParams<"checkTicks">
-    ): Promise<PoolCLTypes.SignExecuteMethodResult<"checkTicks">> => {
-      return signExecuteMethod(PoolCL, this, "checkTicks", params);
+    encodeObservation: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"encodeObservation">
+    ): Promise<PoolCLTypes.SignExecuteMethodResult<"encodeObservation">> => {
+      return signExecuteMethod(PoolCL, this, "encodeObservation", params);
+    },
+    decodeObservation: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"decodeObservation">
+    ): Promise<PoolCLTypes.SignExecuteMethodResult<"decodeObservation">> => {
+      return signExecuteMethod(PoolCL, this, "decodeObservation", params);
+    },
+    initializeObservations: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"initializeObservations">
+    ): Promise<
+      PoolCLTypes.SignExecuteMethodResult<"initializeObservations">
+    > => {
+      return signExecuteMethod(PoolCL, this, "initializeObservations", params);
+    },
+    transformObservation: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"transformObservation">
+    ): Promise<PoolCLTypes.SignExecuteMethodResult<"transformObservation">> => {
+      return signExecuteMethod(PoolCL, this, "transformObservation", params);
+    },
+    writeObservation: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"writeObservation">
+    ): Promise<PoolCLTypes.SignExecuteMethodResult<"writeObservation">> => {
+      return signExecuteMethod(PoolCL, this, "writeObservation", params);
+    },
+    innerSearchObservations: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"innerSearchObservations">
+    ): Promise<
+      PoolCLTypes.SignExecuteMethodResult<"innerSearchObservations">
+    > => {
+      return signExecuteMethod(PoolCL, this, "innerSearchObservations", params);
+    },
+    binarySearchObservations: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"binarySearchObservations">
+    ): Promise<
+      PoolCLTypes.SignExecuteMethodResult<"binarySearchObservations">
+    > => {
+      return signExecuteMethod(
+        PoolCL,
+        this,
+        "binarySearchObservations",
+        params
+      );
+    },
+    interpolateObservations: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"interpolateObservations">
+    ): Promise<
+      PoolCLTypes.SignExecuteMethodResult<"interpolateObservations">
+    > => {
+      return signExecuteMethod(PoolCL, this, "interpolateObservations", params);
     },
     runSwapSteps: async (
       params: PoolCLTypes.SignExecuteMethodParams<"runSwapSteps">

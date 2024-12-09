@@ -1,0 +1,94 @@
+{
+  "version": "v3.8.5",
+  "name": "IncentiveCLFactory",
+  "bytecode": "01031d4036409e01000505010ed38ab3ab54160016014416024044160340441604474402010005050109d38c737192160016011602160316040000cb020103080e004036d3b121c032b3ce00411341937b16060c0c170a170917081600ce0016011603160413056416081609160a130364170c170b160116021603160416050000170d16007ad1a216011606a3160d1607160b160cc1180516011602160316041605160674",
+  "codeHash": "b7a593ae9093402b6a991f579326ad2f9ebbd5608a1a41e60c26d927e9cb9a10",
+  "fieldsSig": {
+    "names": [
+      "managerContractId"
+    ],
+    "types": [
+      "ByteVec"
+    ],
+    "isMutable": [
+      false
+    ]
+  },
+  "eventsSig": [
+    {
+      "name": "IncentiveCreated",
+      "fieldNames": [
+        "rewardToken",
+        "pool",
+        "startTime",
+        "endTime",
+        "refundee",
+        "reward"
+      ],
+      "fieldTypes": [
+        "ByteVec",
+        "IPoolCL",
+        "U256",
+        "U256",
+        "Address",
+        "U256"
+      ]
+    }
+  ],
+  "functions": [
+    {
+      "name": "getIncentivePath",
+      "paramNames": [
+        "key"
+      ],
+      "paramTypes": [
+        "IncentiveKey"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "ByteVec"
+      ]
+    },
+    {
+      "name": "getIncentiveContractId",
+      "paramNames": [
+        "key"
+      ],
+      "paramTypes": [
+        "IncentiveKey"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "ByteVec"
+      ]
+    },
+    {
+      "name": "create",
+      "paramNames": [
+        "payer",
+        "key",
+        "reward",
+        "incentiveTemplateId"
+      ],
+      "paramTypes": [
+        "Address",
+        "IncentiveKey",
+        "U256",
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
+    }
+  ],
+  "constants": [],
+  "enums": []
+}

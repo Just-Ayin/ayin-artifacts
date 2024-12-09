@@ -612,6 +612,20 @@
           }
         },
         {
+          "name": "UpgradeInProgress",
+          "value": {
+            "type": "U256",
+            "value": "111"
+          }
+        },
+        {
+          "name": "MigrateTokenIdsSizeInvalid",
+          "value": {
+            "type": "U256",
+            "value": "112"
+          }
+        },
+        {
           "name": "IdenticalTokenIds",
           "value": {
             "type": "U256",
@@ -731,6 +745,55 @@
           }
         },
         {
+          "name": "TickUninitialized",
+          "value": {
+            "type": "U256",
+            "value": "217"
+          }
+        },
+        {
+          "name": "TokenNotInPool",
+          "value": {
+            "type": "U256",
+            "value": "218"
+          }
+        },
+        {
+          "name": "PositionIsStaked",
+          "value": {
+            "type": "U256",
+            "value": "219"
+          }
+        },
+        {
+          "name": "InvariantNotConverged",
+          "value": {
+            "type": "U256",
+            "value": "300"
+          }
+        },
+        {
+          "name": "BalanceUpdateNotConverged",
+          "value": {
+            "type": "U256",
+            "value": "301"
+          }
+        },
+        {
+          "name": "CoinIndexOutOfBounds",
+          "value": {
+            "type": "U256",
+            "value": "302"
+          }
+        },
+        {
+          "name": "SameCoinIndices",
+          "value": {
+            "type": "U256",
+            "value": "303"
+          }
+        },
+        {
           "name": "IncorrectTokenIndex",
           "value": {
             "type": "U256",
@@ -770,6 +833,97 @@
           "value": {
             "type": "U256",
             "value": "805"
+          }
+        },
+        {
+          "name": "IncentiveRewardZero",
+          "value": {
+            "type": "U256",
+            "value": "810"
+          }
+        },
+        {
+          "name": "IncentiveStartTimeTooEarly",
+          "value": {
+            "type": "U256",
+            "value": "811"
+          }
+        },
+        {
+          "name": "StartTimeAfterEndTime",
+          "value": {
+            "type": "U256",
+            "value": "812"
+          }
+        },
+        {
+          "name": "StartTimeTooFarInTheFuture",
+          "value": {
+            "type": "U256",
+            "value": "813"
+          }
+        },
+        {
+          "name": "IncentiveDurationTooLong",
+          "value": {
+            "type": "U256",
+            "value": "814"
+          }
+        },
+        {
+          "name": "NotNFTPositionManager",
+          "value": {
+            "type": "U256",
+            "value": "815"
+          }
+        },
+        {
+          "name": "StakeNotFound",
+          "value": {
+            "type": "U256",
+            "value": "816"
+          }
+        },
+        {
+          "name": "TooManyStakes",
+          "value": {
+            "type": "U256",
+            "value": "817"
+          }
+        },
+        {
+          "name": "StakeAlreadyExists",
+          "value": {
+            "type": "U256",
+            "value": "818"
+          }
+        },
+        {
+          "name": "EmptyStakeNotAllowed",
+          "value": {
+            "type": "U256",
+            "value": "819"
+          }
+        },
+        {
+          "name": "TooEarlyToStake",
+          "value": {
+            "type": "U256",
+            "value": "820"
+          }
+        },
+        {
+          "name": "TooLateToStake",
+          "value": {
+            "type": "U256",
+            "value": "821"
+          }
+        },
+        {
+          "name": "IncentiveNotFound",
+          "value": {
+            "type": "U256",
+            "value": "822"
           }
         },
         {

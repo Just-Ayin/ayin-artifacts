@@ -1,8 +1,8 @@
 {
   "version": "v3.8.5",
   "name": "NFTPosition",
-  "bytecode": "0e0941dc41e741f4420f422c4240425442fa43390100000501405e000417041703170217011700ce0214093f76657273696f6e3d440d89441409266d616e616765723d44ce00000744140726696e6465783d44ce018944140626706f6f6c3d44ce03000744141126706f6f6c4b65795b746f6b656e305d3d44ce04000744141126706f6f6c4b65795b746f6b656e315d3d44ce05000744141626706f6f6c4b65795b7469636b53706163696e675d3d44ce068944141426706f6f6c4b65795b6665655065724d696c5d3d44ce078944141426706f736974696f6e4b65795b6f776e65725d3d44ce0847000744141826706f736974696f6e4b65795b7469636b4c6f7765725d3d44ce098a44141826706f736974696f6e4b65795b7469636b55707065725d3d44ce0a8a44141326706f736974696f6e4b65795b73616c745d3d44ce0b000744141526706f736974696f6e5b6c69717569646974795d3d441600894414402426706f736974696f6e5b66656547726f777468496e73696465304c617374583132385d3d441601894414402426706f736974696f6e5b66656547726f777468496e73696465314c617374583132385d3d4416028944141426706f736974696f6e5b6665654f776564305d3d4416038944141426706f736974696f6e5b6665654f776564315d3d441604894402010000000203ce00ce0102010000000103d3da1a8f8a0d0201010202000cd3deae6261b3ce00411341937b1600b10dbd1601b001000000050ad3070a2bddce08ce09ce0ace0b1011ce03d49aba8ec002010000000406d3068ce6a1ce04ce05ce06ce0702010000000406d3f0822238ce08ce09ce0ace0b0200000116014054140017011600431702140130140131140132140133140134140135140136140137140138140139140161140162140163140164140165140166171217111710170f170e170d170c170b170a17091708170717061705170417030c171316131602314c40271600161316130d2a626c17141614103c7a1310314d0f2a781614130f387a1310314d0f2a784417151601161544170116130d2a17134a7fd516010201000105004020d3caa32a2c16004e1701b1b917020c0dce00010d17030c0dce00010cb9170416011602421343247b16011604411343257b1603a1001600ba",
-  "codeHash": "bb2c92c52674f6984684fa9901cd1bb26393a007ffe0699b79ed2291a120cb61",
+  "bytecode": "0e144240424b425842914341435c4379438d43a14447448c44e34503457245ab462b469d46df46ec471801000016014091000617041703170217011700000b17141713171217111710170f170e170d170c170b170a170917081707170617050c0dce03d4da1a8f8a0d334c1716051606160716081609160a160b160c160d160e160f161016111612161316141600160116021603160400044a0114001715ce0214093f76657273696f6e3d440e89441409266d616e616765723d44ce00000944140726696e6465783d44ce018944140626706f6f6c3d44ce03000944141126706f6f6c4b65795b746f6b656e305d3d44ce04000944141126706f6f6c4b65795b746f6b656e315d3d44ce05000944141626706f6f6c4b65795b7469636b53706163696e675d3d44ce068944141426706f6f6c4b65795b6665655065724d696c5d3d44ce078944141426706f736974696f6e4b65795b6f776e65725d3d44ce0847000944141826706f736974696f6e4b65795b7469636b4c6f7765725d3d44ce098a44141826706f736974696f6e4b65795b7469636b55707065725d3d44ce0a8a44141326706f736974696f6e4b65795b73616c745d3d44ce0b000944141526706f736974696f6e5b6c69717569646974795d3d441600894414402426706f736974696f6e5b66656547726f777468496e73696465304c617374583132385d3d441601894414402426706f736974696f6e5b66656547726f777468496e73696465314c617374583132385d3d4416028944141426706f736974696f6e5b6665654f776564305d3d4416038944141426706f736974696f6e5b6665654f776564315d3d441604894416154402010000000203ce00ce0102010000000103d3da1a8f8a0e0200000102010b160013ccffffffffffffffffffffffffffffffff334c0213ccffffffffffffffffffffffffffffffff4a011600170116016a020000151d014066ce09ce0a0e0fce03d4280ada4a18171518561343e82d1716140017170c171816181308314c404f16187a1308314d0e2c78132065424c403e16187a1308314d0e2c781719161516187a1308314d0e2c0d2a782b16102c171a161a16160e0d16190106171b0c0d16190103171c16171408267374616b65735b441618894414025d3d4416187a1308314d0e2c78000944161c000944161b0003000944171716180d2a17184a7fad16170201010202000cd3deae6261b3ce00411341937b1600b10dbd1601b001000000050ad3070a2bddce08ce09ce0ace0b1011ce03d49aba8ec002010000000406d3068ce6a1ce04ce05ce06ce0702010000000406d3f0822238ce08ce09ce0ace0b0200000116014054140017011600431702140130140131140132140133140134140135140136140137140138140139140161140162140163140164140165140166171217111710170f170e170d170c170b170a17091708170717061705170417030c171316131602314c40271600161316130d2a626c17141614103c7a1310314d0f2a781614130f387a1310314d0f2a784417151601161544170116130d2a17134a7fd516010201000105004024d3caa32a2c16004e1701b1b917020c0dce000115b9170316011602421343247b16011603411343257b00020d2f4c070c0dce00011617041604a1001600ba01000011104028d3583fec360c1700a0001600000d181710170f170e170d170c170b170a170917081707170617051704170317021701160116021603160416051606160716081609160a160b160c160d160e160f16100200000202021016001601160113202a621600160113202a16011340402a6271020000020511403a160113404013082c2a170216001601000c160016011340402a000c160016011340400e2c2a000c160016011340400f2c2a000c16001601134040102c2a000c16001601134040112c2a000c1600160113404013062c2a000c1600160113404013072c2a000c16020200000103011e0c170116011308314c16a00016011340402c16011340402c13202a62170216021600414c0216010216010d2a17014a261308020100010c01403fd306439baeb3ce004113432f7b1600000e13082f1343327b13206517011601000e170216021308311343317bce08ce09ce0ace0b1011ce03d4625b4eb91707170617051704170316030c331343337bce09ce0a0e0fce03d4280ada4a1817081816001608170a17091609160a0012170b1602160b00131602020100010b014037d3aa37ecb1b3ce004113432f7b1600000e170116011308311343307bce09ce0a0e0fce03d4280ada4a18170218ce08ce09ce0ace0b1011ce03d4625b4eb917071706170517041703a00016011340402c000c17091708160216092b16032c170a1601134040650013160a0201000003014022d3c998cfeb13206517000c170116011308314c16a00016011340402c16011340402c13202a62170216021600424c02040216010d2a17014a260302000002020105160016016b4402000002040017a0000c13404016002c621702a00013404016000d2a2ca000436217031602160144160344a100",
+  "codeHash": "bfc4cd00c6a9777824553723016eb411689a3d290cd141af073ba24ca26ed001",
   "fieldsSig": {
     "names": [
       "manager",
@@ -63,6 +63,39 @@
       "paramIsMutable": [],
       "returnTypes": [
         "U256"
+      ]
+    },
+    {
+      "name": "u128To16ByteSaturated",
+      "paramNames": [
+        "value"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "ByteVec"
+      ]
+    },
+    {
+      "name": "encodeRewardDataForURL",
+      "paramNames": [
+        "stakes",
+        "position"
+      ],
+      "paramTypes": [
+        "[StakeCLInfo;8]",
+        "Position"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "ByteVec"
       ]
     },
     {
@@ -135,9 +168,161 @@
         false
       ],
       "returnTypes": []
+    },
+    {
+      "name": "getStakingInfos",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "[StakeCLInfo;8]"
+      ]
+    },
+    {
+      "name": "decodeStakingDataSingle",
+      "paramNames": [
+        "encoded",
+        "offset"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "StakeCLInfo"
+      ]
+    },
+    {
+      "name": "decodeStakingData",
+      "paramNames": [
+        "encoded",
+        "offset"
+      ],
+      "paramTypes": [
+        "ByteVec",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "[StakeCLInfo;8]",
+        "U256"
+      ]
+    },
+    {
+      "name": "getStakeIndex",
+      "paramNames": [
+        "programId"
+      ],
+      "paramTypes": [
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "stake",
+      "paramNames": [
+        "programId"
+      ],
+      "paramTypes": [
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "unstake",
+      "paramNames": [
+        "programId"
+      ],
+      "paramTypes": [
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "notStaked",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "Bool"
+      ]
+    },
+    {
+      "name": "encodeStakingDataSingle",
+      "paramNames": [
+        "stakeInfo"
+      ],
+      "paramTypes": [
+        "StakeCLInfo"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": [
+        "ByteVec"
+      ]
+    },
+    {
+      "name": "setStakingDataAt",
+      "paramNames": [
+        "index",
+        "stakingData"
+      ],
+      "paramTypes": [
+        "U256",
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": []
     }
   ],
   "constants": [
+    {
+      "name": "MaxStakes",
+      "value": {
+        "type": "U256",
+        "value": "8"
+      }
+    },
+    {
+      "name": "StakeCLInfoLen",
+      "value": {
+        "type": "U256",
+        "value": "64"
+      }
+    },
+    {
+      "name": "StakeCLInfosLen",
+      "value": {
+        "type": "U256",
+        "value": "512"
+      }
+    },
     {
       "name": "MinSqrtPrice",
       "value": {
@@ -156,7 +341,14 @@
       "name": "Version",
       "value": {
         "type": "U256",
-        "value": "1"
+        "value": "2"
+      }
+    },
+    {
+      "name": "MaxU128",
+      "value": {
+        "type": "U256",
+        "value": "340282366920938463463374607431768211455"
       }
     }
   ],
@@ -239,6 +431,20 @@
           "value": {
             "type": "U256",
             "value": "110"
+          }
+        },
+        {
+          "name": "UpgradeInProgress",
+          "value": {
+            "type": "U256",
+            "value": "111"
+          }
+        },
+        {
+          "name": "MigrateTokenIdsSizeInvalid",
+          "value": {
+            "type": "U256",
+            "value": "112"
           }
         },
         {
@@ -361,6 +567,55 @@
           }
         },
         {
+          "name": "TickUninitialized",
+          "value": {
+            "type": "U256",
+            "value": "217"
+          }
+        },
+        {
+          "name": "TokenNotInPool",
+          "value": {
+            "type": "U256",
+            "value": "218"
+          }
+        },
+        {
+          "name": "PositionIsStaked",
+          "value": {
+            "type": "U256",
+            "value": "219"
+          }
+        },
+        {
+          "name": "InvariantNotConverged",
+          "value": {
+            "type": "U256",
+            "value": "300"
+          }
+        },
+        {
+          "name": "BalanceUpdateNotConverged",
+          "value": {
+            "type": "U256",
+            "value": "301"
+          }
+        },
+        {
+          "name": "CoinIndexOutOfBounds",
+          "value": {
+            "type": "U256",
+            "value": "302"
+          }
+        },
+        {
+          "name": "SameCoinIndices",
+          "value": {
+            "type": "U256",
+            "value": "303"
+          }
+        },
+        {
           "name": "IncorrectTokenIndex",
           "value": {
             "type": "U256",
@@ -400,6 +655,97 @@
           "value": {
             "type": "U256",
             "value": "805"
+          }
+        },
+        {
+          "name": "IncentiveRewardZero",
+          "value": {
+            "type": "U256",
+            "value": "810"
+          }
+        },
+        {
+          "name": "IncentiveStartTimeTooEarly",
+          "value": {
+            "type": "U256",
+            "value": "811"
+          }
+        },
+        {
+          "name": "StartTimeAfterEndTime",
+          "value": {
+            "type": "U256",
+            "value": "812"
+          }
+        },
+        {
+          "name": "StartTimeTooFarInTheFuture",
+          "value": {
+            "type": "U256",
+            "value": "813"
+          }
+        },
+        {
+          "name": "IncentiveDurationTooLong",
+          "value": {
+            "type": "U256",
+            "value": "814"
+          }
+        },
+        {
+          "name": "NotNFTPositionManager",
+          "value": {
+            "type": "U256",
+            "value": "815"
+          }
+        },
+        {
+          "name": "StakeNotFound",
+          "value": {
+            "type": "U256",
+            "value": "816"
+          }
+        },
+        {
+          "name": "TooManyStakes",
+          "value": {
+            "type": "U256",
+            "value": "817"
+          }
+        },
+        {
+          "name": "StakeAlreadyExists",
+          "value": {
+            "type": "U256",
+            "value": "818"
+          }
+        },
+        {
+          "name": "EmptyStakeNotAllowed",
+          "value": {
+            "type": "U256",
+            "value": "819"
+          }
+        },
+        {
+          "name": "TooEarlyToStake",
+          "value": {
+            "type": "U256",
+            "value": "820"
+          }
+        },
+        {
+          "name": "TooLateToStake",
+          "value": {
+            "type": "U256",
+            "value": "821"
+          }
+        },
+        {
+          "name": "IncentiveNotFound",
+          "value": {
+            "type": "U256",
+            "value": "822"
           }
         },
         {

@@ -39,15 +39,21 @@ import {
   CurrentPoolInfo,
   FactoryProtectedData,
   FactoryRoles,
+  IncentiveKey,
   ModifyLiquidity,
   ModifyLiquidityScriptParams,
   NewStruct,
   NextTick,
+  ObservationCL,
+  ObservationTP,
   PendingBalance,
   PoolData,
   PoolKey,
   Position,
   PositionKey,
+  StakeCLInfo,
+  StakerCLData,
+  StakerCLIncentive,
   TickInfo,
   TickUpdateInfo,
   AllStructs,
@@ -65,6 +71,8 @@ export namespace PoolFactoryTypes {
     upgrader: Address;
     poolTemplateId: HexString;
     pairSize: bigint;
+    balanceTemplateId: HexString;
+    upgradeInProgress: bigint;
   };
 
   export type State = ContractState<Fields>;
@@ -203,6 +211,14 @@ export namespace PoolFactoryTypes {
       params: CallContractParams<{ poolTemplateIdArg: HexString }>;
       result: CallContractResult<null>;
     };
+    setBalanceTemplateId: {
+      params: CallContractParams<{ balanceTemplateIdArg: HexString }>;
+      result: CallContractResult<null>;
+    };
+    getBalanceTemplateId: {
+      params: Omit<CallContractParams<{}>, "args">;
+      result: CallContractResult<HexString>;
+    };
     modifyPoolFeeProtocol: {
       params: CallContractParams<{ poolKey: PoolKey; newFeeProtocol: bigint }>;
       result: CallContractResult<null>;
@@ -218,6 +234,10 @@ export namespace PoolFactoryTypes {
     initializeTokenBalance: {
       params: CallContractParams<{ payer: Address; tokenId: HexString }>;
       result: CallContractResult<null>;
+    };
+    getPendingProtocolBalance: {
+      params: CallContractParams<{ tokenId: HexString }>;
+      result: CallContractResult<bigint>;
     };
     getTokenBalances: {
       params: CallContractParams<{ poolKey: PoolKey }>;
@@ -254,6 +274,29 @@ export namespace PoolFactoryTypes {
         newMutFieldsEncoded: HexString;
       }>;
       result: CallContractResult<null>;
+    };
+    postUpgrade: {
+      params: CallContractParams<{
+        payer: Address;
+        balancesToMigrate: HexString;
+      }>;
+      result: CallContractResult<null>;
+    };
+    balancePath: {
+      params: CallContractParams<{ tokenId: HexString }>;
+      result: CallContractResult<HexString>;
+    };
+    getBalance: {
+      params: CallContractParams<{ tokenId: HexString }>;
+      result: CallContractResult<HexString>;
+    };
+    balanceExists: {
+      params: CallContractParams<{ tokenId: HexString }>;
+      result: CallContractResult<boolean>;
+    };
+    createEmptyBalance: {
+      params: CallContractParams<{ payer: Address; tokenId: HexString }>;
+      result: CallContractResult<HexString>;
     };
   }
   export type CallMethodParams<T extends keyof CallMethodTable> =
@@ -402,6 +445,16 @@ export namespace PoolFactoryTypes {
       params: SignExecuteContractMethodParams<{ poolTemplateIdArg: HexString }>;
       result: SignExecuteScriptTxResult;
     };
+    setBalanceTemplateId: {
+      params: SignExecuteContractMethodParams<{
+        balanceTemplateIdArg: HexString;
+      }>;
+      result: SignExecuteScriptTxResult;
+    };
+    getBalanceTemplateId: {
+      params: Omit<SignExecuteContractMethodParams<{}>, "args">;
+      result: SignExecuteScriptTxResult;
+    };
     modifyPoolFeeProtocol: {
       params: SignExecuteContractMethodParams<{
         poolKey: PoolKey;
@@ -425,6 +478,10 @@ export namespace PoolFactoryTypes {
         payer: Address;
         tokenId: HexString;
       }>;
+      result: SignExecuteScriptTxResult;
+    };
+    getPendingProtocolBalance: {
+      params: SignExecuteContractMethodParams<{ tokenId: HexString }>;
       result: SignExecuteScriptTxResult;
     };
     getTokenBalances: {
@@ -466,6 +523,32 @@ export namespace PoolFactoryTypes {
       }>;
       result: SignExecuteScriptTxResult;
     };
+    postUpgrade: {
+      params: SignExecuteContractMethodParams<{
+        payer: Address;
+        balancesToMigrate: HexString;
+      }>;
+      result: SignExecuteScriptTxResult;
+    };
+    balancePath: {
+      params: SignExecuteContractMethodParams<{ tokenId: HexString }>;
+      result: SignExecuteScriptTxResult;
+    };
+    getBalance: {
+      params: SignExecuteContractMethodParams<{ tokenId: HexString }>;
+      result: SignExecuteScriptTxResult;
+    };
+    balanceExists: {
+      params: SignExecuteContractMethodParams<{ tokenId: HexString }>;
+      result: SignExecuteScriptTxResult;
+    };
+    createEmptyBalance: {
+      params: SignExecuteContractMethodParams<{
+        payer: Address;
+        tokenId: HexString;
+      }>;
+      result: SignExecuteScriptTxResult;
+    };
   }
   export type SignExecuteMethodParams<T extends keyof SignExecuteMethodTable> =
     SignExecuteMethodTable[T]["params"];
@@ -499,7 +582,7 @@ class Factory extends ContractFactory<
     MaxFee: BigInt("1000000"),
     MinSqrtPrice: BigInt("4295128739"),
     MaxSqrtPrice: BigInt("1461446703485210103287273052203988822378723970342"),
-    Version: BigInt("1"),
+    Version: BigInt("2"),
     DefaultProtocolFee: BigInt("200000"),
     ErrorCodes: {
       NotAdmin: BigInt("100"),
@@ -513,6 +596,8 @@ class Factory extends ContractFactory<
       NotFeeSetter: BigInt("108"),
       InvalidFeeAndSpacing: BigInt("109"),
       NotUpgrader: BigInt("110"),
+      UpgradeInProgress: BigInt("111"),
+      MigrateTokenIdsSizeInvalid: BigInt("112"),
       IdenticalTokenIds: BigInt("200"),
       TickOOB: BigInt("201"),
       SqrtRatioOOB: BigInt("202"),
@@ -530,12 +615,32 @@ class Factory extends ContractFactory<
       LowerTickNotMultiple: BigInt("214"),
       UpperTickNotMultiple: BigInt("215"),
       PriceLimitOOB: BigInt("216"),
+      TickUninitialized: BigInt("217"),
+      TokenNotInPool: BigInt("218"),
+      PositionIsStaked: BigInt("219"),
+      InvariantNotConverged: BigInt("300"),
+      BalanceUpdateNotConverged: BigInt("301"),
+      CoinIndexOutOfBounds: BigInt("302"),
+      SameCoinIndices: BigInt("303"),
       IncorrectTokenIndex: BigInt("800"),
       NFTNotFound: BigInt("801"),
       NFTNotPartOfCollection: BigInt("802"),
       MissingNFTInput: BigInt("803"),
       NFTUpgradeSameVersion: BigInt("804"),
       NFTUpgradeBadCodeHash: BigInt("805"),
+      IncentiveRewardZero: BigInt("810"),
+      IncentiveStartTimeTooEarly: BigInt("811"),
+      StartTimeAfterEndTime: BigInt("812"),
+      StartTimeTooFarInTheFuture: BigInt("813"),
+      IncentiveDurationTooLong: BigInt("814"),
+      NotNFTPositionManager: BigInt("815"),
+      StakeNotFound: BigInt("816"),
+      TooManyStakes: BigInt("817"),
+      StakeAlreadyExists: BigInt("818"),
+      EmptyStakeNotAllowed: BigInt("819"),
+      TooEarlyToStake: BigInt("820"),
+      TooLateToStake: BigInt("821"),
+      IncentiveNotFound: BigInt("822"),
       MinimumAmountOutNotReached: BigInt("900"),
       UnknownPoolType: BigInt("901"),
       UnsupportedPoolType: BigInt("902"),
@@ -808,6 +913,37 @@ class Factory extends ContractFactory<
         getContractByCodeHash
       );
     },
+    setBalanceTemplateId: async (
+      params: TestContractParams<
+        PoolFactoryTypes.Fields,
+        { balanceTemplateIdArg: HexString },
+        PoolFactoryTypes.Maps
+      >
+    ): Promise<TestContractResult<null, PoolFactoryTypes.Maps>> => {
+      return testMethod(
+        this,
+        "setBalanceTemplateId",
+        params,
+        getContractByCodeHash
+      );
+    },
+    getBalanceTemplateId: async (
+      params: Omit<
+        TestContractParams<
+          PoolFactoryTypes.Fields,
+          never,
+          PoolFactoryTypes.Maps
+        >,
+        "testArgs"
+      >
+    ): Promise<TestContractResult<HexString, PoolFactoryTypes.Maps>> => {
+      return testMethod(
+        this,
+        "getBalanceTemplateId",
+        params,
+        getContractByCodeHash
+      );
+    },
     modifyPoolFeeProtocol: async (
       params: TestContractParams<
         PoolFactoryTypes.Fields,
@@ -855,6 +991,20 @@ class Factory extends ContractFactory<
       return testMethod(
         this,
         "initializeTokenBalance",
+        params,
+        getContractByCodeHash
+      );
+    },
+    getPendingProtocolBalance: async (
+      params: TestContractParams<
+        PoolFactoryTypes.Fields,
+        { tokenId: HexString },
+        PoolFactoryTypes.Maps
+      >
+    ): Promise<TestContractResult<bigint, PoolFactoryTypes.Maps>> => {
+      return testMethod(
+        this,
+        "getPendingProtocolBalance",
         params,
         getContractByCodeHash
       );
@@ -931,6 +1081,56 @@ class Factory extends ContractFactory<
     ): Promise<TestContractResult<null, PoolFactoryTypes.Maps>> => {
       return testMethod(this, "upgrade", params, getContractByCodeHash);
     },
+    postUpgrade: async (
+      params: TestContractParams<
+        PoolFactoryTypes.Fields,
+        { payer: Address; balancesToMigrate: HexString },
+        PoolFactoryTypes.Maps
+      >
+    ): Promise<TestContractResult<null, PoolFactoryTypes.Maps>> => {
+      return testMethod(this, "postUpgrade", params, getContractByCodeHash);
+    },
+    balancePath: async (
+      params: TestContractParams<
+        PoolFactoryTypes.Fields,
+        { tokenId: HexString },
+        PoolFactoryTypes.Maps
+      >
+    ): Promise<TestContractResult<HexString, PoolFactoryTypes.Maps>> => {
+      return testMethod(this, "balancePath", params, getContractByCodeHash);
+    },
+    getBalance: async (
+      params: TestContractParams<
+        PoolFactoryTypes.Fields,
+        { tokenId: HexString },
+        PoolFactoryTypes.Maps
+      >
+    ): Promise<TestContractResult<HexString, PoolFactoryTypes.Maps>> => {
+      return testMethod(this, "getBalance", params, getContractByCodeHash);
+    },
+    balanceExists: async (
+      params: TestContractParams<
+        PoolFactoryTypes.Fields,
+        { tokenId: HexString },
+        PoolFactoryTypes.Maps
+      >
+    ): Promise<TestContractResult<boolean, PoolFactoryTypes.Maps>> => {
+      return testMethod(this, "balanceExists", params, getContractByCodeHash);
+    },
+    createEmptyBalance: async (
+      params: TestContractParams<
+        PoolFactoryTypes.Fields,
+        { payer: Address; tokenId: HexString },
+        PoolFactoryTypes.Maps
+      >
+    ): Promise<TestContractResult<HexString, PoolFactoryTypes.Maps>> => {
+      return testMethod(
+        this,
+        "createEmptyBalance",
+        params,
+        getContractByCodeHash
+      );
+    },
   };
 
   stateForTest(
@@ -947,8 +1147,8 @@ class Factory extends ContractFactory<
 export const PoolFactory = new Factory(
   Contract.fromJson(
     PoolFactoryContractJson,
-    "=104-2+26=2-2=1-2=2-1=1-1+8c=1+6=1+2=1-1+75c=2-2+76=2497-1+2=37-1+c=38+7a7e0214696e73657274206174206d617020706174683a2000=1196",
-    "8f4c4fbf0149915c0c59aaa91b6c041d0228288078fbe949fa850299adff10f1",
+    "=142-4=1-1+d=2-3=1+14=1-1+82=2-1+8=1+47b8=3343-1+8=95-1+b=134+7a7e021472656d6f7665206174206d617020706174683a2000=139-1+1=188",
+    "63eb25d58fb29274c57324c6133b1f96c8f4fba6f8002eae11e0cee9f631b536",
     AllStructs
   )
 );
@@ -1236,6 +1436,28 @@ export class PoolFactoryInstance extends ContractInstance {
         getContractByCodeHash
       );
     },
+    setBalanceTemplateId: async (
+      params: PoolFactoryTypes.CallMethodParams<"setBalanceTemplateId">
+    ): Promise<PoolFactoryTypes.CallMethodResult<"setBalanceTemplateId">> => {
+      return callMethod(
+        PoolFactory,
+        this,
+        "setBalanceTemplateId",
+        params,
+        getContractByCodeHash
+      );
+    },
+    getBalanceTemplateId: async (
+      params?: PoolFactoryTypes.CallMethodParams<"getBalanceTemplateId">
+    ): Promise<PoolFactoryTypes.CallMethodResult<"getBalanceTemplateId">> => {
+      return callMethod(
+        PoolFactory,
+        this,
+        "getBalanceTemplateId",
+        params === undefined ? {} : params,
+        getContractByCodeHash
+      );
+    },
     modifyPoolFeeProtocol: async (
       params: PoolFactoryTypes.CallMethodParams<"modifyPoolFeeProtocol">
     ): Promise<PoolFactoryTypes.CallMethodResult<"modifyPoolFeeProtocol">> => {
@@ -1276,6 +1498,19 @@ export class PoolFactoryInstance extends ContractInstance {
         PoolFactory,
         this,
         "initializeTokenBalance",
+        params,
+        getContractByCodeHash
+      );
+    },
+    getPendingProtocolBalance: async (
+      params: PoolFactoryTypes.CallMethodParams<"getPendingProtocolBalance">
+    ): Promise<
+      PoolFactoryTypes.CallMethodResult<"getPendingProtocolBalance">
+    > => {
+      return callMethod(
+        PoolFactory,
+        this,
+        "getPendingProtocolBalance",
         params,
         getContractByCodeHash
       );
@@ -1331,6 +1566,61 @@ export class PoolFactoryInstance extends ContractInstance {
         PoolFactory,
         this,
         "upgrade",
+        params,
+        getContractByCodeHash
+      );
+    },
+    postUpgrade: async (
+      params: PoolFactoryTypes.CallMethodParams<"postUpgrade">
+    ): Promise<PoolFactoryTypes.CallMethodResult<"postUpgrade">> => {
+      return callMethod(
+        PoolFactory,
+        this,
+        "postUpgrade",
+        params,
+        getContractByCodeHash
+      );
+    },
+    balancePath: async (
+      params: PoolFactoryTypes.CallMethodParams<"balancePath">
+    ): Promise<PoolFactoryTypes.CallMethodResult<"balancePath">> => {
+      return callMethod(
+        PoolFactory,
+        this,
+        "balancePath",
+        params,
+        getContractByCodeHash
+      );
+    },
+    getBalance: async (
+      params: PoolFactoryTypes.CallMethodParams<"getBalance">
+    ): Promise<PoolFactoryTypes.CallMethodResult<"getBalance">> => {
+      return callMethod(
+        PoolFactory,
+        this,
+        "getBalance",
+        params,
+        getContractByCodeHash
+      );
+    },
+    balanceExists: async (
+      params: PoolFactoryTypes.CallMethodParams<"balanceExists">
+    ): Promise<PoolFactoryTypes.CallMethodResult<"balanceExists">> => {
+      return callMethod(
+        PoolFactory,
+        this,
+        "balanceExists",
+        params,
+        getContractByCodeHash
+      );
+    },
+    createEmptyBalance: async (
+      params: PoolFactoryTypes.CallMethodParams<"createEmptyBalance">
+    ): Promise<PoolFactoryTypes.CallMethodResult<"createEmptyBalance">> => {
+      return callMethod(
+        PoolFactory,
+        this,
+        "createEmptyBalance",
         params,
         getContractByCodeHash
       );
@@ -1480,6 +1770,30 @@ export class PoolFactoryInstance extends ContractInstance {
     > => {
       return signExecuteMethod(PoolFactory, this, "setPoolTemplateId", params);
     },
+    setBalanceTemplateId: async (
+      params: PoolFactoryTypes.SignExecuteMethodParams<"setBalanceTemplateId">
+    ): Promise<
+      PoolFactoryTypes.SignExecuteMethodResult<"setBalanceTemplateId">
+    > => {
+      return signExecuteMethod(
+        PoolFactory,
+        this,
+        "setBalanceTemplateId",
+        params
+      );
+    },
+    getBalanceTemplateId: async (
+      params: PoolFactoryTypes.SignExecuteMethodParams<"getBalanceTemplateId">
+    ): Promise<
+      PoolFactoryTypes.SignExecuteMethodResult<"getBalanceTemplateId">
+    > => {
+      return signExecuteMethod(
+        PoolFactory,
+        this,
+        "getBalanceTemplateId",
+        params
+      );
+    },
     modifyPoolFeeProtocol: async (
       params: PoolFactoryTypes.SignExecuteMethodParams<"modifyPoolFeeProtocol">
     ): Promise<
@@ -1513,6 +1827,18 @@ export class PoolFactoryInstance extends ContractInstance {
         PoolFactory,
         this,
         "initializeTokenBalance",
+        params
+      );
+    },
+    getPendingProtocolBalance: async (
+      params: PoolFactoryTypes.SignExecuteMethodParams<"getPendingProtocolBalance">
+    ): Promise<
+      PoolFactoryTypes.SignExecuteMethodResult<"getPendingProtocolBalance">
+    > => {
+      return signExecuteMethod(
+        PoolFactory,
+        this,
+        "getPendingProtocolBalance",
         params
       );
     },
@@ -1551,6 +1877,33 @@ export class PoolFactoryInstance extends ContractInstance {
       params: PoolFactoryTypes.SignExecuteMethodParams<"upgrade">
     ): Promise<PoolFactoryTypes.SignExecuteMethodResult<"upgrade">> => {
       return signExecuteMethod(PoolFactory, this, "upgrade", params);
+    },
+    postUpgrade: async (
+      params: PoolFactoryTypes.SignExecuteMethodParams<"postUpgrade">
+    ): Promise<PoolFactoryTypes.SignExecuteMethodResult<"postUpgrade">> => {
+      return signExecuteMethod(PoolFactory, this, "postUpgrade", params);
+    },
+    balancePath: async (
+      params: PoolFactoryTypes.SignExecuteMethodParams<"balancePath">
+    ): Promise<PoolFactoryTypes.SignExecuteMethodResult<"balancePath">> => {
+      return signExecuteMethod(PoolFactory, this, "balancePath", params);
+    },
+    getBalance: async (
+      params: PoolFactoryTypes.SignExecuteMethodParams<"getBalance">
+    ): Promise<PoolFactoryTypes.SignExecuteMethodResult<"getBalance">> => {
+      return signExecuteMethod(PoolFactory, this, "getBalance", params);
+    },
+    balanceExists: async (
+      params: PoolFactoryTypes.SignExecuteMethodParams<"balanceExists">
+    ): Promise<PoolFactoryTypes.SignExecuteMethodResult<"balanceExists">> => {
+      return signExecuteMethod(PoolFactory, this, "balanceExists", params);
+    },
+    createEmptyBalance: async (
+      params: PoolFactoryTypes.SignExecuteMethodParams<"createEmptyBalance">
+    ): Promise<
+      PoolFactoryTypes.SignExecuteMethodResult<"createEmptyBalance">
+    > => {
+      return signExecuteMethod(PoolFactory, this, "createEmptyBalance", params);
     },
   };
 

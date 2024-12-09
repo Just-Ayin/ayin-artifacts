@@ -39,15 +39,21 @@ import {
   CurrentPoolInfo,
   FactoryProtectedData,
   FactoryRoles,
+  IncentiveKey,
   ModifyLiquidity,
   ModifyLiquidityScriptParams,
   NewStruct,
   NextTick,
+  ObservationCL,
+  ObservationTP,
   PendingBalance,
   PoolData,
   PoolKey,
   Position,
   PositionKey,
+  StakeCLInfo,
+  StakerCLData,
+  StakerCLIncentive,
   TickInfo,
   TickUpdateInfo,
   AllStructs,
@@ -57,13 +63,17 @@ import {
 export namespace NFTPositionManagerTypes {
   export type Fields = {
     factory: HexString;
-    nftTemplateId: HexString;
     collectionUri: HexString;
     nftUriPrefix: HexString;
+    nftTemplateId: HexString;
+    incentiveTemplateId: HexString;
     totalSupply: bigint;
     nextIndex: bigint;
     admin: Address;
     newAdmin: Address;
+    feeSink: Address;
+    incentivizer: Address;
+    stakerData: StakerCLData;
   };
 
   export type State = ContractState<Fields>;
@@ -116,6 +126,35 @@ export namespace NFTPositionManagerTypes {
       }>;
       result: CallContractResult<[bigint, bigint]>;
     };
+    getIncentiveFactory: {
+      params: Omit<CallContractParams<{}>, "args">;
+      result: CallContractResult<HexString>;
+    };
+    createIncentive: {
+      params: CallContractParams<{
+        payer: Address;
+        key: IncentiveKey;
+        reward: bigint;
+      }>;
+      result: CallContractResult<null>;
+    };
+    stake: {
+      params: CallContractParams<{
+        nftOwner: Address;
+        nftIndex: bigint;
+        incentiveKey: IncentiveKey;
+      }>;
+      result: CallContractResult<bigint>;
+    };
+    unstake: {
+      params: CallContractParams<{
+        nftOwner: Address;
+        nftIndex: bigint;
+        incentiveKey: IncentiveKey;
+        refundAddress: Address;
+      }>;
+      result: CallContractResult<null>;
+    };
     getVersion: {
       params: Omit<CallContractParams<{}>, "args">;
       result: CallContractResult<bigint>;
@@ -139,6 +178,23 @@ export namespace NFTPositionManagerTypes {
       }>;
       result: CallContractResult<null>;
     };
+    setupIncentiveFactory: {
+      params: CallContractParams<{ payer: Address; templateId: HexString }>;
+      result: CallContractResult<null>;
+    };
+    claimRewards: {
+      params: CallContractParams<{
+        nftOwner: Address;
+        nftIndex: bigint;
+        incentiveKey: IncentiveKey;
+        refundAddress: Address;
+      }>;
+      result: CallContractResult<bigint>;
+    };
+    claimIncentivizeFees: {
+      params: Omit<CallContractParams<{}>, "args">;
+      result: CallContractResult<null>;
+    };
     changeAdmin: {
       params: CallContractParams<{ newAdminArg: Address }>;
       result: CallContractResult<null>;
@@ -151,9 +207,25 @@ export namespace NFTPositionManagerTypes {
       params: Omit<CallContractParams<{}>, "args">;
       result: CallContractResult<null>;
     };
+    setFeeSink: {
+      params: CallContractParams<{ newFeeSink: Address }>;
+      result: CallContractResult<null>;
+    };
+    setIncentivizer: {
+      params: CallContractParams<{ newIncentivizer: Address }>;
+      result: CallContractResult<null>;
+    };
     getNftTemplateId: {
       params: Omit<CallContractParams<{}>, "args">;
       result: CallContractResult<HexString>;
+    };
+    setStakerData: {
+      params: CallContractParams<{
+        incentivizeFee: bigint;
+        maxIncentiveStartLeadTime: bigint;
+        maxIncentiveDuration: bigint;
+      }>;
+      result: CallContractResult<null>;
     };
     getInitialDataForPosition: {
       params: Omit<CallContractParams<{}>, "args">;
@@ -224,6 +296,35 @@ export namespace NFTPositionManagerTypes {
       }>;
       result: SignExecuteScriptTxResult;
     };
+    getIncentiveFactory: {
+      params: Omit<SignExecuteContractMethodParams<{}>, "args">;
+      result: SignExecuteScriptTxResult;
+    };
+    createIncentive: {
+      params: SignExecuteContractMethodParams<{
+        payer: Address;
+        key: IncentiveKey;
+        reward: bigint;
+      }>;
+      result: SignExecuteScriptTxResult;
+    };
+    stake: {
+      params: SignExecuteContractMethodParams<{
+        nftOwner: Address;
+        nftIndex: bigint;
+        incentiveKey: IncentiveKey;
+      }>;
+      result: SignExecuteScriptTxResult;
+    };
+    unstake: {
+      params: SignExecuteContractMethodParams<{
+        nftOwner: Address;
+        nftIndex: bigint;
+        incentiveKey: IncentiveKey;
+        refundAddress: Address;
+      }>;
+      result: SignExecuteScriptTxResult;
+    };
     getVersion: {
       params: Omit<SignExecuteContractMethodParams<{}>, "args">;
       result: SignExecuteScriptTxResult;
@@ -247,6 +348,26 @@ export namespace NFTPositionManagerTypes {
       }>;
       result: SignExecuteScriptTxResult;
     };
+    setupIncentiveFactory: {
+      params: SignExecuteContractMethodParams<{
+        payer: Address;
+        templateId: HexString;
+      }>;
+      result: SignExecuteScriptTxResult;
+    };
+    claimRewards: {
+      params: SignExecuteContractMethodParams<{
+        nftOwner: Address;
+        nftIndex: bigint;
+        incentiveKey: IncentiveKey;
+        refundAddress: Address;
+      }>;
+      result: SignExecuteScriptTxResult;
+    };
+    claimIncentivizeFees: {
+      params: Omit<SignExecuteContractMethodParams<{}>, "args">;
+      result: SignExecuteScriptTxResult;
+    };
     changeAdmin: {
       params: SignExecuteContractMethodParams<{ newAdminArg: Address }>;
       result: SignExecuteScriptTxResult;
@@ -259,8 +380,24 @@ export namespace NFTPositionManagerTypes {
       params: Omit<SignExecuteContractMethodParams<{}>, "args">;
       result: SignExecuteScriptTxResult;
     };
+    setFeeSink: {
+      params: SignExecuteContractMethodParams<{ newFeeSink: Address }>;
+      result: SignExecuteScriptTxResult;
+    };
+    setIncentivizer: {
+      params: SignExecuteContractMethodParams<{ newIncentivizer: Address }>;
+      result: SignExecuteScriptTxResult;
+    };
     getNftTemplateId: {
       params: Omit<SignExecuteContractMethodParams<{}>, "args">;
+      result: SignExecuteScriptTxResult;
+    };
+    setStakerData: {
+      params: SignExecuteContractMethodParams<{
+        incentivizeFee: bigint;
+        maxIncentiveStartLeadTime: bigint;
+        maxIncentiveDuration: bigint;
+      }>;
       result: SignExecuteScriptTxResult;
     };
     getInitialDataForPosition: {
@@ -296,17 +433,12 @@ class Factory extends ContractFactory<
 
   eventIndex = { NFTMinted: 0, NFTBurned: 1 };
   consts = {
-    MinTick: BigInt("-887272"),
-    MaxTick: BigInt("887272"),
-    HalfUnitX96: BigInt("39614081257132168796771975168"),
-    UnitX96: BigInt("79228162514264337593543950336"),
-    UnitX128: BigInt("340282366920938463463374607431768211456"),
-    DoubleUnitX96: BigInt("158456325028528675187087900672"),
-    U160Limit: BigInt("1461501637330902918203684832716283019655932542976"),
-    MaxFee: BigInt("1000000"),
+    MaxStakes: BigInt("8"),
+    StakeCLInfoLen: BigInt("64"),
+    StakeCLInfosLen: BigInt("512"),
     MinSqrtPrice: BigInt("4295128739"),
     MaxSqrtPrice: BigInt("1461446703485210103287273052203988822378723970342"),
-    Version: BigInt("1"),
+    Version: BigInt("2"),
     ErrorCodes: {
       NotAdmin: BigInt("100"),
       NotNewAdmin: BigInt("101"),
@@ -319,6 +451,8 @@ class Factory extends ContractFactory<
       NotFeeSetter: BigInt("108"),
       InvalidFeeAndSpacing: BigInt("109"),
       NotUpgrader: BigInt("110"),
+      UpgradeInProgress: BigInt("111"),
+      MigrateTokenIdsSizeInvalid: BigInt("112"),
       IdenticalTokenIds: BigInt("200"),
       TickOOB: BigInt("201"),
       SqrtRatioOOB: BigInt("202"),
@@ -336,12 +470,32 @@ class Factory extends ContractFactory<
       LowerTickNotMultiple: BigInt("214"),
       UpperTickNotMultiple: BigInt("215"),
       PriceLimitOOB: BigInt("216"),
+      TickUninitialized: BigInt("217"),
+      TokenNotInPool: BigInt("218"),
+      PositionIsStaked: BigInt("219"),
+      InvariantNotConverged: BigInt("300"),
+      BalanceUpdateNotConverged: BigInt("301"),
+      CoinIndexOutOfBounds: BigInt("302"),
+      SameCoinIndices: BigInt("303"),
       IncorrectTokenIndex: BigInt("800"),
       NFTNotFound: BigInt("801"),
       NFTNotPartOfCollection: BigInt("802"),
       MissingNFTInput: BigInt("803"),
       NFTUpgradeSameVersion: BigInt("804"),
       NFTUpgradeBadCodeHash: BigInt("805"),
+      IncentiveRewardZero: BigInt("810"),
+      IncentiveStartTimeTooEarly: BigInt("811"),
+      StartTimeAfterEndTime: BigInt("812"),
+      StartTimeTooFarInTheFuture: BigInt("813"),
+      IncentiveDurationTooLong: BigInt("814"),
+      NotNFTPositionManager: BigInt("815"),
+      StakeNotFound: BigInt("816"),
+      TooManyStakes: BigInt("817"),
+      StakeAlreadyExists: BigInt("818"),
+      EmptyStakeNotAllowed: BigInt("819"),
+      TooEarlyToStake: BigInt("820"),
+      TooLateToStake: BigInt("821"),
+      IncentiveNotFound: BigInt("822"),
       MinimumAmountOutNotReached: BigInt("900"),
       UnknownPoolType: BigInt("901"),
       UnsupportedPoolType: BigInt("902"),
@@ -414,6 +568,48 @@ class Factory extends ContractFactory<
     ): Promise<TestContractResultWithoutMaps<[bigint, bigint]>> => {
       return testMethod(this, "claimFees", params, getContractByCodeHash);
     },
+    getIncentiveFactory: async (
+      params: Omit<
+        TestContractParamsWithoutMaps<NFTPositionManagerTypes.Fields, never>,
+        "testArgs"
+      >
+    ): Promise<TestContractResultWithoutMaps<HexString>> => {
+      return testMethod(
+        this,
+        "getIncentiveFactory",
+        params,
+        getContractByCodeHash
+      );
+    },
+    createIncentive: async (
+      params: TestContractParamsWithoutMaps<
+        NFTPositionManagerTypes.Fields,
+        { payer: Address; key: IncentiveKey; reward: bigint }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
+      return testMethod(this, "createIncentive", params, getContractByCodeHash);
+    },
+    stake: async (
+      params: TestContractParamsWithoutMaps<
+        NFTPositionManagerTypes.Fields,
+        { nftOwner: Address; nftIndex: bigint; incentiveKey: IncentiveKey }
+      >
+    ): Promise<TestContractResultWithoutMaps<bigint>> => {
+      return testMethod(this, "stake", params, getContractByCodeHash);
+    },
+    unstake: async (
+      params: TestContractParamsWithoutMaps<
+        NFTPositionManagerTypes.Fields,
+        {
+          nftOwner: Address;
+          nftIndex: bigint;
+          incentiveKey: IncentiveKey;
+          refundAddress: Address;
+        }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
+      return testMethod(this, "unstake", params, getContractByCodeHash);
+    },
     getVersion: async (
       params: Omit<
         TestContractParamsWithoutMaps<NFTPositionManagerTypes.Fields, never>,
@@ -449,6 +645,45 @@ class Factory extends ContractFactory<
     ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "burnNft", params, getContractByCodeHash);
     },
+    setupIncentiveFactory: async (
+      params: TestContractParamsWithoutMaps<
+        NFTPositionManagerTypes.Fields,
+        { payer: Address; templateId: HexString }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
+      return testMethod(
+        this,
+        "setupIncentiveFactory",
+        params,
+        getContractByCodeHash
+      );
+    },
+    claimRewards: async (
+      params: TestContractParamsWithoutMaps<
+        NFTPositionManagerTypes.Fields,
+        {
+          nftOwner: Address;
+          nftIndex: bigint;
+          incentiveKey: IncentiveKey;
+          refundAddress: Address;
+        }
+      >
+    ): Promise<TestContractResultWithoutMaps<bigint>> => {
+      return testMethod(this, "claimRewards", params, getContractByCodeHash);
+    },
+    claimIncentivizeFees: async (
+      params: Omit<
+        TestContractParamsWithoutMaps<NFTPositionManagerTypes.Fields, never>,
+        "testArgs"
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
+      return testMethod(
+        this,
+        "claimIncentivizeFees",
+        params,
+        getContractByCodeHash
+      );
+    },
     changeAdmin: async (
       params: TestContractParamsWithoutMaps<
         NFTPositionManagerTypes.Fields,
@@ -473,6 +708,22 @@ class Factory extends ContractFactory<
     ): Promise<TestContractResultWithoutMaps<null>> => {
       return testMethod(this, "acceptAdmin", params, getContractByCodeHash);
     },
+    setFeeSink: async (
+      params: TestContractParamsWithoutMaps<
+        NFTPositionManagerTypes.Fields,
+        { newFeeSink: Address }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
+      return testMethod(this, "setFeeSink", params, getContractByCodeHash);
+    },
+    setIncentivizer: async (
+      params: TestContractParamsWithoutMaps<
+        NFTPositionManagerTypes.Fields,
+        { newIncentivizer: Address }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
+      return testMethod(this, "setIncentivizer", params, getContractByCodeHash);
+    },
     getNftTemplateId: async (
       params: Omit<
         TestContractParamsWithoutMaps<NFTPositionManagerTypes.Fields, never>,
@@ -485,6 +736,18 @@ class Factory extends ContractFactory<
         params,
         getContractByCodeHash
       );
+    },
+    setStakerData: async (
+      params: TestContractParamsWithoutMaps<
+        NFTPositionManagerTypes.Fields,
+        {
+          incentivizeFee: bigint;
+          maxIncentiveStartLeadTime: bigint;
+          maxIncentiveDuration: bigint;
+        }
+      >
+    ): Promise<TestContractResultWithoutMaps<null>> => {
+      return testMethod(this, "setStakerData", params, getContractByCodeHash);
     },
     getInitialDataForPosition: async (
       params: Omit<
@@ -527,7 +790,7 @@ export const NFTPositionManager = new Factory(
   Contract.fromJson(
     NFTPositionManagerContractJson,
     "",
-    "a14ecea38cb1afab0471b63ed457f59e2d941d41ae14b77d63e4ed7867010adb",
+    "0ea695d310dc57958709ee2fe6a72ffbfffa93e2be6fd2335ffd62259bc2a45e",
     AllStructs
   )
 );
@@ -657,6 +920,52 @@ export class NFTPositionManagerInstance extends ContractInstance {
         getContractByCodeHash
       );
     },
+    getIncentiveFactory: async (
+      params?: NFTPositionManagerTypes.CallMethodParams<"getIncentiveFactory">
+    ): Promise<
+      NFTPositionManagerTypes.CallMethodResult<"getIncentiveFactory">
+    > => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "getIncentiveFactory",
+        params === undefined ? {} : params,
+        getContractByCodeHash
+      );
+    },
+    createIncentive: async (
+      params: NFTPositionManagerTypes.CallMethodParams<"createIncentive">
+    ): Promise<NFTPositionManagerTypes.CallMethodResult<"createIncentive">> => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "createIncentive",
+        params,
+        getContractByCodeHash
+      );
+    },
+    stake: async (
+      params: NFTPositionManagerTypes.CallMethodParams<"stake">
+    ): Promise<NFTPositionManagerTypes.CallMethodResult<"stake">> => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "stake",
+        params,
+        getContractByCodeHash
+      );
+    },
+    unstake: async (
+      params: NFTPositionManagerTypes.CallMethodParams<"unstake">
+    ): Promise<NFTPositionManagerTypes.CallMethodResult<"unstake">> => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "unstake",
+        params,
+        getContractByCodeHash
+      );
+    },
     getVersion: async (
       params?: NFTPositionManagerTypes.CallMethodParams<"getVersion">
     ): Promise<NFTPositionManagerTypes.CallMethodResult<"getVersion">> => {
@@ -687,6 +996,43 @@ export class NFTPositionManagerInstance extends ContractInstance {
         this,
         "burnNft",
         params,
+        getContractByCodeHash
+      );
+    },
+    setupIncentiveFactory: async (
+      params: NFTPositionManagerTypes.CallMethodParams<"setupIncentiveFactory">
+    ): Promise<
+      NFTPositionManagerTypes.CallMethodResult<"setupIncentiveFactory">
+    > => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "setupIncentiveFactory",
+        params,
+        getContractByCodeHash
+      );
+    },
+    claimRewards: async (
+      params: NFTPositionManagerTypes.CallMethodParams<"claimRewards">
+    ): Promise<NFTPositionManagerTypes.CallMethodResult<"claimRewards">> => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "claimRewards",
+        params,
+        getContractByCodeHash
+      );
+    },
+    claimIncentivizeFees: async (
+      params?: NFTPositionManagerTypes.CallMethodParams<"claimIncentivizeFees">
+    ): Promise<
+      NFTPositionManagerTypes.CallMethodResult<"claimIncentivizeFees">
+    > => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "claimIncentivizeFees",
+        params === undefined ? {} : params,
         getContractByCodeHash
       );
     },
@@ -723,6 +1069,28 @@ export class NFTPositionManagerInstance extends ContractInstance {
         getContractByCodeHash
       );
     },
+    setFeeSink: async (
+      params: NFTPositionManagerTypes.CallMethodParams<"setFeeSink">
+    ): Promise<NFTPositionManagerTypes.CallMethodResult<"setFeeSink">> => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "setFeeSink",
+        params,
+        getContractByCodeHash
+      );
+    },
+    setIncentivizer: async (
+      params: NFTPositionManagerTypes.CallMethodParams<"setIncentivizer">
+    ): Promise<NFTPositionManagerTypes.CallMethodResult<"setIncentivizer">> => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "setIncentivizer",
+        params,
+        getContractByCodeHash
+      );
+    },
     getNftTemplateId: async (
       params?: NFTPositionManagerTypes.CallMethodParams<"getNftTemplateId">
     ): Promise<
@@ -733,6 +1101,17 @@ export class NFTPositionManagerInstance extends ContractInstance {
         this,
         "getNftTemplateId",
         params === undefined ? {} : params,
+        getContractByCodeHash
+      );
+    },
+    setStakerData: async (
+      params: NFTPositionManagerTypes.CallMethodParams<"setStakerData">
+    ): Promise<NFTPositionManagerTypes.CallMethodResult<"setStakerData">> => {
+      return callMethod(
+        NFTPositionManager,
+        this,
+        "setStakerData",
+        params,
         getContractByCodeHash
       );
     },
@@ -815,6 +1194,40 @@ export class NFTPositionManagerInstance extends ContractInstance {
     > => {
       return signExecuteMethod(NFTPositionManager, this, "claimFees", params);
     },
+    getIncentiveFactory: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"getIncentiveFactory">
+    ): Promise<
+      NFTPositionManagerTypes.SignExecuteMethodResult<"getIncentiveFactory">
+    > => {
+      return signExecuteMethod(
+        NFTPositionManager,
+        this,
+        "getIncentiveFactory",
+        params
+      );
+    },
+    createIncentive: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"createIncentive">
+    ): Promise<
+      NFTPositionManagerTypes.SignExecuteMethodResult<"createIncentive">
+    > => {
+      return signExecuteMethod(
+        NFTPositionManager,
+        this,
+        "createIncentive",
+        params
+      );
+    },
+    stake: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"stake">
+    ): Promise<NFTPositionManagerTypes.SignExecuteMethodResult<"stake">> => {
+      return signExecuteMethod(NFTPositionManager, this, "stake", params);
+    },
+    unstake: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"unstake">
+    ): Promise<NFTPositionManagerTypes.SignExecuteMethodResult<"unstake">> => {
+      return signExecuteMethod(NFTPositionManager, this, "unstake", params);
+    },
     getVersion: async (
       params: NFTPositionManagerTypes.SignExecuteMethodParams<"getVersion">
     ): Promise<
@@ -831,6 +1244,42 @@ export class NFTPositionManagerInstance extends ContractInstance {
       params: NFTPositionManagerTypes.SignExecuteMethodParams<"burnNft">
     ): Promise<NFTPositionManagerTypes.SignExecuteMethodResult<"burnNft">> => {
       return signExecuteMethod(NFTPositionManager, this, "burnNft", params);
+    },
+    setupIncentiveFactory: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"setupIncentiveFactory">
+    ): Promise<
+      NFTPositionManagerTypes.SignExecuteMethodResult<"setupIncentiveFactory">
+    > => {
+      return signExecuteMethod(
+        NFTPositionManager,
+        this,
+        "setupIncentiveFactory",
+        params
+      );
+    },
+    claimRewards: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"claimRewards">
+    ): Promise<
+      NFTPositionManagerTypes.SignExecuteMethodResult<"claimRewards">
+    > => {
+      return signExecuteMethod(
+        NFTPositionManager,
+        this,
+        "claimRewards",
+        params
+      );
+    },
+    claimIncentivizeFees: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"claimIncentivizeFees">
+    ): Promise<
+      NFTPositionManagerTypes.SignExecuteMethodResult<"claimIncentivizeFees">
+    > => {
+      return signExecuteMethod(
+        NFTPositionManager,
+        this,
+        "claimIncentivizeFees",
+        params
+      );
     },
     changeAdmin: async (
       params: NFTPositionManagerTypes.SignExecuteMethodParams<"changeAdmin">
@@ -853,6 +1302,25 @@ export class NFTPositionManagerInstance extends ContractInstance {
     > => {
       return signExecuteMethod(NFTPositionManager, this, "acceptAdmin", params);
     },
+    setFeeSink: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"setFeeSink">
+    ): Promise<
+      NFTPositionManagerTypes.SignExecuteMethodResult<"setFeeSink">
+    > => {
+      return signExecuteMethod(NFTPositionManager, this, "setFeeSink", params);
+    },
+    setIncentivizer: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"setIncentivizer">
+    ): Promise<
+      NFTPositionManagerTypes.SignExecuteMethodResult<"setIncentivizer">
+    > => {
+      return signExecuteMethod(
+        NFTPositionManager,
+        this,
+        "setIncentivizer",
+        params
+      );
+    },
     getNftTemplateId: async (
       params: NFTPositionManagerTypes.SignExecuteMethodParams<"getNftTemplateId">
     ): Promise<
@@ -862,6 +1330,18 @@ export class NFTPositionManagerInstance extends ContractInstance {
         NFTPositionManager,
         this,
         "getNftTemplateId",
+        params
+      );
+    },
+    setStakerData: async (
+      params: NFTPositionManagerTypes.SignExecuteMethodParams<"setStakerData">
+    ): Promise<
+      NFTPositionManagerTypes.SignExecuteMethodResult<"setStakerData">
+    > => {
+      return signExecuteMethod(
+        NFTPositionManager,
+        this,
+        "setStakerData",
         params
       );
     },
