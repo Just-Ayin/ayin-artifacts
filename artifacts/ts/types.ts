@@ -21,6 +21,13 @@ export interface FactoryRoles extends Record<string, Val> {
   admin: Address;
   upgrader: Address;
 }
+export interface IncentiveKey extends Record<string, Val> {
+  rewardToken: HexString;
+  pool: HexString;
+  startTime: bigint;
+  endTime: bigint;
+  refundee: Address;
+}
 export interface ModifyLiquidity extends Record<string, Val> {
   owner: Address;
   tickLower: bigint;
@@ -42,6 +49,16 @@ export interface NewStruct extends Record<string, Val> {
 export interface NextTick extends Record<string, Val> {
   value: bigint;
   initialized: boolean;
+}
+export interface ObservationCL extends Record<string, Val> {
+  timestamp: bigint;
+  cumulativeTick: bigint;
+  cumulativeSecondsPerLiquidityX128: bigint;
+}
+export interface ObservationTP extends Record<string, Val> {
+  timestamp: bigint;
+  price0Cumulative: bigint;
+  price1Cumulative: bigint;
 }
 export interface PendingBalance extends Record<string, Val> {
   user: bigint;
@@ -79,6 +96,22 @@ export interface PositionKey extends Record<string, Val> {
   tickLower: bigint;
   tickUpper: bigint;
   salt: HexString;
+}
+export interface StakeCLInfo extends Record<string, Val> {
+  programId: HexString;
+  secondsPerLiquidityInsideInitialX128: bigint;
+}
+export interface StakerCLData extends Record<string, Val> {
+  incentivizeFeeTokenId: HexString;
+  incentivizeFee: bigint;
+  accruedIncentivizeFee: bigint;
+  maxIncentiveStartLeadTime: bigint;
+  maxIncentiveDuration: bigint;
+}
+export interface StakerCLIncentive extends Record<string, Val> {
+  totalRewardUnclaimed: bigint;
+  totalSecondsClaimedX128: bigint;
+  numOfStakes: bigint;
 }
 export interface TickInfo extends Record<string, Val> {
   liquidityNet: bigint;

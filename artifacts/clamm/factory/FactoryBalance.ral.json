@@ -1,0 +1,157 @@
+{
+  "version": "v3.8.5",
+  "name": "FactoryBalance",
+  "bytecode": "04080e1c402b405a4079409140a940db010000000103d33abaa903a00002010000000103d375e5e2d6a001020000010100051600ce00411351337b010002020018d340839a89b30002160005264c08a000051600203d2ba1004a05a00016003d2aa100a00116012aa10101070202010dd32ed5013fb300021600ce011601aca00016012aa100a00002010201010009d377522121b300021600ce01a000ab0ca100010201010009d366ab3314b300021600ce01a001ab0ca101010001040019d3caa32a2c16004e1701b1b917020c0dce000117b9170316011602421351347b16011603411351357b1600ba",
+  "codeHash": "b9ce9983e941f985eaa4fec3b626e9b906188a2d1fd47236bfa3e89cb37c9f7d",
+  "fieldsSig": {
+    "names": [
+      "factory",
+      "tokenId",
+      "user",
+      "protocol"
+    ],
+    "types": [
+      "PoolFactory",
+      "ByteVec",
+      "U256",
+      "U256"
+    ],
+    "isMutable": [
+      false,
+      false,
+      true,
+      true
+    ]
+  },
+  "eventsSig": [],
+  "functions": [
+    {
+      "name": "getUser",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "getProtocol",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "checkCaller",
+      "paramNames": [
+        "callerId"
+      ],
+      "paramTypes": [
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "addDelta",
+      "paramNames": [
+        "userDelta",
+        "protocolDelta"
+      ],
+      "paramTypes": [
+        "I256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "depositUser",
+      "paramNames": [
+        "payer",
+        "amount"
+      ],
+      "paramTypes": [
+        "Address",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "withdrawUser",
+      "paramNames": [
+        "to"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "withdrawProtocol",
+      "paramNames": [
+        "to"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "upgrade",
+      "paramNames": [
+        "newCode"
+      ],
+      "paramTypes": [
+        "ByteVec"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    }
+  ],
+  "constants": [
+    {
+      "name": "Forbidden",
+      "value": {
+        "type": "U256",
+        "value": "4403"
+      }
+    },
+    {
+      "name": "UpgradeSameCodeHash",
+      "value": {
+        "type": "U256",
+        "value": "4404"
+      }
+    },
+    {
+      "name": "UpgradeBadCodeHash",
+      "value": {
+        "type": "U256",
+        "value": "4405"
+      }
+    }
+  ],
+  "enums": []
+}

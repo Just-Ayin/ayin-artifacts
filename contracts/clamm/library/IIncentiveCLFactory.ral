@@ -1,0 +1,28 @@
+Interface IIncentiveCLFactory {
+  event IncentiveCreated(
+    rewardToken: ByteVec,
+    pool: IPoolCL,
+    startTime: U256,
+    endTime: U256,
+    refundee: Address,
+    reward: U256
+  )
+
+  /// Gets the subcontract path where the incentive is stored
+  /// Code:
+  /// return key.rewardToken
+  ///   ++ contractId!(key.pool)
+  ///   ++ toByteVec!(key.startTime)
+  ///   ++ toByteVec!(key.endTime)
+  ///   ++ toByteVec!(key.refundee)
+  pub fn getIncentivePath(key: IncentiveKey) -> ByteVec
+
+  /// Gets the contractID of the incentive subcontract
+  /// Code:
+  /// return subContractId!(getIncentivePath(key))
+  pub fn getIncentiveContractId(key: IncentiveKey) -> ByteVec
+
+  /// Permissioned endpoint, use INFTPositionManager.createIncentive for public access
+  @using(preapprovedAssets = true)
+  pub fn create(payer: Address, key: IncentiveKey, reward: U256, incentiveTemplateId: ByteVec) -> ()
+}

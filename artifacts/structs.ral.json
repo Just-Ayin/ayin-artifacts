@@ -72,6 +72,81 @@
     ]
   },
   {
+    "name": "StakerCLIncentive",
+    "fieldNames": [
+      "totalRewardUnclaimed",
+      "totalSecondsClaimedX128",
+      "numOfStakes"
+    ],
+    "fieldTypes": [
+      "U256",
+      "U256",
+      "U256"
+    ],
+    "isMutable": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "name": "StakeCLInfo",
+    "fieldNames": [
+      "programId",
+      "secondsPerLiquidityInsideInitialX128"
+    ],
+    "fieldTypes": [
+      "ByteVec",
+      "U256"
+    ],
+    "isMutable": [
+      true,
+      true
+    ]
+  },
+  {
+    "name": "StakerCLData",
+    "fieldNames": [
+      "incentivizeFeeTokenId",
+      "incentivizeFee",
+      "accruedIncentivizeFee",
+      "maxIncentiveStartLeadTime",
+      "maxIncentiveDuration"
+    ],
+    "fieldTypes": [
+      "ByteVec",
+      "U256",
+      "U256",
+      "U256",
+      "U256"
+    ],
+    "isMutable": [
+      false,
+      true,
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "name": "ObservationTP",
+    "fieldNames": [
+      "timestamp",
+      "price0Cumulative",
+      "price1Cumulative"
+    ],
+    "fieldTypes": [
+      "U256",
+      "U256",
+      "U256"
+    ],
+    "isMutable": [
+      true,
+      true,
+      true
+    ]
+  },
+  {
     "name": "ModifyLiquidityScriptParams",
     "fieldNames": [
       "tickLower",
@@ -198,6 +273,30 @@
     ]
   },
   {
+    "name": "IncentiveKey",
+    "fieldNames": [
+      "rewardToken",
+      "pool",
+      "startTime",
+      "endTime",
+      "refundee"
+    ],
+    "fieldTypes": [
+      "ByteVec",
+      "IPoolCL",
+      "U256",
+      "U256",
+      "Address"
+    ],
+    "isMutable": [
+      false,
+      false,
+      false,
+      false,
+      false
+    ]
+  },
+  {
     "name": "ModifyLiquidity",
     "fieldNames": [
       "owner",
@@ -261,6 +360,24 @@
     "isMutable": [
       true,
       true,
+      true,
+      true,
+      true
+    ]
+  },
+  {
+    "name": "ObservationCL",
+    "fieldNames": [
+      "timestamp",
+      "cumulativeTick",
+      "cumulativeSecondsPerLiquidityX128"
+    ],
+    "fieldTypes": [
+      "U256",
+      "I256",
+      "U256"
+    ],
+    "isMutable": [
       true,
       true,
       true

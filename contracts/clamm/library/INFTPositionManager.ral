@@ -1,3 +1,16 @@
+struct IncentiveKey {
+  /// tokenId of the distributed rewards
+  rewardToken: ByteVec,
+  /// pool contract ID for which the rewards are distributed
+  pool: IPoolCL,
+  /// start time of the incentive in seconds since epoch (blocktime / 1000)
+  startTime: U256,
+  /// end time of the incentive in seconds since epoch (blocktime / 1000)
+  endTime: U256,
+  /// address that will receive the remaining rewards
+  refundee: Address
+}
+
 Interface INFTPositionManager {
   event NFTMinted(owner: Address, nftId: ByteVec, nftIndex: U256)
   event NFTBurned(owner: Address, nftId: ByteVec, nftIndex: U256)
@@ -13,6 +26,8 @@ Interface INFTPositionManager {
   ///   tickUpper: the upper tick of the position
   ///   liquidityDelta: the change in liquidity
   ///   nftIndex: the index of the NFT associated with the position, U256Max if no NFT yet
+  /// Returns:
+  ///   (userDelta0, userDelta1, NFTPosition)
   @using(preapprovedAssets = true)
   pub fn modifyLiquidity(
     payer: Address,
@@ -22,13 +37,50 @@ Interface INFTPositionManager {
     tickUpper: I256,
     liquidityDelta: I256,
     nftIndex: U256
-  ) -> (I256, I256, NFTPosition)
+  ) -> (I256, I256, INFTPosition)
 
   /// Claim fees earned from liquidity position and send them to refundAddress
+  /// Args:
+  ///   refundAddress: the address that will receive the fees
+  ///   nftOwner: the address that owns the NFT
+  ///   nftIndex: the index of the NFT
+  /// Returns:
+  ///   (fee0, fee1)
   @using(preapprovedAssets = true)
   pub fn claimFees(
     refundAddress: Address,
     nftOwner: Address,
     nftIndex: U256
   ) -> (U256, U256)
+
+  /////////////////
+  //   Staking   //
+  /////////////////
+
+  /// Get the subcontract for managing incentives
+  pub fn getIncentiveFactory() -> IIncentiveCLFactory
+
+  /// Create a new incentive for a specified pool
+  @using(checkExternalCaller = false, preapprovedAssets = true)
+  pub fn createIncentive(payer: Address, key: IncentiveKey, reward: U256) -> ()
+
+  /// Stake the NFT for a given incentive program (the NFT's pool and inventive pool must match)
+  /// The NFT Owner retains the ownership of the NFT
+  /// Each NFT can be staked in up to 8 staking programs at the same time
+  ///
+  /// Returns:
+  ///   the staking slot used
+  @using(preapprovedAssets = true)
+  pub fn stake(nftOwner: Address, nftIndex: U256, incentiveKey: IncentiveKey) -> (U256)
+
+  /// Unstake the NFT from the staking program
+  /// The NFT Owner retains the ownership of the NFT
+  ///
+  /// Args:
+  ///   nftOwner: the address that owns the NFT
+  ///   nftIndex: the index of the NFT
+  ///   incentiveKey: the key of the incentive program
+  ///   refundAddress: the address that will receive the rewards
+  @using(preapprovedAssets = true)
+  pub fn unstake(nftOwner: Address, nftIndex: U256, incentiveKey: IncentiveKey, refundAddress: Address) -> ()
 }

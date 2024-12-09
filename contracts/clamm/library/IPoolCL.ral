@@ -25,9 +25,15 @@ struct Position {
     mut feeOwed1: U256  // The amount of fees in token1 owed to the LP
 }
 
+struct ObservationCL {
+    mut timestamp: U256, // 32 bits
+    mut cumulativeTick: I256, // 56 bits
+    mut cumulativeSecondsPerLiquidityX128: U256 // 160 bits
+}
+
 /// Public interface for interacting with the PoolCL contract
 /// Functions that modify state are excluded as they can only ever be called by the factory
-Interface IPoolCL {
+Interface IPoolCL extends IOracle {
     event Swap(
         caller: Address,    // The address which called the swap in Factory
         token0: ByteVec,    // The lower token ID
@@ -71,8 +77,8 @@ Interface IPoolCL {
     //  Permissioned endpoints (factory only)  //
     /////////////////////////////////////////////
 
-    @using(updateFields = true, checkExternalCaller = false)
-    pub fn initialize(intialSqrtPrice: U256) -> ()
+    @using(updateFields = true, checkExternalCaller = false, preapprovedAssets = true)
+    pub fn initialize(payer: Address, intialSqrtPrice: U256) -> ()
 
     @using(updateFields = true)
     pub fn modifyFeeProtocol(newFeeProtocol: U256) -> ()
@@ -91,4 +97,22 @@ Interface IPoolCL {
     /// Will revert on overflow
     @using(updateFields = true)
     pub fn factoryOnlySubUserDeltas(userDelta0: I256, userDelta1: I256, protocol0: U256, protocol1: U256) -> ()
+
+    //////////////
+    //  Oracle  //
+    //////////////
+
+    /// Calculates geometric mean tick between timestamps `a` and `b` 
+    pub fn getMeanTick(startTimestamp: U256, endTimestamp: U256) -> I256
+
+    /// Searches for observation at the `timestamp`,
+    /// extrapolating if there is no recent observation
+    /// interpolating between observations if needed
+    pub fn getObservation(timestamp: U256) -> ObservationCL
+
+    pub fn snapshotCumulativesInside(tickLower: I256, tickUpper: I256) -> (
+        I256, // tickCumulativeInside (63 + 1 bits)
+        U256, // secondsPerLiquidityInsideX128 (160 bits)
+        U256  // secondsInside (32 bits)
+    )
 }

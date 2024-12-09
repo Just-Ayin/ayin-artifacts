@@ -1,0 +1,199 @@
+{
+  "version": "v3.8.5",
+  "name": "IncentiveCL",
+  "bytecode": "080b40db40ff4111411f412d413b416f418e41a641df42100000030e01408816001601371703160016010c0d368717041604160336170516041603314c0416050d2a170516050c2f4c04160316022d0216001601160287170616061603334c0416050d2b1705160316062b17030c1602361602381707160216072d1702160316072d17030c16073616072d0d351707160316051607373917030f16022c0e3a170816080e16021608373637170816080e16021608373637170816080e16021608373637170816080e16021608373637170816080e16021608373637170816080e1602160837363717081603160837170916090200000304011216001601160200001703160016011602870c304c0416030d2a1703160302010000000305d364fdfd20a000a001a00202010000000103d30e26422ace0202010000000103d385207441ce0302010000000103d35aa8cd4ace0402010002040118d3be55e1c71601ce04334c041601ce032b4a03ce04ce032b170216021340803ba0012b1703a0001600160300000201000303000cd3a865f42cb3ce01411341937b160016011602a102a101a100010701010009d3d385e15cb4ce021600aca00016002aa10001020305001bd3ab72368fb3ce01411341937b1601a0012b1703a0001602160300001704a001160235a101a00016042ba1001600ce021604ab010201010017d3fb3cff01b4ce00451341937b561343e82dce041380278d002a331341907b1600ce02b2ce02a5ab0ca100",
+  "codeHash": "a4997742fa0deca9d32f979bc9169e03e335d8a90fb4e7a4b21790378a1a5673",
+  "fieldsSig": {
+    "names": [
+      "creator",
+      "managerContractId",
+      "rewardToken",
+      "startTime",
+      "endTime",
+      "incentive"
+    ],
+    "types": [
+      "Address",
+      "ByteVec",
+      "ByteVec",
+      "U256",
+      "U256",
+      "StakerCLIncentive"
+    ],
+    "isMutable": [
+      false,
+      false,
+      false,
+      false,
+      false,
+      true
+    ]
+  },
+  "eventsSig": [],
+  "functions": [
+    {
+      "name": "mulDiv",
+      "paramNames": [
+        "a",
+        "b",
+        "denom"
+      ],
+      "paramTypes": [
+        "U256",
+        "U256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        true
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "mulDivCeil",
+      "paramNames": [
+        "a",
+        "b",
+        "denom"
+      ],
+      "paramTypes": [
+        "U256",
+        "U256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "get",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "StakerCLIncentive"
+      ]
+    },
+    {
+      "name": "getRewardToken",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "ByteVec"
+      ]
+    },
+    {
+      "name": "getStartTime",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "getEndTime",
+      "paramNames": [],
+      "paramTypes": [],
+      "paramIsMutable": [],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "calculateReward",
+      "paramNames": [
+        "secondsInsideX128",
+        "timestampSeconds"
+      ],
+      "paramTypes": [
+        "U256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false
+      ],
+      "returnTypes": [
+        "U256"
+      ]
+    },
+    {
+      "name": "set",
+      "paramNames": [
+        "newIncentive"
+      ],
+      "paramTypes": [
+        "StakerCLIncentive"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "deposit",
+      "paramNames": [
+        "amount"
+      ],
+      "paramTypes": [
+        "U256"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "unstake",
+      "paramNames": [
+        "refundAddress",
+        "secondsStakedX128",
+        "secondsInsideX128"
+      ],
+      "paramTypes": [
+        "Address",
+        "U256",
+        "U256"
+      ],
+      "paramIsMutable": [
+        false,
+        false,
+        false
+      ],
+      "returnTypes": []
+    },
+    {
+      "name": "takeRemainigRewards",
+      "paramNames": [
+        "refundAddress"
+      ],
+      "paramTypes": [
+        "Address"
+      ],
+      "paramIsMutable": [
+        false
+      ],
+      "returnTypes": []
+    }
+  ],
+  "constants": [
+    {
+      "name": "RemainingRewardLockTime",
+      "value": {
+        "type": "U256",
+        "value": "2592000"
+      }
+    }
+  ],
+  "enums": []
+}
