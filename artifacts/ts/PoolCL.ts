@@ -539,6 +539,14 @@ export namespace PoolCLTypes {
       params: CallContractParams<{ newCode: HexString }>;
       result: CallContractResult<null>;
     };
+    setUnlocked: {
+      params: CallContractParams<{ value: boolean }>;
+      result: CallContractResult<null>;
+    };
+    postUpgradeTick: {
+      params: CallContractParams<{ tickIndex: bigint }>;
+      result: CallContractResult<null>;
+    };
   }
   export type CallMethodParams<T extends keyof CallMethodTable> =
     CallMethodTable[T]["params"];
@@ -549,8 +557,8 @@ export namespace PoolCLTypes {
   }>;
   export type MultiCallResults<T extends MultiCallParams> = {
     [MaybeName in keyof T]: MaybeName extends keyof CallMethodTable
-      ? CallMethodTable[MaybeName]["result"]
-      : undefined;
+    ? CallMethodTable[MaybeName]["result"]
+    : undefined;
   };
   export type MulticallReturnType<Callss extends MultiCallParams[]> = {
     [index in keyof Callss]: MultiCallResults<Callss[index]>;
@@ -1022,6 +1030,14 @@ export namespace PoolCLTypes {
       params: SignExecuteContractMethodParams<{ newCode: HexString }>;
       result: SignExecuteScriptTxResult;
     };
+    setUnlocked: {
+      params: SignExecuteContractMethodParams<{ value: boolean }>;
+      result: SignExecuteScriptTxResult;
+    };
+    postUpgradeTick: {
+      params: SignExecuteContractMethodParams<{ tickIndex: bigint }>;
+      result: SignExecuteScriptTxResult;
+    };
   }
   export type SignExecuteMethodParams<T extends keyof SignExecuteMethodTable> =
     SignExecuteMethodTable[T]["params"];
@@ -1097,6 +1113,7 @@ class Factory extends ContractFactory<PoolCLInstance, PoolCLTypes.Fields> {
       TickUninitialized: BigInt("217"),
       TokenNotInPool: BigInt("218"),
       PositionIsStaked: BigInt("219"),
+      PoolLocked: BigInt("220"),
       InvariantNotConverged: BigInt("300"),
       BalanceUpdateNotConverged: BigInt("301"),
       CoinIndexOutOfBounds: BigInt("302"),
@@ -2050,6 +2067,24 @@ class Factory extends ContractFactory<PoolCLInstance, PoolCLTypes.Fields> {
     ): Promise<TestContractResult<null, PoolCLTypes.Maps>> => {
       return testMethod(this, "upgrade", params, getContractByCodeHash);
     },
+    setUnlocked: async (
+      params: TestContractParams<
+        PoolCLTypes.Fields,
+        { value: boolean },
+        PoolCLTypes.Maps
+      >
+    ): Promise<TestContractResult<null, PoolCLTypes.Maps>> => {
+      return testMethod(this, "setUnlocked", params, getContractByCodeHash);
+    },
+    postUpgradeTick: async (
+      params: TestContractParams<
+        PoolCLTypes.Fields,
+        { tickIndex: bigint },
+        PoolCLTypes.Maps
+      >
+    ): Promise<TestContractResult<null, PoolCLTypes.Maps>> => {
+      return testMethod(this, "postUpgradeTick", params, getContractByCodeHash);
+    },
   };
 
   stateForTest(
@@ -2066,8 +2101,8 @@ class Factory extends ContractFactory<PoolCLInstance, PoolCLTypes.Fields> {
 export const PoolCL = new Factory(
   Contract.fromJson(
     PoolCLContractJson,
-    "=12-2+b2=2-2+bf=2-2+23=2+3=1-1=2-2+82=2-5+d=4-5+9=2-1+0=2-2+22e=1+252=2+a=1-1=1-2+3f=3-2+7a=2-2+cf=2-2+0745df=2-2+34=2-1=1+6=2-5=1+3=3+7=1+aed=2-1=2-3=2-2+9f=2+bf4=1+e64=1+61=2+e5=1-1+e15=1-3+e=1-3+5=2-2+9=1-3=2-3=1-2=1-3=2+0e4=1-1+38=3-1+3=2-2+37=2-2+0b=2+0=1-1=2-4+c=1-1=1-2=1-1+0=1-2=2-1+1=2-1+3=1-1+e=1+3=1-1=2-2+42d=1+46c=2+1=1-5=3-1+9=1-3+60c=2-1=1+0=3-1+c=2-1+6=2+68=1-2=1-1+6=1-1=1-2=1+6ef=2-2+d=1-3=3-1+9=2-2+3b=2-2=1-3+7=1+87=1-2=1-2=1+c5=1-3+92c=1-3+999=1-1=1-1+e1=1-1+a=1-1+e=1+b175bf=1+5=1+3=3+435=1-1+6b5f79=2+9b5fc=1-1=161-1+5=68-2+11=38+7a7e0214696e73657274206174206d617020706174683a2000=27-1+b=7967-1+2=41-1+c=88+7a7e0214696e73657274206174206d617020706174683a2000=1139-1+b=40+7a7e021472656d6f7665206174206d617020706174683a2000=743-1+2=117-1+f=40+7a7e0214696e73657274206174206d617020706174683a2000=895-1+b=61-1+f=38+7a7e0214696e73657274206174206d617020706174683a2000=31-1+d=209-1+b=38+7a7e021472656d6f7665206174206d617020706174683a2000=847-1+9=130+7a7e0214696e73657274206174206d617020706174683a2000=3176",
-    "ba25deba5ec933877faebc0738339baa0ce8f0445a535bd161be482d2c0fc096",
+    "=12-2+b2=2-2+bf=2-2+23=2+3=1-1=2-6+82=2-1+d=4+942=1+9422e=2-1=1-1=1-2=2-3+b=1-2=1-2=1+fd=2+8=1-1+44e1=2-2+19=2-2+f1=2-2+46=2-2+e8=2-2+f5=2-2+e9=2-2+ff=2-3=1-2+6=3-1+1=3+14c=1+8=2-2+73=2-2+f7=2-2+27=2-2+57=2-2+a6=2-2+f6=2+2=1-1=2-2+4a=2-2+2=1-3=2-2+49=2-2+1d=2-6+1b=3-5+e=2-2+14=2-1+2=2-2=1-1=1-2+0=1+3=2-1=1+43f=1-2+47e=2-2+2c=3-1+b=3-5+e=3-1+2=2-1=1+e=1+6=1+4=1-1+699=1-1+6=1+7=1+701=2-1+e=2-2+8=1-4+b=3-1+d5869=2-1=1+c=2-2+d7=2-2+3e=1+9=1-2+b=1-2+9f35=1+d0=2-4+2=1-1=1-3+c10=1-1=1+4c5=1+55=2+7=1-1=1-1=1-1+8b=2-2+ad=2-2+d35ffa=6-2+f8=161-1+5=68-2+11=38+7a7e0214696e73657274206174206d617020706174683a2000=27-1+b=8003-1+2=41-1+c=88+7a7e0214696e73657274206174206d617020706174683a2000=1139-1+b=40+7a7e021472656d6f7665206174206d617020706174683a2000=743-1+2=117-1+f=40+7a7e0214696e73657274206174206d617020706174683a2000=895-1+b=61-1+f=38+7a7e0214696e73657274206174206d617020706174683a2000=31-1+d=209-1+b=38+7a7e021472656d6f7665206174206d617020706174683a2000=847-1+9=130+7a7e0214696e73657274206174206d617020706174683a2000=3762",
+    "cb72381d65a30ad54a9611e64563f7f5e29a5ed8a209a18738789300e73d1a52",
     AllStructs
   )
 );
@@ -2902,6 +2937,28 @@ export class PoolCLInstance extends ContractInstance {
     ): Promise<PoolCLTypes.CallMethodResult<"upgrade">> => {
       return callMethod(PoolCL, this, "upgrade", params, getContractByCodeHash);
     },
+    setUnlocked: async (
+      params: PoolCLTypes.CallMethodParams<"setUnlocked">
+    ): Promise<PoolCLTypes.CallMethodResult<"setUnlocked">> => {
+      return callMethod(
+        PoolCL,
+        this,
+        "setUnlocked",
+        params,
+        getContractByCodeHash
+      );
+    },
+    postUpgradeTick: async (
+      params: PoolCLTypes.CallMethodParams<"postUpgradeTick">
+    ): Promise<PoolCLTypes.CallMethodResult<"postUpgradeTick">> => {
+      return callMethod(
+        PoolCL,
+        this,
+        "postUpgradeTick",
+        params,
+        getContractByCodeHash
+      );
+    },
   };
 
   transact = {
@@ -3337,6 +3394,16 @@ export class PoolCLInstance extends ContractInstance {
       params: PoolCLTypes.SignExecuteMethodParams<"upgrade">
     ): Promise<PoolCLTypes.SignExecuteMethodResult<"upgrade">> => {
       return signExecuteMethod(PoolCL, this, "upgrade", params);
+    },
+    setUnlocked: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"setUnlocked">
+    ): Promise<PoolCLTypes.SignExecuteMethodResult<"setUnlocked">> => {
+      return signExecuteMethod(PoolCL, this, "setUnlocked", params);
+    },
+    postUpgradeTick: async (
+      params: PoolCLTypes.SignExecuteMethodParams<"postUpgradeTick">
+    ): Promise<PoolCLTypes.SignExecuteMethodResult<"postUpgradeTick">> => {
+      return signExecuteMethod(PoolCL, this, "postUpgradeTick", params);
     },
   };
 
